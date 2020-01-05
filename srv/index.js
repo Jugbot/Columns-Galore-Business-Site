@@ -2,6 +2,18 @@ import express from 'express'
 import sql from './mysql'
 import cors from 'cors'
 
+function objectToWhereValues (object) {
+  var sqlString = ''
+  for (var key in object) {
+    var val = object[key]
+    if (typeof val === 'function') {
+      continue
+    }
+    sqlString += (sqlString.length === 0 ? '' : ' AND ') + sql.escapeId(key) + ' = ' + sql.escape(val, true)
+  }
+  return sqlString
+};
+
 export default (app, http) => {
   app.use(cors({ origin: 'http://localhost:8080' }))
   app.use(express.json())
@@ -26,42 +38,44 @@ export default (app, http) => {
   app.post('/catalog', (req, response) => {
     let filter = req.body
     console.log('Request Search', filter)
-    sql.query('SELECT * FROM catalog WHERE ?', filter, (error, result) => {
+    sql.query('SELECT * FROM catalog WHERE ' + objectToWhereValues(filter), function (error, result) {
+      console.log(this.sql)
       if (error) {
         console.log(error)
         return
       }
-      console.log('result: ', result)
-      console.log('queries: ', catalogQueries)
+      // console.log('result: ', result)
       // now get the next question to ask
-      let success = false
-      for (let field of catalogQueries) {
-        if (!(field in filter)) {
-          sql.query('SELECT DISTINCT ' + field + ' FROM catalog WHERE ?', filter, (error, result) => {
-            if (error) {
-              console.log(error)
-              return
-            }
-            console.log('field: ', field, 'options: ', result)
-            let options = []
-            for (let obj of result) {
-              options.push(obj[field])
-            }
-            if (options.length > 1) {
-              console.log('Next Question: ', field)
-              response.json({
-                nextQuestion: field,
-                options: options,
-                result: result
-              })
-              success = true
-            }
+      function nextOptions (idx) {
+        if (idx >= catalogQueries.length) {
+          return response.json({
+            result: result
           })
         }
-        if (success) break
+        let field = catalogQueries[idx]
+        sql.query('SELECT DISTINCT ' + field + ' FROM catalog WHERE ' + objectToWhereValues(filter), (error, result2) => {
+          if (error) {
+            console.log(error)
+            return
+          }
+          console.log('field: ', field, 'options: ', result2)
+          let options = []
+          for (let obj of result2) {
+            options.push(obj[field])
+          }
+          if (options.length > 1) {
+            console.log('Next Question: ', field)
+            return response.json({
+              nextQuestion: field,
+              options: options,
+              result: result
+            })
+          } else {
+            return nextOptions(idx + 1)
+          }
+        })
       }
-      console.log("other")
-      if (!success) response.json({})
+      nextOptions(0)
     })
   })
 }

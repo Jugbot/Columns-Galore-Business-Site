@@ -2,6 +2,9 @@
   <v-container>
     <v-card>
       <v-card-actions color="primary">
+        <v-breadcrumbs divider="/" :items={}>
+          
+        </v-breadcrumbs>
         <v-select
           v-for="name in search"
           :key='name'
@@ -13,9 +16,6 @@
       </v-card-actions>
       <v-list two-line>
         <v-list-item v-for='product in searchResults' :key='product.CatalogId' avatar @click="toProductPage(product)">
-          <v-list-item-avatar v-if='product.Preview'>
-            <img src="src">
-          </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>{{product.Manufacturer}} {{product.Model}}</v-list-item-title>
             <v-list-item-subtitle>{{product.Year}} {{product.Shift}} {{product.Transmission}} {{product.Tilt}}</v-list-item-subtitle>
@@ -75,7 +75,12 @@ export default {
         } }).then(response => {
         if (response.status === 200) {
           response.json().then(data => {
-            this.searchResults = data
+            console.log(data)
+            this.searchResults = data.result
+            if (data.nextQuestion) {
+              this.questions[data.nextQuestion] = { options: data.options }
+              this.search.push(data.nextQuestion)
+            }
           })
         }
       })
