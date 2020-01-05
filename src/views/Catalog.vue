@@ -1,21 +1,25 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-actions color="primary">
-        <v-breadcrumbs divider="/" :items={}>
-          
+      <v-card-actions>
+        <v-breadcrumbs divider="/" :items="questions">
+          <template #item="props">
+            <v-breadcrumbs-item @click="goto(props.item.text)">
+              {{props.item.text}}
+            </v-breadcrumbs-item>
+          </template>
         </v-breadcrumbs>
+      </v-card-actions>
+      <v-card-actions>
         <v-select
-          v-for="name in search"
-          :key='name'
-          :items="questions[name].options"
-          v-model='questions[name].selected'
-          @change='setQuestion(name, $event)'
-          :label="name">
+          :items="question.options"
+          v-model='question.selected'
+          @change='setQuestion()'
+          :label="question.text">
         </v-select>
       </v-card-actions>
       <v-list two-line>
-        <v-list-item v-for='product in searchResults' :key='product.CatalogId' avatar @click="toProductPage(product)">
+        <v-list-item v-for='product in searchResults' :key='product.CatalogId' @click="toProductPage(product)">
           <v-list-item-content>
             <v-list-item-title>{{product.Manufacturer}} {{product.Model}}</v-list-item-title>
             <v-list-item-subtitle>{{product.Year}} {{product.Shift}} {{product.Transmission}} {{product.Tilt}}</v-list-item-subtitle>
@@ -32,8 +36,9 @@ export default {
   data () {
     // manufacturer make model(year)
     return {
-      questions: {
-        'Manufacturer': {
+      questions: [
+        {
+          text: 'Manufacturer',
           options: [
             'Jeep',
             'Ford',
@@ -42,9 +47,6 @@ export default {
           ],
           selected: null
         }
-      },
-      search: [
-        //
       ],
       searchResults: [
         /* {
@@ -61,11 +63,24 @@ export default {
       ]
     }
   },
+  computed: {
+    question () {
+      return this.questions[this.questions.length - 1]
+    }
+  },
   methods: {
+    goto (name) {
+      this.questions = this.questions.slice(0,
+        this.questions.findIndex(
+          (o) => { o.text == name }
+        ) - 1
+      )
+      this.fetchList()
+    },
     fetchList () {
       let values = {}
-      for (const keyword in this.questions) {
-        values[keyword] = this.questions[keyword].selected
+      for (const obj of this.questions) {
+        values[obj.text] = obj.selected
       }
       fetch('http://localhost:3000/catalog', {
         method: 'POST',
@@ -78,8 +93,7 @@ export default {
             console.log(data)
             this.searchResults = data.result
             if (data.nextQuestion) {
-              this.questions[data.nextQuestion] = { options: data.options }
-              this.search.push(data.nextQuestion)
+              this.questions.push({ text: data.nextQuestion, options: data.options })
             }
           })
         }
@@ -88,13 +102,10 @@ export default {
     toProductPage (product) {
 
     },
-    setQuestion (name, val) {
-      this.$route.query[name] = val
+    setQuestion () {
+      this.$route.query[this.question.text] = this.question.selected
       this.fetchList()
     }
-  },
-  created () {
-    this.search.push('Manufacturer')
   }
 }
 </script>
