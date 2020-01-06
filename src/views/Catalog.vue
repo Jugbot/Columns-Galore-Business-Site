@@ -100,7 +100,8 @@ export default {
       })
     },
     toProductPage (product) {
-
+      console.log(product)
+      this.$router.push('/part/' + product.ProductInformationId)
     },
     setQuestion () {
       this.$route.query[this.question.text] = this.question.selected

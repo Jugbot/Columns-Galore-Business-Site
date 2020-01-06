@@ -35,10 +35,21 @@ export default (app, http) => {
     response.json({ msg: 'pong' })
   })
 
+  app.get('/part', (req, response) => {
+    sql.query('SELECT Title, DescriptionHTML FROM ProductInformation WHERE ProductInformationId=? LIMIT 1', req.query.id, function (error, result) {
+      console.log(this.sql) 
+      if (error) {
+        console.log(error)
+        return
+      }
+      response.json(result[0])
+    })
+  })
+
   app.post('/catalog', (req, response) => {
     let filter = req.body
     console.log('Request Search', filter)
-    sql.query('SELECT * FROM catalog WHERE ' + objectToWhereValues(filter), function (error, result) {
+    sql.query('SELECT * FROM catalog WHERE ' + objectToWhereValues(filter) + ' LIMIT 10', function (error, result) {
       console.log(this.sql)
       if (error) {
         console.log(error)
