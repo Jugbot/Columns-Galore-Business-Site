@@ -72,7 +72,7 @@ export default {
     goto (name) {
       this.questions = this.questions.slice(0,
         this.questions.findIndex(
-          (o) => { o.text == name }
+          (o) => { return o.text === name }
         ) - 1
       )
       this.fetchList()
