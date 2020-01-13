@@ -33,6 +33,10 @@ CREATE TABLE Catalog
   Transmission ENUM("Manual", "Automatic") NOT NULL,
   Tilt ENUM("Tilt", "Fixed") NOT NULL,
   AdditionalOptions VARCHAR(100),
+  Image VARCHAR(50),
+  Price INT,
+  CoreCharge INT,
+
   
   FOREIGN KEY (InventoryId) REFERENCES Inventory(InventoryId),
   FOREIGN KEY (ProductInformationId) REFERENCES ProductInformation(ProductInformationId)
@@ -47,11 +51,12 @@ Insert into ProductInformation (`ProductInformationId`, `Title`, `DescriptionHTM
 <h3>This column does not come with:</h3><p>(The Customer can remove these items from their broken column and install them on our rebuilt column.) Steering wheel, signal and shift levers (on column shift models), these parts may be available if needed.</p>	
 ');
 
-Insert into Catalog (`ProductInformationId`, `Manufacturer`, `Model`, `Year`, `Shift`, `Transmission`, `Tilt`) Values (1, "CHRYSLER", "300M", "99-00", "Floor", "Manual", "Tilt"),
-(1, "Chrysler", "300M", "01-02", "Floor", "Manual", "Tilt"),
-(1, "American Motors", "Ambassador", "70", "Floor", "Manual", "Tilt"),
-(1, "American Motors", "Ambassador", "70", "Floor", "Manual", "Fixed"),
-(1, "American Motors", "Ambassador", "70", "Floor", "Automatic", "Tilt"),
-(1, "American Motors", "Ambassador", "70", "Floor", "Automatic", "Fixed");
+Insert into Catalog (`ProductInformationId`, `Manufacturer`, `Model`, `Year`, `Shift`, `Transmission`, `Tilt`, `Price`, `CoreCharge`) Values 
+(1, "CHRYSLER", "300M", "99-00", "Floor", "Manual", "Tilt", 325, 150),
+(1, "Chrysler", "300M", "01-02", "Floor", "Manual", "Tilt", 325, 150),
+(1, "American Motors", "Ambassador", "70", "Floor", "Manual", "Tilt", 325, 150),
+(1, "American Motors", "Ambassador", "70", "Floor", "Manual", "Fixed", 325, 150),
+(1, "American Motors", "Ambassador", "70", "Floor", "Automatic", "Tilt", 325, 150),
+(1, "American Motors", "Ambassador", "70", "Floor", "Automatic", "Fixed", 325, 150);
 
 

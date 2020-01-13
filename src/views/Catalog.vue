@@ -1,12 +1,12 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-actions>
-        <v-breadcrumbs divider="/" :items="questions">
+      <v-card-actions class="primary" >
+        <v-breadcrumbs divider="/" :items="questions" class='pa-0' dark>
           <template #item="props">
-            <v-breadcrumbs-item @click="goto(props.item.text)">
+            <v-btn small text dark @click="goto(props.item.text)">
               {{props.item.text}}
-            </v-breadcrumbs-item>
+            </v-btn>
           </template>
         </v-breadcrumbs>
       </v-card-actions>
@@ -20,6 +20,9 @@
       </v-card-actions>
       <v-list two-line>
         <v-list-item v-for='product in searchResults' :key='product.CatalogId' @click="toProductPage(product)">
+          <v-list-item-avatar>
+            <v-img :src="product.Image || fallbackImage"></v-img>
+          </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>{{product.Manufacturer}} {{product.Model}}</v-list-item-title>
             <v-list-item-subtitle>{{product.Year}} {{product.Shift}} {{product.Transmission}} {{product.Tilt}}</v-list-item-subtitle>
@@ -36,6 +39,7 @@ export default {
   data () {
     // manufacturer make model(year)
     return {
+      fallbackImage: require('../assets/steering_column.svg'),
       questions: [
         {
           text: 'Manufacturer',
@@ -100,7 +104,6 @@ export default {
       })
     },
     toProductPage (product) {
-      console.log(product)
       this.$router.push('/part/' + product.ProductInformationId)
     },
     setQuestion () {

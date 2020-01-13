@@ -36,8 +36,8 @@ export default (app, http) => {
   })
 
   app.get('/part', (req, response) => {
-    sql.query('SELECT Title, DescriptionHTML FROM ProductInformation WHERE ProductInformationId=? LIMIT 1', req.query.id, function (error, result) {
-      console.log(this.sql) 
+    sql.query('SELECT * FROM Catalog LEFT JOIN ProductInformation USING(ProductInformationId) WHERE Catalog.ProductInformationId=? LIMIT 1', req.query.id, function (error, result) {
+      console.log(this.sql)
       if (error) {
         console.log(error)
         return
