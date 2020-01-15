@@ -1,31 +1,33 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-actions class="primary" >
+      <v-card-actions class="primary">
         <!-- <v-breadcrumbs divider="/" :items="questions" class='pa-0' dark>
           <template #item="props">
           </template>
-        </v-breadcrumbs> -->
-        <v-row align='baseline' no-gutters>
-          <template v-for='(item, i) in questions'>
-            <v-btn :disabled='!item.selected' small text dark @click="goto(i)">
-              {{item.text}}
-            </v-btn>
-            <div v-if='i != questions.length - 1' class='white--text mx-3'>/</div>
+        </v-breadcrumbs>-->
+        <v-row align="baseline" no-gutters>
+          <template v-for="(item, i) in questions">
+            <v-btn :disabled="!item.selected" small text dark @click="goto(i)">{{item.text}}</v-btn>
+            <div v-if="i != questions.length - 1" class="white--text mx-3">/</div>
           </template>
         </v-row>
       </v-card-actions>
       <v-card-actions>
         <v-select
-          v-if='questions.length !== 0'
+          v-if="questions.length !== 0"
           :items="question.options"
-          v-model='question.selected'
-          @change='setQuestion()'
-          :label="question.text">
-        </v-select>
+          v-model="question.selected"
+          @change="changeSelection()"
+          :label="question.text"
+        ></v-select>
       </v-card-actions>
       <v-list two-line>
-        <v-list-item v-for='product in searchResults' :key='product.CatalogId' @click="toProductPage(product)">
+        <v-list-item
+          v-for="product in searchResults"
+          :key="product.CatalogId"
+          @click="toProductPage(product)"
+        >
           <v-list-item-avatar>
             <v-img :src="product.Image || fallbackImage"></v-img>
           </v-list-item-avatar>
@@ -37,10 +39,7 @@
       </v-list>
     </v-card>
     <div class="text-center py-5">
-      <v-pagination
-        v-model="page"
-        :length="maxPage"
-      ></v-pagination>
+      <v-pagination @input="fetchList()" total-visible v-model="page" :length="maxPage"></v-pagination>
     </div>
   </v-container>
 </template>
@@ -83,7 +82,9 @@ export default {
   },
   computed: {
     question () {
-      return this.questions.length ? this.questions[this.questions.length - 1] : null
+      return this.questions.length
+        ? this.questions[this.questions.length - 1]
+        : null
     }
   },
   methods: {
@@ -95,7 +96,7 @@ export default {
     fetchList () {
       let values = {}
       for (const obj of this.questions) {
-        values[obj.text] = obj.selected
+        values[obj.text] = obj.selected || null
       }
       console.log(values)
       fetch('http://localhost:3000/catalog', {
@@ -103,13 +104,18 @@ export default {
         body: JSON.stringify({ query: values, page: this.page }),
         headers: {
           'Content-Type': 'application/json'
-        } }).then(response => {
+        }
+      }).then(response => {
         if (response.status === 200) {
           response.json().then(data => {
             console.log(data)
             this.searchResults = data.result
+            this.maxPage = data.maxPage
             if (data.nextQuestion) {
-              this.questions.push({ text: data.nextQuestion, options: data.options })
+              this.questions.push({
+                text: data.nextQuestion,
+                options: data.options
+              })
             }
           })
         }
@@ -118,7 +124,8 @@ export default {
     toProductPage (product) {
       this.$router.push('/part/' + product.ProductInformationId)
     },
-    setQuestion () {
+    changeSelection () {
+      this.page = 1
       this.fetchList()
     }
   },
@@ -129,5 +136,4 @@ export default {
 </script>
 
 <style>
-
 </style>

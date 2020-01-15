@@ -43,62 +43,86 @@ export default (app, http) => {
     })
   })
 
+  const MAX_RESULTS = 2
+
+  function catalogQuestion (idx, whereString, fn) {
+    // get the next question to ask
+    if (idx >= catalogQueries.length) {
+      return fn({})
+    }
+    let field = catalogQueries[idx]
+    sql.query('SELECT DISTINCT ' + field + ' FROM catalog ' + (whereString ? ('WHERE ' + whereString) : ''), (error, result) => {
+      if (error) {
+        console.log(error)
+        return fn({})
+      }
+      // console.log('field: ', field, 'options: ', result)
+      let options = []
+      for (let obj of result) {
+        options.push(obj[field])
+      }
+      if (options.length > 1) {
+        console.log('Next Question: ', field)
+        fn({
+          nextQuestion: field,
+          options: options
+        })
+      } else {
+        return catalogQuestion(idx + 1, whereString, fn)
+      }
+    })
+  }
+
+  function catalogQuery (page, whereString, fn) {
+    sql.query('SELECT * FROM catalog' + (whereString ? (' WHERE ' + whereString) : '') + ' ORDER BY CatalogId LIMIT ?, ?', [(page - 1) * MAX_RESULTS, MAX_RESULTS], function (error, result) {
+      console.log(this.sql)
+      if (error) {
+        console.log(error)
+        return fn({})
+      }
+      fn({ result: result })
+      // console.log('result: ', result)
+    })
+  }
+
+  function catalogSizeQuery (whereString, fn) {
+    sql.query('SELECT COUNT(*) as count FROM catalog' + (whereString ? (' WHERE ' + whereString) : ''), function (error, result) {
+      console.log(this.sql)
+      if (error) {
+        console.log(error)
+        return fn({})
+      }
+      result = Math.ceil(result[0].count / MAX_RESULTS)
+      fn({ maxPage: result })
+      // console.log('result: ', result)
+    })
+  }
+
   app.post('/catalog', (req, response) => {
     let filter = req.body.query
     let page = req.body.page
     console.log('Request Search', filter)
     let noNextQuestion = false
+    // Question with null answer means no next question
     for (const k in filter) {
-      if (filter[k] === null) {
+      if (filter[k] === null || filter[k] === undefined) {
         noNextQuestion = true
         delete filter[k]
       }
     }
     let whereString = objectToWhereValues(filter)
-    sql.query('SELECT * FROM catalog' + (whereString ? (' WHERE ' + whereString) : '') + ' ORDER BY CatalogId LIMIT ?, ?', [(page - 1) * 10, page * 10], function (error, result) {
-      console.log(this.sql)
-      if (error) {
-        console.log(error)
-        return
-      }
-      // console.log('result: ', result)
-      // now get the next question to ask
-      function nextOptions (idx) {
-        if (idx >= catalogQueries.length) {
-          return response.json({
-            result: result
-          })
-        }
-        let field = catalogQueries[idx]
-        sql.query('SELECT DISTINCT ' + field + ' FROM catalog ' + (whereString ? ('WHERE ' + whereString) : ''), (error, result2) => {
-          if (error) {
-            console.log(error)
-            return
-          }
-          console.log('field: ', field, 'options: ', result2)
-          let options = []
-          for (let obj of result2) {
-            options.push(obj[field])
-          }
-          if (options.length > 1) {
-            console.log('Next Question: ', field)
-            return response.json({
-              nextQuestion: field,
-              options: options,
-              result: result
-            })
-          } else {
-            return nextOptions(idx + 1)
-          }
+    let payload = {}
+    catalogSizeQuery(whereString, (pages) => {
+      payload = Object.assign(payload, pages)
+      catalogQuery(page, whereString, (result) => {
+        payload = Object.assign(payload, result)
+        if (noNextQuestion) return response.json(payload)
+        catalogQuestion(0, whereString, (data) => {
+          payload = Object.assign(payload, data)
+          return response.json(payload)
         })
-      }
-      if (noNextQuestion) {
-        // Question with null answer means no next question
-        return response.json({
-          result: result
-        })
-      }
-      nextOptions(0)
+      })
     })
+    
   })
 }
