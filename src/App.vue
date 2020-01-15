@@ -43,7 +43,9 @@
 
       </v-col>
 
-      <router-view></router-view>
+      <v-container fluid class="py-5">
+        <router-view></router-view>
+      </v-container>
 
     </v-content>
 
@@ -122,7 +124,7 @@
 
 <style>
 .v-content__wrap {
-  min-height:100vh
+  min-height: 100vh;
 }
 </style>
 

@@ -18,18 +18,15 @@ export default (app, http) => {
   app.use(cors({ origin: 'http://localhost:8080' }))
   app.use(express.json())
 
-  let catalogQueries = []
-  sql.query('SHOW COLUMNS FROM catalog', (error, result) => {
-    if (error) {
-      throw error
-    } else {
-      for (let obj of result) {
-        if (obj.Key === '') {
-          catalogQueries.push(obj.Field)
-        }
-      }
-    }
-  })
+  let catalogQueries = [
+    'Manufacturer',
+    'Model',
+    'Year',
+    'Shift',
+    'Transmission',
+    'Tilt',
+    'AdditionalOptions'
+  ]
 
   app.get('/ping', (req, response) => {
     response.json({ msg: 'pong' })
@@ -47,9 +44,18 @@ export default (app, http) => {
   })
 
   app.post('/catalog', (req, response) => {
-    let filter = req.body
+    let filter = req.body.query
+    let page = req.body.page
     console.log('Request Search', filter)
-    sql.query('SELECT * FROM catalog WHERE ' + objectToWhereValues(filter) + ' LIMIT 10', function (error, result) {
+    let noNextQuestion = false
+    for (const k in filter) {
+      if (filter[k] === null) {
+        noNextQuestion = true
+        delete filter[k]
+      }
+    }
+    let whereString = objectToWhereValues(filter)
+    sql.query('SELECT * FROM catalog' + (whereString ? (' WHERE ' + whereString) : '') + ' ORDER BY CatalogId LIMIT ?, ?', [(page - 1) * 10, page * 10], function (error, result) {
       console.log(this.sql)
       if (error) {
         console.log(error)
@@ -64,7 +70,7 @@ export default (app, http) => {
           })
         }
         let field = catalogQueries[idx]
-        sql.query('SELECT DISTINCT ' + field + ' FROM catalog WHERE ' + objectToWhereValues(filter), (error, result2) => {
+        sql.query('SELECT DISTINCT ' + field + ' FROM catalog ' + (whereString ? ('WHERE ' + whereString) : ''), (error, result2) => {
           if (error) {
             console.log(error)
             return
@@ -84,6 +90,12 @@ export default (app, http) => {
           } else {
             return nextOptions(idx + 1)
           }
+        })
+      }
+      if (noNextQuestion) {
+        // Question with null answer means no next question
+        return response.json({
+          result: result
         })
       }
       nextOptions(0)

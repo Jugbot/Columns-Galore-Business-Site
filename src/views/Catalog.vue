@@ -2,16 +2,22 @@
   <v-container>
     <v-card>
       <v-card-actions class="primary" >
-        <v-breadcrumbs divider="/" :items="questions" class='pa-0' dark>
+        <!-- <v-breadcrumbs divider="/" :items="questions" class='pa-0' dark>
           <template #item="props">
-            <v-btn small text dark @click="goto(props.item.text)">
-              {{props.item.text}}
-            </v-btn>
           </template>
-        </v-breadcrumbs>
+        </v-breadcrumbs> -->
+        <v-row align='baseline' no-gutters>
+          <template v-for='(item, i) in questions'>
+            <v-btn :disabled='!item.selected' small text dark @click="goto(i)">
+              {{item.text}}
+            </v-btn>
+            <div v-if='i != questions.length - 1' class='white--text mx-3'>/</div>
+          </template>
+        </v-row>
       </v-card-actions>
       <v-card-actions>
         <v-select
+          v-if='questions.length !== 0'
           :items="question.options"
           v-model='question.selected'
           @change='setQuestion()'
@@ -30,6 +36,12 @@
         </v-list-item>
       </v-list>
     </v-card>
+    <div class="text-center py-5">
+      <v-pagination
+        v-model="page"
+        :length="maxPage"
+      ></v-pagination>
+    </div>
   </v-container>
 </template>
 
@@ -41,44 +53,43 @@ export default {
     return {
       fallbackImage: require('../assets/steering_column.svg'),
       questions: [
-        {
-          text: 'Manufacturer',
-          options: [
-            'Jeep',
-            'Ford',
-            'Chevy & GMC',
-            'American Motors'
-          ],
-          selected: null
-        }
+        // {
+        //   text: 'Manufacturer',
+        //   options: [
+        //     'Jeep',
+        //     'Ford',
+        //     'Chevy & GMC',
+        //     'American Motors'
+        //   ],
+        //   selected: null
+        // }
       ],
       searchResults: [
-        /* {
-          CatalogId: 6,
-          InventoryId: 'someID',
-          Manufacturer: 'American Motors',
-          Model: 'Ambassador',
-          Year: '70',
-          Shift: 'Floor',
-          Transmission: 'Automatic',
-          Tilt: 'Fixed',
-          AdditionalOptions: null
-        } */
-      ]
+        // {
+        //   CatalogId: 6,
+        //   InventoryId: 'someID',
+        //   Manufacturer: 'American Motors',
+        //   Model: 'Ambassador',
+        //   Year: '70',
+        //   Shift: 'Floor',
+        //   Transmission: 'Automatic',
+        //   Tilt: 'Fixed',
+        //   AdditionalOptions: null
+        // }
+      ],
+      page: 1,
+      maxPage: 1
     }
   },
   computed: {
     question () {
-      return this.questions[this.questions.length - 1]
+      return this.questions.length ? this.questions[this.questions.length - 1] : null
     }
   },
   methods: {
-    goto (name) {
-      this.questions = this.questions.slice(0,
-        this.questions.findIndex(
-          (o) => { return o.text === name }
-        ) - 1
-      )
+    goto (idx) {
+      this.questions[idx].selected = null
+      this.questions = this.questions.slice(0, idx + 1)
       this.fetchList()
     },
     fetchList () {
@@ -86,9 +97,10 @@ export default {
       for (const obj of this.questions) {
         values[obj.text] = obj.selected
       }
+      console.log(values)
       fetch('http://localhost:3000/catalog', {
         method: 'POST',
-        body: JSON.stringify(values),
+        body: JSON.stringify({ query: values, page: this.page }),
         headers: {
           'Content-Type': 'application/json'
         } }).then(response => {
@@ -107,9 +119,11 @@ export default {
       this.$router.push('/part/' + product.ProductInformationId)
     },
     setQuestion () {
-      this.$route.query[this.question.text] = this.question.selected
       this.fetchList()
     }
+  },
+  mounted () {
+    this.fetchList()
   }
 }
 </script>
