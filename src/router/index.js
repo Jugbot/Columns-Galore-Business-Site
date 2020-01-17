@@ -20,6 +20,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "catalog" */ '../views/Catalog.vue')
   },
   {
+    path: '/rebuiltcolumns',
+    name: 'rebuiltcolumns',
+    component: () => import(/* webpackChunkName: "rebuiltcolumns" */ '../views/RebuiltColumns.vue')
+  },
+  {
     path: '/part/:id',
     component: () => import(/* webpackChunkName: "part information" */ '../views/PartInformation.vue')
   }

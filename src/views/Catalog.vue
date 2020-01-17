@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: 'Catalog',
+  name: 'catalog',
   data () {
     // manufacturer make model(year)
     return {
