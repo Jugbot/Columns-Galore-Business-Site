@@ -122,14 +122,14 @@ export default {
       })
     },
     toProductPage (product) {
-      this.$router.push('/part/' + product.ProductInformationId)
+      this.$router.push('/part/' + product.CatalogId)
     },
     changeSelection () {
       this.page = 1
       this.fetchList()
     }
   },
-  mounted () {
+  created () {
     this.fetchList()
   }
 }

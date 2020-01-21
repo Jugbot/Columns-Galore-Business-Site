@@ -33,7 +33,7 @@ export default (app, http) => {
   })
 
   app.get('/part', (req, response) => {
-    sql.query('SELECT * FROM Catalog LEFT JOIN ProductInformation USING(ProductInformationId) WHERE Catalog.ProductInformationId=? LIMIT 1', req.query.id, function (error, result) {
+    sql.query('SELECT * FROM Catalog LEFT JOIN ProductInformation USING(ProductInformationId) WHERE Catalog.CatalogId=? LIMIT 1', req.query.id, function (error, result) {
       console.log(this.sql)
       if (error) {
         console.log(error)
@@ -43,7 +43,7 @@ export default (app, http) => {
     })
   })
 
-  const MAX_RESULTS = 2
+  const MAX_RESULTS = 5
 
   function catalogQuestion (idx, whereString, fn) {
     // get the next question to ask
@@ -97,6 +97,17 @@ export default (app, http) => {
       // console.log('result: ', result)
     })
   }
+
+  app.get('/catalog', (req, response) => {
+    sql.query('SELECT * FROM Catalog WHERE Catalog.CatalogId=? LIMIT 1', req.query.id, function (error, result) {
+      console.log(this.sql)
+      if (error) {
+        console.log(error)
+        return
+      }
+      response.json(result[0])
+    })
+  })
 
   app.post('/catalog', (req, response) => {
     let filter = req.body.query

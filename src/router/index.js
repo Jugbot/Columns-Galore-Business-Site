@@ -25,8 +25,32 @@ const routes = [
     component: () => import(/* webpackChunkName: "rebuiltcolumns" */ '../views/RebuiltColumns.vue')
   },
   {
+    path: '/columnparts',
+    name: 'columnparts',
+    component: () => import(/* webpackChunkName: "columnparts" */ '../views/ColumnParts.vue')
+  },
+  {
+    path: '/coloroptions',
+    name: 'coloroptions',
+    component: () => import(/* webpackChunkName: "coloroptions" */ '../views/ColorOptions.vue')
+  },
+  {
+    path: '/techsupport',
+    name: 'techsupport',
+    component: () => import(/* webpackChunkName: "techsupport" */ '../views/TechSupport.vue')
+  },
+  {
+    path: '/payment',
+    name: 'payment',
+    component: () => import(/* webpackChunkName: "payment" */ '../views/Payment.vue')
+  },
+  {
     path: '/part/:id',
-    component: () => import(/* webpackChunkName: "part information" */ '../views/PartInformation.vue')
+    component: () => import(/* webpackChunkName: "partinformation" */ '../views/PartInformation.vue')
+  },
+  {
+    path: '/quote',
+    component: () => import(/* webpackChunkName: "quoteform" */ '../views/Quote.vue')
   }
 ]
 

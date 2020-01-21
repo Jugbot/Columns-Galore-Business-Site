@@ -57,7 +57,7 @@
     <v-footer app absolute color="white">
       <v-container>
         <v-row justify="space-between">
-          <v-col sm="12" md="auto" class='grow'>
+          <v-col cols="12" md="auto" class='grow'>
             <v-card outlined class="pa-3 fill-height">
               <v-card-title>Phone</v-card-title>
               <v-card-text style>
@@ -68,7 +68,7 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col sm="12" md="auto" class='grow'>
+          <v-col cols="12" md="auto" class='grow'>
             <v-card outlined class="pa-3 fill-height">
               <v-card-title>Shipping & Mailing</v-card-title>
               <v-card-text>
@@ -78,7 +78,7 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col sm="12" md="auto" class='grow'>
+          <v-col cols="12" md="auto" class='grow'>
             <v-card outlined class="pa-3 fill-height">
               <v-card-title>Email</v-card-title>
               <v-card-text>
@@ -91,7 +91,7 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col sm="12" md="auto" class='grow'>
+          <v-col cols="12" md="auto" class='grow'>
             <v-card outlined class="pa-3 fill-height">
               <v-card-title>Hours of Operation (EST)</v-card-title>
               <v-card-text>
@@ -107,7 +107,7 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col sm="12" md="auto" class="grow">
+          <v-col cols="12" md="auto" class="grow">
             <v-card outlined class='fill-height grow'>
               <v-card-actions class='pa-0'>
                 <iframe
@@ -143,15 +143,16 @@ export default {
     pages: {
       primary: [
         { name: 'Home', page: '/' },
-        { name: 'Catalog', page: 'Catalog' },
-        { name: 'Rebuilt Columns', page: 'RebuiltColumns' },
-        { name: 'Column Parts', page: 'ColumnParts' }
+        { name: 'Catalog', page: 'catalog' },
+        { name: 'Quote', page: 'quote' },
+        { name: 'Rebuilt Columns', page: 'rebuiltcolumns' },
+        { name: 'Column Parts', page: 'columnparts' }
       ],
       secondary: [
-        { name: 'About', page: 'About' },
-        { name: 'Tech Support', page: 'TechSupport' },
-        { name: 'Color Options', page: 'ColorOptions' },
-        { name: 'Payment', page: 'Payment' }
+        { name: 'Tech Support', page: 'techsupport' },
+        { name: 'Color Options', page: 'coloroptions' },
+        { name: 'Payment', page: 'payment' },
+        { name: 'About', page: 'about' }
       ]
     },
     phoneNumbers: [
