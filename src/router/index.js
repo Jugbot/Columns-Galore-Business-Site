@@ -51,11 +51,15 @@ const routes = [
   {
     path: '/quote',
     component: () => import(/* webpackChunkName: "quoteform" */ '../views/Quote.vue')
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ]
 
 const router = new VueRouter({
-  // mode: 'history',
+  mode: 'history',
   routes
 })
 

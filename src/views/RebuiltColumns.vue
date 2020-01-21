@@ -25,6 +25,6 @@
 
 <script>
 export default {
-  name: "rebuiltcolumns"
-};
+  name: 'rebuiltcolumns'
+}
 </script>

@@ -1,3 +1,4 @@
+
 module.exports = {
   'transpileDependencies': [
     'vuetify'
@@ -9,6 +10,22 @@ module.exports = {
     express: {
       shouldServeApp: true,
       serverDir: './srv'
+    },
+    prerenderSpa: {
+      registry: undefined,
+      renderRoutes: [ '/',
+        '/about',
+        '/catalog',
+        '/rebuiltcolumns',
+        '/columnparts',
+        '/coloroptions',
+        '/techsupport',
+        '/payment',
+        '/part/1',
+        '/quote' ],
+      useRenderEvent: true,
+      headless: true,
+      onlyProduction: true
     }
   }
 }

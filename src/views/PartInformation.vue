@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-img :src='part.Image || fallbackImage' 
+      <v-img :src='part.Image || fallbackImage'
       class="img-expand hidden-md-and-up"
       @click='imageClicked=!imageClicked'
       :style="{'max-height':imageClicked?'500px':null}"></v-img>
@@ -11,7 +11,7 @@
       </v-card-subtitle>
       <v-card-text>
         <!-- generated content -->
-        <v-img :src='part.Image || fallbackImage' class="float-right hidden-sm-and-down" 
+        <v-img :src='part.Image || fallbackImage' class="float-right hidden-sm-and-down"
         style="" width='200'></v-img>
         <span v-html="part.DescriptionHTML"></span>
       </v-card-text>
