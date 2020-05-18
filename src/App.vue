@@ -137,22 +137,26 @@
 export default {
   name: 'App',
 
+  metaInfo: {
+
+  },
+
   components: {},
 
   data: () => ({
     pages: {
       primary: [
         { name: 'Home', page: '/' },
-        { name: 'Catalog', page: 'catalog' },
-        { name: 'Quote', page: 'quote' },
-        { name: 'Rebuilt Columns', page: 'rebuiltcolumns' },
-        { name: 'Column Parts', page: 'columnparts' }
+        { name: 'Catalog', page: '/catalog' },
+        { name: 'Quote', page: '/quote' },
+        { name: 'Rebuilt Columns', page: '/rebuiltcolumns' },
+        { name: 'Column Parts', page: '/columnparts' }
       ],
       secondary: [
-        { name: 'Tech Support', page: 'techsupport' },
-        { name: 'Color Options', page: 'coloroptions' },
-        { name: 'Payment', page: 'payment' },
-        { name: 'About', page: 'about' }
+        { name: 'Tech Support', page: '/techsupport' },
+        { name: 'Color Options', page: '/coloroptions' },
+        { name: 'Payment', page: '/payment' },
+        { name: 'About', page: '/about' }
       ]
     },
     phoneNumbers: [

@@ -1,0 +1,8 @@
+Split description 3 categories (str id)
+Core charge description
+SEO
+assets
+header
+mobile nav
+upload data to server (Rick)
+part number (str)

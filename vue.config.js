@@ -13,7 +13,8 @@ module.exports = {
     },
     prerenderSpa: {
       registry: undefined,
-      renderRoutes: [ '/',
+      renderRoutes: [
+        '/',
         '/about',
         '/catalog',
         '/rebuiltcolumns',
@@ -22,7 +23,8 @@ module.exports = {
         '/techsupport',
         '/payment',
         '/part/1',
-        '/quote' ],
+        '/quote'
+      ],
       useRenderEvent: true,
       headless: true,
       onlyProduction: true
