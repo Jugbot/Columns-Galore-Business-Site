@@ -46,15 +46,19 @@ const staticRoutes = [
   }
 ]
 
+const MAX_PART_ID = 5
+
 const dynamicRoutes = [
-  ...staticRoutes,
   {
     path: '/part/:id',
-    component: () => import(/* webpackChunkName: "partinformation" */ '../views/PartInformation.vue')
-  },
-  {
-    path: '*',
-    redirect: '/'
+    component: () => import(/* webpackChunkName: "partinformation" */ '../views/PartInformation.vue'),
+    meta: {
+      // special code for including part urls in the sitemap
+      sitemap: {
+        priority: 0.1,
+        slugs: [...Array(MAX_PART_ID).keys()]
+      }
+    }
   }
 ]
 

@@ -138,7 +138,8 @@ export default {
   name: 'App',
 
   metaInfo: {
-
+    title: 'Steering Columns Galore',
+    meta: ''
   },
 
   components: {},

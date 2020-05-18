@@ -3,7 +3,14 @@ import VueRouter from 'vue-router'
 import Meta from 'vue-meta'
 
 const { staticRoutes, dynamicRoutes } = require('./routes')
-const routes = [...staticRoutes, ...dynamicRoutes]
+const routes = [
+  ...staticRoutes,
+  ...dynamicRoutes,
+  {
+    path: '*',
+    redirect: '/'
+  }
+]
 
 Vue.use(VueRouter)
 Vue.use(Meta, {
