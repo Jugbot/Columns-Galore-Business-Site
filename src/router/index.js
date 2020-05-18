@@ -1,62 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Meta from 'vue-meta'
+
+const { staticRoutes, dynamicRoutes } = require('./routes')
+const routes = [...staticRoutes, ...dynamicRoutes]
 
 Vue.use(VueRouter)
-
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
-    path: '/catalog',
-    name: 'catalog',
-    component: () => import(/* webpackChunkName: "catalog" */ '../views/Catalog.vue')
-  },
-  {
-    path: '/rebuiltcolumns',
-    name: 'rebuiltcolumns',
-    component: () => import(/* webpackChunkName: "rebuiltcolumns" */ '../views/RebuiltColumns.vue')
-  },
-  {
-    path: '/columnparts',
-    name: 'columnparts',
-    component: () => import(/* webpackChunkName: "columnparts" */ '../views/ColumnParts.vue')
-  },
-  {
-    path: '/coloroptions',
-    name: 'coloroptions',
-    component: () => import(/* webpackChunkName: "coloroptions" */ '../views/ColorOptions.vue')
-  },
-  {
-    path: '/techsupport',
-    name: 'techsupport',
-    component: () => import(/* webpackChunkName: "techsupport" */ '../views/TechSupport.vue')
-  },
-  {
-    path: '/payment',
-    name: 'payment',
-    component: () => import(/* webpackChunkName: "payment" */ '../views/Payment.vue')
-  },
-  {
-    path: '/part/:id',
-    component: () => import(/* webpackChunkName: "partinformation" */ '../views/PartInformation.vue')
-  },
-  {
-    path: '/quote',
-    component: () => import(/* webpackChunkName: "quoteform" */ '../views/Quote.vue')
-  },
-  {
-    path: '*',
-    redirect: '/'
-  }
-]
+Vue.use(Meta, {
+  keyName: 'metaInfo',
+  attribute: 'data-vue-meta',
+  ssrAttribute: 'data-vue-meta-server-rendered',
+  tagIDKeyName: 'vmid',
+  refreshOnceOnNavigation: true
+})
 
 const router = new VueRouter({
   mode: 'history',
