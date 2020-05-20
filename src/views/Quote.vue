@@ -113,6 +113,9 @@ import colors from '@/colors'
 
 export default {
   name: 'quote',
+  metaInfo: {
+    title: 'Get A Quote'
+  },
   data () {
     return {
       colors: colors,

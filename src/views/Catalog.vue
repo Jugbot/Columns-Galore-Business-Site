@@ -47,6 +47,9 @@
 <script>
 export default {
   name: 'catalog',
+  metaInfo: {
+    title: 'Catalog'
+  },
   data () {
     // manufacturer make model(year)
     return {

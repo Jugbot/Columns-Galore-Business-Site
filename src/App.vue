@@ -138,8 +138,10 @@ export default {
   name: 'App',
 
   metaInfo: {
-    title: 'Steering Columns Galore',
-    meta: ''
+    titleTemplate: '%s | Steering Columns Galore',
+    meta: [
+      { name: 'description', content: 'Steering columns for American cars and trucks from 1967 and up' }
+    ]
   },
 
   components: {},

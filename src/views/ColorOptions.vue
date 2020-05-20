@@ -40,6 +40,9 @@ import colors from '@/colors'
 
 export default {
   name: 'coloroptions',
+  metaInfo: {
+    title: 'Color Options'
+  },
   data () {
     return {
       colors: colors

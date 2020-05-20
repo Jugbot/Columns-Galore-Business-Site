@@ -18,6 +18,9 @@
 
 <script>
 export default {
-  name: 'payment'
+  name: 'payment',
+  metaInfo: {
+    title: 'Payment Information'
+  }
 }
 </script>

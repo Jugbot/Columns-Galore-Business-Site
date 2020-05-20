@@ -54,6 +54,10 @@
 <script>
 export default {
   name: 'home',
-  components: {}
+  components: {},
+  metaInfo: {
+    title: 'Steering Columns Galore',
+    titleTemplate: '%s'
+  }
 }
 </script>

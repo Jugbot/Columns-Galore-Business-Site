@@ -23,6 +23,9 @@
 
 <script>
 export default {
-  name: 'techsupport'
+  name: 'techsupport',
+  metaInfo: {
+    title: 'Technical Support'
+  }
 }
 </script>

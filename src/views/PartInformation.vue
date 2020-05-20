@@ -25,6 +25,9 @@
 <script>
 export default {
   name: 'InventoryId',
+  metaInfo: {
+    title: 'Part Information'
+  },
   data () {
     return {
       imageClicked: false,
