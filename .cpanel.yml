@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/columnsg/new.columnsgalore.com/
+    - export DEPLOYPATH=/home/columnsg/public_html/new
     - /bin/cp dist/* $DEPLOYPATH
