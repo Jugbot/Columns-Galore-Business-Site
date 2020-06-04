@@ -26,5 +26,7 @@ module.exports = {
       headless: true,
       onlyProduction: true
     }
-  }
+  },
+
+  publicPath: '/new/'
 }
