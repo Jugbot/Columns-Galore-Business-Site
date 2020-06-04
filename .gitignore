@@ -1,6 +1,5 @@
 .DS_Store
 node_modules
-/dist
 
 # local env files
 .env.local
@@ -20,3 +19,5 @@ yarn-error.log*
 *.sln
 *.sw?
 *.log
+TODO.txt
+desktop.ini

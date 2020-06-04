@@ -1,4 +1,4 @@
-Split description 3 categories (str id)
+
 Core charge description
 SEO
 assets
@@ -6,3 +6,12 @@ header
 mobile nav
 upload data to server (Rick)
 part number (str)
+
+Text size
+Split description 3 categories (str id)
+import data
+logo?
+color scheme
+Make interactions obvious (highlight search field)
+Get rid of list
+get rid of parts page
