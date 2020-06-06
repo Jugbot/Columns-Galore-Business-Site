@@ -4,7 +4,7 @@
   "description": "Columnsgalore express server",
   "main": "app.js",
   "scripts": {
-    "start": "node -r esm app.js"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
