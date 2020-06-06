@@ -1,6 +1,7 @@
 import express from 'express'
 import sql from './mysql'
 import cors from 'cors'
+import httpServer from 'http'
 
 function objectToWhereValues (object) {
   var sqlString = ''
@@ -14,7 +15,7 @@ function objectToWhereValues (object) {
   return sqlString
 };
 
-export default (app, http) => {
+function server(app, http) {
   app.use(cors({ origin: 'http://localhost:8080' }))
   app.use(express.json())
 
@@ -136,4 +137,11 @@ export default (app, http) => {
     })
     
   })
+  
+  app.listen(3000, () => console.log(`Example app listening at http://localhost:3000`))
 }
+
+const app = express()
+const http = httpServer.Server(app)
+
+server(app, http)
