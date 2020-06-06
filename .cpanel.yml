@@ -3,5 +3,5 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/columnsg/public_html/new/
     - /bin/cp -R dist/* $DEPLOYPATH
-    - /bin/cd srv
+    - cd srv
     - npm install
