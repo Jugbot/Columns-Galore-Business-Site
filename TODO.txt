@@ -15,3 +15,4 @@ color scheme
 Make interactions obvious (highlight search field)
 Get rid of list
 get rid of parts page
+google search console

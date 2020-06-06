@@ -1,0 +1,16 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Columnsgalore express server",
+  "main": "app.js",
+  "scripts": {
+    "start": "node -r esm app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  }
+}
