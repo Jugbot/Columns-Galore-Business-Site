@@ -16,7 +16,7 @@ function objectToWhereValues (object) {
 };
 
 function server (app, http) {
-  app.use(cors({ origin: ['http://localhost:8080', /columnsgalore\.com$/] }))
+  app.use(cors({ origin: /columnsgalore\.com$/ }))
   app.use(express.json())
 
   let catalogQueries = [
