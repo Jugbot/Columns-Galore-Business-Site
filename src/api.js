@@ -1,6 +1,6 @@
 var BASE_URL = 'http://localhost:3000/api'
 if (process.env.NODE_ENV === 'production') {
-  BASE_URL = 'http://columnsgalore.com:3000/api'
+  BASE_URL = 'http://columnsgalore.com/api'
 }
 
 const api = {
