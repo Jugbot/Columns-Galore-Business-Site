@@ -16,7 +16,7 @@ function objectToWhereValues (object) {
 };
 
 function server (app, http) {
-  app.use(cors({ origin: /columnsgalore\.com$/ }))
+  app.use(cors({ origin: ['http://localhost:8080', /columnsgalore\.com$/] }))
   app.use(express.json())
 
   let catalogQueries = [
@@ -29,11 +29,11 @@ function server (app, http) {
     'AdditionalOptions'
   ]
 
-  app.get('/ping', (req, response) => {
+  app.get('/api/ping', (req, response) => {
     response.json({ msg: 'pong' })
   })
 
-  app.get('/part', (req, response) => {
+  app.get('/api/part', (req, response) => {
     sql.query('SELECT * FROM Catalog LEFT JOIN ProductInformation USING(ProductInformationId) WHERE Catalog.CatalogId=? LIMIT 1', req.query.id, function (error, result) {
       console.log(this.sql)
       if (error) {
@@ -99,7 +99,7 @@ function server (app, http) {
     })
   }
 
-  app.get('/catalog', (req, response) => {
+  app.get('/api/catalog', (req, response) => {
     sql.query('SELECT * FROM Catalog WHERE Catalog.CatalogId=? LIMIT 1', req.body.query.id, function (error, result) {
       console.log(this.sql)
       if (error) {
@@ -110,7 +110,7 @@ function server (app, http) {
     })
   })
 
-  app.post('/catalog', (req, response) => {
+  app.post('/api/catalog', (req, response) => {
     let filter = req.body.query
     let page = req.body.page
     console.log('Request Search', filter)

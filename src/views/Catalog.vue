@@ -102,7 +102,7 @@ export default {
         values[obj.text] = obj.selected || null
       }
       console.log(values)
-      fetch('http://localhost:3000/catalog', {
+      fetch('/api/catalog', {
         method: 'POST',
         body: JSON.stringify({ query: values, page: this.page }),
         headers: {

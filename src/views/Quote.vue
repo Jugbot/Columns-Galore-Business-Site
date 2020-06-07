@@ -138,7 +138,7 @@ export default {
   },
   created () {
     if ('id' in this.$route.query) {
-      fetch('http://localhost:3000/catalog?id=' + this.$route.query.id).then(
+      fetch('/api/catalog?id=' + this.$route.query.id).then(
         response => {
           if (response.status === 200) {
             response.json().then(data => {

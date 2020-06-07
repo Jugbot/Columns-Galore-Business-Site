@@ -42,7 +42,7 @@ export default {
     }
   },
   created () {
-    fetch('http://localhost:3000/part?id=' + this.$route.params.id).then(response => {
+    fetch('/api/part?id=' + this.$route.params.id).then(response => {
       if (response.status === 200) {
         response.json().then(data => {
           console.log(data)
