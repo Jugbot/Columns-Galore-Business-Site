@@ -1,8 +1,9 @@
-CREATE DATABASE  IF NOT EXISTS `columnsgalore` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `columnsgalore`;
+
+CREATE DATABASE  IF NOT EXISTS `columnsg_database` ;
+USE `columnsg_database`;
 -- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
 --
--- Host: localhost    Database: columnsgalore
+-- Host: localhost    Database: columnsg_database
 -- ------------------------------------------------------
 -- Server version	8.0.18
 
@@ -43,7 +44,7 @@ CREATE TABLE `catalog` (
   KEY `ProductInformationId` (`ProductInformationId`),
   CONSTRAINT `catalog_ibfk_1` FOREIGN KEY (`InventoryId`) REFERENCES `inventory` (`InventoryId`),
   CONSTRAINT `catalog_ibfk_2` FOREIGN KEY (`ProductInformationId`) REFERENCES `productinformation` (`ProductInformationId`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,7 +58,7 @@ CREATE TABLE `inventory` (
   `InventoryId` int(11) NOT NULL AUTO_INCREMENT,
   `Qty` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`InventoryId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +74,7 @@ CREATE TABLE `productinformation` (
   `DescriptionHTML` text,
   `Notes` text,
   PRIMARY KEY (`ProductInformationId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
