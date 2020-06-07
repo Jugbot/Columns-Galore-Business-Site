@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import api from '@/api'
+
 export default {
   name: 'InventoryId',
   metaInfo: {
@@ -42,7 +44,7 @@ export default {
     }
   },
   created () {
-    fetch('/api/part?id=' + this.$route.params.id).then(response => {
+    api.getPart(this.$route.params.id).then(response => {
       if (response.status === 200) {
         response.json().then(data => {
           console.log(data)

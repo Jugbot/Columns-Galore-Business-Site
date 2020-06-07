@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import api from '@/api'
+
 export default {
   name: 'catalog',
   metaInfo: {
@@ -102,27 +104,22 @@ export default {
         values[obj.text] = obj.selected || null
       }
       console.log(values)
-      fetch('/api/catalog', {
-        method: 'POST',
-        body: JSON.stringify({ query: values, page: this.page }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(response => {
-        if (response.status === 200) {
-          response.json().then(data => {
-            console.log(data)
-            this.searchResults = data.result
-            this.maxPage = data.maxPage
-            if (data.nextQuestion) {
-              this.questions.push({
-                text: data.nextQuestion,
-                options: data.options
-              })
-            }
-          })
-        }
-      })
+      api.postCatalog(JSON.stringify({ query: values, page: this.page }))
+        .then(response => {
+          if (response.status === 200) {
+            response.json().then(data => {
+              console.log(data)
+              this.searchResults = data.result
+              this.maxPage = data.maxPage
+              if (data.nextQuestion) {
+                this.questions.push({
+                  text: data.nextQuestion,
+                  options: data.options
+                })
+              }
+            })
+          }
+        })
     },
     toProductPage (product) {
       this.$router.push('/part/' + product.CatalogId)

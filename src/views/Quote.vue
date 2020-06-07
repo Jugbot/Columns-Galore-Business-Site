@@ -110,6 +110,7 @@
 
 <script>
 import colors from '@/colors'
+import api from '@/api'
 
 export default {
   name: 'quote',
@@ -138,7 +139,8 @@ export default {
   },
   created () {
     if ('id' in this.$route.query) {
-      fetch('/api/catalog?id=' + this.$route.query.id).then(
+      console.log(this.$route.query)
+      api.getCatalog(this.$route.query.id).then(
         response => {
           if (response.status === 200) {
             response.json().then(data => {

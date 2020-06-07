@@ -3,6 +3,8 @@ import sql from './mysql'
 import cors from 'cors'
 import httpServer from 'http'
 
+const PORT = 3000
+
 function objectToWhereValues (object) {
   var sqlString = ''
   for (var key in object) {
@@ -100,7 +102,7 @@ function server (app, http) {
   }
 
   app.get('/api/catalog', (req, response) => {
-    sql.query('SELECT * FROM Catalog WHERE Catalog.CatalogId=? LIMIT 1', req.body.query.id, function (error, result) {
+    sql.query('SELECT * FROM Catalog WHERE Catalog.CatalogId=? LIMIT 1', req.query.id, function (error, result) {
       console.log(this.sql)
       if (error) {
         console.log(error)
@@ -137,7 +139,7 @@ function server (app, http) {
     })
   })
 
-  app.listen(3000, () => console.log(`App listening at http://localhost:3000`))
+  app.listen(PORT, () => console.log(`App listening at http://localhost:${PORT}`))
 }
 
 const app = express()
