@@ -15,8 +15,8 @@ function objectToWhereValues (object) {
   return sqlString
 };
 
-function server(app, http) {
-  app.use(cors({ origin: ['http://localhost', 'https://localhost'] }))
+function server (app, http) {
+  app.use(cors({ origin: ['http://localhost:8080', 'http://localhost/', 'https://localhost/'] }))
   app.use(express.json())
 
   let catalogQueries = [
@@ -100,7 +100,7 @@ function server(app, http) {
   }
 
   app.get('/catalog', (req, response) => {
-    sql.query('SELECT * FROM Catalog WHERE Catalog.CatalogId=? LIMIT 1', req.query.id, function (error, result) {
+    sql.query('SELECT * FROM Catalog WHERE Catalog.CatalogId=? LIMIT 1', req.body.query.id, function (error, result) {
       console.log(this.sql)
       if (error) {
         console.log(error)
@@ -135,10 +135,9 @@ function server(app, http) {
         })
       })
     })
-    
   })
-  
-  app.listen(3000, () => console.log(`Example app listening at http://localhost:3000`))
+
+  app.listen(3000, () => console.log(`App listening at http://localhost:3000`))
 }
 
 const app = express()
