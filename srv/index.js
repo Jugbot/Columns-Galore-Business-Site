@@ -36,7 +36,7 @@ function server (app, http) {
   })
 
   app.get('/api/part', (req, response) => {
-    sql.query('SELECT * FROM Catalog LEFT JOIN ProductInformation USING(ProductInformationId) WHERE Catalog.CatalogId=? LIMIT 1', req.query.id, function (error, result) {
+    sql.query('SELECT * FROM catalog LEFT JOIN productinformation USING(ProductInformationId) WHERE catalog.CatalogId=? LIMIT 1', req.query.id, function (error, result) {
       console.log(this.sql)
       if (error) {
         console.log(error)
@@ -102,7 +102,7 @@ function server (app, http) {
   }
 
   app.get('/api/catalog', (req, response) => {
-    sql.query('SELECT * FROM Catalog WHERE Catalog.CatalogId=? LIMIT 1', req.query.id, function (error, result) {
+    sql.query('SELECT * FROM catalog WHERE catalog.CatalogId=? LIMIT 1', req.query.id, function (error, result) {
       console.log(this.sql)
       if (error) {
         console.log(error)
