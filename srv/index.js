@@ -5,8 +5,9 @@ import httpServer from 'http'
 import path from 'path'
 
 // borrow routes from vue-router
+const SERVE_PATH = process.env.SERVE_PATH || ''
 const { staticRoutes, dynamicRoutes } = require('../src/router/routes')
-const appRoutes = [...staticRoutes, ...dynamicRoutes].map(o => process.env.SERVE_PATH || '' + o.path)
+const appRoutes = [...staticRoutes, ...dynamicRoutes].map(o => SERVE_PATH + o.path)
 
 const PORT = 3000
 
@@ -149,7 +150,7 @@ function server (app, http) {
     })
   })
 
-  app.listen(PORT, () => console.log(`App listening at http://localhost:${PORT}`))
+  app.listen(PORT, () => console.log(`App listening at http://localhost:${PORT}${SERVE_PATH}`))
 }
 
 const app = express()
