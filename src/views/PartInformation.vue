@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-img :src='part.Image || fallbackImage'
+      <v-img :src='part.ImagePath || fallbackImage'
       class="img-expand hidden-md-and-up"
       @click='imageClicked=!imageClicked'
       :style="{'max-height':imageClicked?'500px':null}"></v-img>
@@ -11,9 +11,20 @@
       </v-card-subtitle>
       <v-card-text>
         <!-- generated content -->
-        <v-img :src='part.Image || fallbackImage' class="float-right hidden-sm-and-down"
+        <v-img :src='part.ImagePath || fallbackImage' class="float-right hidden-sm-and-down"
         style="" width='200'></v-img>
-        <span v-html="part.DescriptionHTML"></span>
+        <span v-show="part.ProcessHTML">
+          <h3>What gets done when we rebuild.</h3>
+          <span v-html="part.ProcessHTML"></span>
+        </span>
+        <span v-show="part.IncludesHTML">
+          <h3>Comes complete with:</h3>
+          <span v-html="part.IncludesHTML"></span>
+        </span>
+        <span v-show="part.ExcludesHTML">
+          <h3>This column does not come with:</h3>
+          <span v-html="part.ExcludesHTML"></span>
+        </span>
       </v-card-text>
       <v-card-actions>
         <v-btn :to="{path: '/quote', query:{ id: part.CatalogId}}" block large color="primary"><b>Get A Quote</b></v-btn>

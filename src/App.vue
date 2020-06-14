@@ -4,8 +4,8 @@
       <v-col class="pa-0">
         <v-container>
           <v-row justify="center">
-            <v-flex xs12 md2 px-1>
-              <v-img :src="require('./assets/logo.gif')" />
+            <v-flex xs12 sm2 px-1>
+              <v-img :src="require('./assets/logo.svg')" />
             </v-flex>
             <v-flex shrink>
               <v-row no-gutters class="fill-height mx-3" align="center">

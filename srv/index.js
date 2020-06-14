@@ -1,8 +1,7 @@
 import express from 'express'
-import sql from './mysql'
 import cors from 'cors'
 import httpServer from 'http'
-import path from 'path'
+import sql from './mysql'
 
 // borrow routes from vue-router
 const SERVE_PATH = process.env.SERVE_PATH || ''
@@ -47,7 +46,13 @@ function server (app, http) {
   })
 
   app.get('/api/part', (req, response) => {
-    sql.query('SELECT * FROM catalog LEFT JOIN productinformation USING(ProductInformationId) WHERE catalog.CatalogId=? LIMIT 1', req.query.id, function (error, result) {
+    sql.query(`
+    SELECT * FROM catalog 
+    LEFT JOIN productinformation USING(ProductInformationId) 
+    LEFT JOIN info_process USING(ProcessInfoId)
+    LEFT JOIN info_includes USING(IncludesInfoId)
+    LEFT JOIN info_excludes USING(ExcludesInfoId)
+    WHERE catalog.CatalogId=? LIMIT 1`, req.query.id, function (error, result) {
       console.log(this.sql)
       if (error) {
         console.log(error)
