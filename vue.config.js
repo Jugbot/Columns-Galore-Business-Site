@@ -10,7 +10,7 @@ module.exports = {
   pluginOptions: {
     sitemap: {
       baseURL: 'https://www.columnsgalore.com',
-      routes: [...staticRoutes, ...dynamicRoutes],
+      routes: staticRoutes, // [...staticRoutes, ...dynamicRoutes],
       outputDir: './dist',
       pretty: true,
       productionOnly: false
@@ -21,12 +21,10 @@ module.exports = {
     },
     prerenderSpa: {
       registry: undefined,
-      renderRoutes: staticRoutes.map(o => o.path),
+      // renderRoutes: staticRoutes.map(o => o.path),
       useRenderEvent: true,
       headless: true,
       onlyProduction: true
     }
-  },
-
-  publicPath: '/new/'
+  }
 }

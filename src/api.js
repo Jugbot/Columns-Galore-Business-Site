@@ -1,7 +1,4 @@
-var BASE_URL = 'http://localhost:3000/api'
-if (process.env.NODE_ENV === 'production') {
-  BASE_URL = 'http://columnsgalore.com/api'
-}
+const BASE_URL = '/api'
 
 const api = {
   getPart: (id) => fetch(`${BASE_URL}/part?id=${id}`),

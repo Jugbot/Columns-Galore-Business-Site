@@ -2,6 +2,11 @@ import express from 'express'
 import sql from './mysql'
 import cors from 'cors'
 import httpServer from 'http'
+import path from 'path'
+
+// borrow routes from vue-router
+const { staticRoutes, dynamicRoutes } = require('../src/router/routes')
+const appRoutes = [...staticRoutes, ...dynamicRoutes].map(o => process.env.SERVE_PATH + o.path)
 
 const PORT = 3000
 
@@ -20,6 +25,11 @@ function objectToWhereValues (object) {
 function server (app, http) {
   app.use(cors({ origin: ['http://localhost:8080', /columnsgalore\.com$/] }))
   app.use(express.json())
+  app.use(express.static('../dist'))
+
+  app.get(appRoutes, (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist', 'app.html'))
+  })
 
   let catalogQueries = [
     'Manufacturer',
