@@ -6,7 +6,7 @@ import path from 'path'
 
 // borrow routes from vue-router
 const { staticRoutes, dynamicRoutes } = require('../src/router/routes')
-const appRoutes = [...staticRoutes, ...dynamicRoutes].map(o => process.env.SERVE_PATH + o.path)
+const appRoutes = [...staticRoutes, ...dynamicRoutes].map(o => process.env.SERVE_PATH || '' + o.path)
 
 const PORT = 3000
 
