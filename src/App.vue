@@ -2,7 +2,7 @@
   <v-app>
     <v-content>
       <v-col class="pa-0">
-        <v-container>
+        <v-container v-if="$vuetify.breakpoint.smAndUp">
           <v-row justify="center">
             <v-flex xs12 sm2 px-1>
               <v-img :src="require('./assets/logo.svg')" />
@@ -24,6 +24,12 @@
         </v-container>
 
         <v-tabs centered show-arrows>
+          <v-tab key="Home" to="/" exact>
+            <v-avatar v-if="$vuetify.breakpoint.xsOnly" tile>
+              <v-img :src="require('./assets/logo.svg')" />
+            </v-avatar>
+            <span v-else>Home</span>
+          </v-tab>
           <template v-for="{name, page} in pages.primary">
             <v-tab :key="name" :to="page">{{name}}</v-tab>
           </template>
@@ -149,13 +155,12 @@ export default {
   data: () => ({
     pages: {
       primary: [
-        { name: 'Home', page: '/' },
         { name: 'Catalog', page: '/catalog' },
         { name: 'Quote', page: '/quote' },
-        { name: 'Rebuilt Columns', page: '/rebuiltcolumns' },
-        { name: 'Column Parts', page: '/columnparts' }
       ],
       secondary: [
+        { name: 'Rebuilt Columns', page: '/rebuiltcolumns' },
+        { name: 'Column Parts', page: '/columnparts' },
         { name: 'Tech Support', page: '/techsupport' },
         { name: 'Color Options', page: '/coloroptions' },
         { name: 'Payment', page: '/payment' },

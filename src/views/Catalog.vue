@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-actions class="primary">
+      <v-card-actions v-if="questions.length > 1" class="primary">
         <!-- <v-breadcrumbs divider="/" :items="questions" class='pa-0' dark>
           <template #item="props">
           </template>
@@ -13,15 +13,26 @@
           </template>
         </v-row>
       </v-card-actions>
-      <v-card-actions>
+      <v-card-actions class="primary">
         <v-select
           v-if="questions.length !== 0"
           :items="question.options"
           v-model="question.selected"
           @change="changeSelection()"
-          :label="question.text"
+          :label="'Steering Column ' + question.text"
+          prepend-icon="mdi-home-search"
+          filled
+          dark
+          hide-details
+          outlined
         ></v-select>
       </v-card-actions>
+      <v-card-text class="text-center">
+        Search for the steering column you need! Use the prompt above to narrow down your search. <br>
+        Alternatively, <a to='/quote'>request a quote</a>.
+      </v-card-text>
+    </v-card>
+    <v-card class="mt-5">
       <v-list two-line>
         <v-list-item
           v-for="product in searchResults"
