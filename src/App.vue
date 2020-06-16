@@ -156,7 +156,7 @@ export default {
     pages: {
       primary: [
         { name: 'Catalog', page: '/catalog' },
-        { name: 'Quote', page: '/quote' },
+        { name: 'Quote', page: '/quote' }
       ],
       secondary: [
         { name: 'Rebuilt Columns', page: '/rebuiltcolumns' },

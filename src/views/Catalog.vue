@@ -8,8 +8,8 @@
         </v-breadcrumbs>-->
         <v-row align="baseline" no-gutters>
           <template v-for="(item, i) in questions">
-            <v-btn :disabled="!item.selected" small text dark @click="goto(i)">{{item.text}}</v-btn>
-            <div v-if="i != questions.length - 1" class="white--text mx-3">/</div>
+            <v-btn :disabled="!item.selected" :key="item.text" small text dark @click="goto(i)">{{item.text}}</v-btn>
+            <div v-if="i != questions.length - 1" :key="item.text+'-slash'" class="white--text mx-3">/</div>
           </template>
         </v-row>
       </v-card-actions>
@@ -29,7 +29,7 @@
       </v-card-actions>
       <v-card-text class="text-center">
         Search for the steering column you need! Use the prompt above to narrow down your search. <br>
-        Alternatively, <a to='/quote'>request a quote</a>.
+        Alternatively, <router-link to='/quote'>request a quote</router-link>.
       </v-card-text>
     </v-card>
     <v-card class="mt-5">

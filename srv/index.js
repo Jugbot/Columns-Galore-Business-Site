@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import httpServer from 'http'
 import sql from './mysql'
+import path from 'path'
 
 // borrow routes from vue-router
 const SERVE_PATH = process.env.SERVE_PATH || ''
