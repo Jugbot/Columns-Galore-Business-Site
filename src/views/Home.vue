@@ -16,6 +16,8 @@
       <li>100% Satisfaction Guaranteed</li>
     </ul>
 
+    <v-img :src="require('../assets/SCG1754b.jpg')" max-height="400" :class="{'float-right':$vuetify.breakpoint.mdAndUp}" contain></v-img>
+
     <h2>Huge Inventory, Over 3000 Steering Columns In Stock From 1969 & Up</h2>
 
     <h2>GM Cars & Trucks</h2>
@@ -29,6 +31,8 @@
       <li>Kodiak, Top Kick</li>
       <li>G Series Vans</li>
     </ul>
+
+    <v-img :src="require('../assets/SCGP3091.jpg')" max-height="400" :class="{'float-right':$vuetify.breakpoint.mdAndUp}" contain></v-img>
 
     <h2>Ford Cars & Trucks:</h2>
     <ul>

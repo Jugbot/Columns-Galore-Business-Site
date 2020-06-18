@@ -3,6 +3,7 @@ import cors from 'cors'
 import httpServer from 'http'
 import sql from './mysql'
 import path from 'path'
+import expressStaticGzip from 'express-static-gzip'
 
 // borrow routes from vue-router
 const SERVE_PATH = process.env.SERVE_PATH || ''
@@ -26,7 +27,16 @@ function objectToWhereValues (object) {
 function server (app, http) {
   app.use(cors({ origin: ['http://localhost:8080', /columnsgalore\.com$/] }))
   app.use(express.json())
-  app.use(express.static('../dist'))
+  // app.use(express.static('../dist'))
+  app.use(expressStaticGzip('../dist', {
+    enableBrotli: true,
+    customCompressions: [{
+      encodingName: 'deflate',
+      fileExtension: 'zz'
+    }],
+    orderPreference: ['br'],
+    index: false
+  }))
 
   app.get(appRoutes, (req, res) => {
     res.sendFile(path.join(__dirname, '../dist', 'app.html'))
