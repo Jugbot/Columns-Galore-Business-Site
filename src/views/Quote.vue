@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-form ref="form" method="POST" action="http://columnsgalore.com/cgi-bin/formmail.cgi">
+    <v-form ref="form" method="POST" action="mailto:quoteform@columnsgalore.com" enctype="text/plain">
       <v-card>
         <v-card-title>Your Vehicle Information</v-card-title>
         <v-card-subtitle>
@@ -41,20 +41,20 @@
               <v-row no-gutters wrap>
                 <v-col>
                   <v-radio-group v-model="part.Tilt">
-                    <v-radio name="tilt" label="Tilt Wheel" value="tilt"></v-radio>
-                    <v-radio name="fixed" label="Fixed Wheel" value="fixed"></v-radio>
+                    <v-radio name="wheel" label="Tilt Wheel" value="tilt"></v-radio>
+                    <v-radio name="wheel" label="Fixed Wheel" value="fixed"></v-radio>
                   </v-radio-group>
                 </v-col>
                 <v-col>
                   <v-radio-group v-model="part.Shift">
-                    <v-radio name="column" label="Column Shift" value="column"></v-radio>
-                    <v-radio name="floor" label="Floor Shift" value="floor"></v-radio>
+                    <v-radio name="shift" label="Column Shift" value="column"></v-radio>
+                    <v-radio name="shift" label="Floor Shift" value="floor"></v-radio>
                   </v-radio-group>
                 </v-col>
                 <v-col>
                   <v-radio-group v-model="part.Transmission">
-                    <v-radio name="automatic" label="Automatic" value="automatic"></v-radio>
-                    <v-radio name="manual" label="Manual" value="manual"></v-radio>
+                    <v-radio name="transmission" label="Automatic" value="automatic"></v-radio>
+                    <v-radio name="transmission" label="Manual" value="manual"></v-radio>
                   </v-radio-group>
                 </v-col>
                 <!-- <v-col>
