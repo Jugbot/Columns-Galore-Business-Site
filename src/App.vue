@@ -15,7 +15,7 @@
                   <v-row no-gutters class="accent--text">
                     <h3>Toll Free 888-326-5866</h3>
                     <div class="px-1">&mdash;</div>
-                    <h3>Satisfaction Guarunteed</h3>
+                    <h3>Satisfaction Guaranteed</h3>
                   </v-row>
                 </v-flex>
               </v-row>
@@ -160,7 +160,7 @@ export default {
       ],
       secondary: [
         { name: 'Rebuilt Columns', page: '/rebuiltcolumns' },
-        { name: 'Column Parts', page: '/columnparts' },
+        // { name: 'Column Parts', page: '/columnparts' },
         { name: 'Tech Support', page: '/techsupport' },
         { name: 'Color Options', page: '/coloroptions' },
         { name: 'Payment', page: '/payment' },

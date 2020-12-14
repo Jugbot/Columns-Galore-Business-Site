@@ -4,7 +4,7 @@
 
     <h2>Quality:</h2>
     <ul>
-      <li>Original Equipment, OEM Not AftermarketThis picture represents, SCG1754A, SCG1754B, SCG1941A, SCG1941B</li>
+      <li>Original Equipment, OEM Not Aftermarket</li>
       <li>Fully Guaranteed</li>
       <li>Thoroughly Tested</li>
     </ul>
@@ -16,7 +16,7 @@
       <li>100% Satisfaction Guaranteed</li>
     </ul>
 
-    <v-img :src="require('../assets/SCG1754b.jpg')" max-height="400" :class="{'float-right':$vuetify.breakpoint.mdAndUp}" contain></v-img>
+    <v-img alt="This picture represents, SCG1754A, SCG1754B, SCG1941A, SCG1941B" :src="require('../assets/SCG1754b.jpg')" max-height="400" :class="{'float-right':$vuetify.breakpoint.mdAndUp}" contain></v-img>
 
     <h2>Huge Inventory, Over 3000 Steering Columns In Stock From 1969 & Up</h2>
 
@@ -25,14 +25,14 @@
       <li>Chevy & GMC Pick Up Trucks & SUV's</li>
       <li>Chevrolet Cars</li>
       <li>Buick</li>
-      <li>OldsmobileThis picture represents SCGP3091 and SCGP3094</li>
+      <li>Oldsmobile</li>
       <li>Pontiac</li>
       <li>GM P30, Step Van, Workhorse Chassis, Walk In Van</li>
       <li>Kodiak, Top Kick</li>
       <li>G Series Vans</li>
     </ul>
 
-    <v-img :src="require('../assets/SCGP3091.jpg')" max-height="400" :class="{'float-right':$vuetify.breakpoint.mdAndUp}" contain></v-img>
+    <v-img alt="This picture represents SCGP3091 and SCGP3094" :src="require('../assets/SCGP3091.jpg')" max-height="400" :class="{'float-right':$vuetify.breakpoint.mdAndUp}" contain></v-img>
 
     <h2>Ford Cars & Trucks:</h2>
     <ul>

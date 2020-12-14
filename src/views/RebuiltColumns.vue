@@ -9,7 +9,6 @@
     <p>We stock over 3000 different rebuilt steering columns...</p>
     <p>All Rebuilt steering columns come with two new keys and are painted to match the interior of your car. To see the paint colors available follow this link: <router-link to="coloroptions">Paint Options</router-link></p>
     <p>Our columns are thoroughly tested. We have a 10 point mechanical and electrical quality control test which ensures our customers are receiving a perfect column every time.</p>
-    <p>On vehicles that have coded locks (the door and ignition are keyed the same) we can code the ignition lock to match your original key.</p>
     <p>On GM vehicles that are equipped with the V.A.T.S. system (vehicle anti theft system) we ship the column with the correct key eliminating the need to switch locks.</p>
     <p>If you prefer or we don't have the column you need in stock we can rebuild your column. In most cases the turn around for this service is four or five days .</p>
     <p>Pricing depends on the year, make, model, and options of your vehicle, please call us for a price, or fill out our <router-link to="quote">online quote form</router-link>.</p>
