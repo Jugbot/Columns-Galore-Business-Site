@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-form ref="form" method="POST" action="mailto:quoteform@columnsgalore.com" enctype="text/plain" target="_blank">
+    <v-form ref="form" method="POST" action="mailto:quoteform@columnsgalore.com" enctype="text/plain" target="_blank" rel="noopener noreferrer">
       <v-card>
         <v-card-title>Your Vehicle Information</v-card-title>
         <v-card-subtitle>
