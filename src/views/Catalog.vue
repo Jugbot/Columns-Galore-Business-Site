@@ -40,7 +40,7 @@
           @click="toProductPage(product)"
         >
           <v-list-item-avatar>
-            <v-img :src="product.Image || fallbackImage"></v-img>
+            <v-img :src="product.ImagePath || fallbackImage"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>{{product.Manufacturer}} {{product.Model}}</v-list-item-title>

@@ -104,7 +104,7 @@ function server (app, http) {
   }
 
   function catalogQuery (page, whereString, fn) {
-    sql.query('SELECT * FROM catalog' + (whereString ? (' WHERE ' + whereString) : '') + ' ORDER BY CatalogId LIMIT ?, ?', [(page - 1) * MAX_RESULTS, MAX_RESULTS], function (error, result) {
+    sql.query('SELECT * FROM catalog LEFT JOIN productinformation USING(ProductInformationId) ' + (whereString ? (' WHERE ' + whereString) : '') + ' ORDER BY CatalogId LIMIT ?, ?', [(page - 1) * MAX_RESULTS, MAX_RESULTS], function (error, result) {
       console.log(this.sql)
       if (error) {
         console.log(error)
