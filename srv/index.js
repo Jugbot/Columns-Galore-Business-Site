@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import httpServer from 'http'
-import sql from './mysql'
+import { sqlConnection, connectionPool } from './mysql'
 import path from 'path'
 import expressStaticGzip from 'express-static-gzip'
 
@@ -19,7 +19,7 @@ function objectToWhereValues (object) {
     if (typeof val === 'function') {
       continue
     }
-    sqlString += (sqlString.length === 0 ? '' : ' AND ') + sql.escapeId(key) + ' = ' + sql.escape(val, true)
+    sqlString += (sqlString.length === 0 ? '' : ' AND ') + connectionPool.escapeId(key) + ' = ' + connectionPool.escape(val, true)
   }
   return sqlString
 };
@@ -57,19 +57,21 @@ function server (app, http) {
   })
 
   app.get('/api/part', (req, response) => {
-    sql.query(`
-    SELECT * FROM catalog 
-    LEFT JOIN productinformation USING(ProductInformationId) 
-    LEFT JOIN info_process USING(ProcessInfoId)
-    LEFT JOIN info_includes USING(IncludesInfoId)
-    LEFT JOIN info_excludes USING(ExcludesInfoId)
-    WHERE catalog.CatalogId=? LIMIT 1`, req.query.id, function (error, result) {
-      console.log(this.sql)
-      if (error) {
-        console.log(error)
-        return
-      }
-      response.json(result[0])
+    sqlConnection(sql => {
+      sql.query(`
+      SELECT * FROM catalog 
+      LEFT JOIN productinformation USING(ProductInformationId) 
+      LEFT JOIN info_process USING(ProcessInfoId)
+      LEFT JOIN info_includes USING(IncludesInfoId)
+      LEFT JOIN info_excludes USING(ExcludesInfoId)
+      WHERE catalog.CatalogId=? LIMIT 1`, req.query.id, function (error, result) {
+        console.log(this.sql)
+        if (error) {
+          console.log(error)
+          return
+        }
+        response.json(result[0])
+      })
     })
   })
 
@@ -81,61 +83,69 @@ function server (app, http) {
       return fn({})
     }
     let field = catalogQueries[idx]
-    sql.query('SELECT DISTINCT ' + field + ' FROM catalog ' + (whereString ? ('WHERE ' + whereString) : ''), (error, result) => {
-      if (error) {
-        console.log(error)
-        return fn({})
-      }
-      // console.log('field: ', field, 'options: ', result)
-      let options = []
-      for (let obj of result) {
-        options.push(obj[field])
-      }
-      if (options.length > 1) {
-        console.log('Next Question: ', field)
-        fn({
-          nextQuestion: field,
-          options: options
-        })
-      } else {
-        return catalogQuestion(idx + 1, whereString, fn)
-      }
+    sqlConnection(sql => {
+      sql.query('SELECT DISTINCT ' + field + ' FROM catalog ' + (whereString ? ('WHERE ' + whereString) : ''), (error, result) => {
+        if (error) {
+          console.log(error)
+          return fn({})
+        }
+        // console.log('field: ', field, 'options: ', result)
+        let options = []
+        for (let obj of result) {
+          options.push(obj[field])
+        }
+        if (options.length > 1) {
+          console.log('Next Question: ', field)
+          fn({
+            nextQuestion: field,
+            options: options
+          })
+        } else {
+          return catalogQuestion(idx + 1, whereString, fn)
+        }
+      })
     })
   }
 
   function catalogQuery (page, whereString, fn) {
-    sql.query('SELECT * FROM catalog LEFT JOIN productinformation USING(ProductInformationId) ' + (whereString ? (' WHERE ' + whereString) : '') + ' ORDER BY CatalogId LIMIT ?, ?', [(page - 1) * MAX_RESULTS, MAX_RESULTS], function (error, result) {
-      console.log(this.sql)
-      if (error) {
-        console.log(error)
-        return fn({})
-      }
-      fn({ result: result })
-      // console.log('result: ', result)
+    sqlConnection(sql => {
+      sql.query('SELECT * FROM catalog LEFT JOIN productinformation USING(ProductInformationId) ' + (whereString ? (' WHERE ' + whereString) : '') + ' ORDER BY CatalogId LIMIT ?, ?', [(page - 1) * MAX_RESULTS, MAX_RESULTS], function (error, result) {
+        console.log(this.sql)
+        if (error) {
+          console.log(error)
+          return fn({})
+        }
+        fn({ result: result })
+        // console.log('result: ', result)
+      })
     })
   }
 
   function catalogSizeQuery (whereString, fn) {
-    sql.query('SELECT COUNT(*) as count FROM catalog' + (whereString ? (' WHERE ' + whereString) : ''), function (error, result) {
-      console.log(this.sql)
-      if (error) {
-        console.log(error)
-        return fn({})
-      }
-      result = Math.ceil(result[0].count / MAX_RESULTS)
-      fn({ maxPage: result })
-      // console.log('result: ', result)
+    sqlConnection(sql => {
+      sql.query('SELECT COUNT(*) as count FROM catalog' + (whereString ? (' WHERE ' + whereString) : ''), function (error, result) {
+        console.log(this.sql)
+        if (error) {
+          console.log(error)
+          return fn({})
+        }
+        result = Math.ceil(result[0].count / MAX_RESULTS)
+        fn({ maxPage: result })
+        // console.log('result: ', result)
+      })
     })
   }
 
   app.get('/api/catalog', (req, response) => {
-    sql.query('SELECT * FROM catalog WHERE catalog.CatalogId=? LIMIT 1', req.query.id, function (error, result) {
-      console.log(this.sql)
-      if (error) {
-        console.log(error)
-        return
-      }
-      response.json(result[0])
+    sqlConnection(sql => {
+      sql.query('SELECT * FROM catalog WHERE catalog.CatalogId=? LIMIT 1', req.query.id, function (error, result) {
+        console.log(this.sql)
+        if (error) {
+          console.log(error)
+          return
+        }
+        response.json(result[0])
+      })
     })
   })
 
