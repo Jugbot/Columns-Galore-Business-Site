@@ -37,10 +37,10 @@
         <v-list-item
           v-for="product in searchResults"
           :key="product.CatalogId"
-          @click="toProductPage(product)"
+          :to="'/part/' + product.CatalogId"
         >
           <v-list-item-avatar>
-            <v-img :src="product.ImagePath || fallbackImage"></v-img>
+            <v-img :src="product.ImagePath" :lazy-src="fallbackImage"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>{{product.Manufacturer}} {{product.Model}}</v-list-item-title>
@@ -131,9 +131,6 @@ export default {
             })
           }
         })
-    },
-    toProductPage (product) {
-      this.$router.push('/part/' + product.CatalogId)
     },
     changeSelection () {
       this.page = 1
