@@ -49,11 +49,25 @@
         </v-list-item>
       </v-list>
     </v-card>
-    <div class="text-center py-5">
-      <v-pagination @input="fetchList()" total-visible v-model="page" :length="maxPage"></v-pagination>
-    </div>
+    <v-row class="text-center py-5" no-gutters>
+      <v-btn :to="'?page=' + (page - 1)" @click="page--;fetchList()" :disabled="page<=1" color="white">prev</v-btn>
+      <v-flex>
+        <v-pagination @input="fetchList()" total-visible v-model="page" :length="maxPage"></v-pagination>
+      </v-flex>
+      <v-btn :to="'?page=' + (page + 1)" @click="page++;fetchList()" :disabled="page>=maxPage" color="white">next</v-btn>
+    </v-row>
   </v-container>
 </template>
+
+<style>
+/* hide native paginator buttons */
+.v-paginator li:last-of-type {
+  display: hidden;
+}
+.v-paginator li:first-of-type {
+  display: hidden;
+}
+</style>
 
 <script>
 import api from '@/api'
@@ -138,10 +152,8 @@ export default {
     }
   },
   created () {
+    this.page = this.$route.query.page || 1
     this.fetchList()
   }
 }
 </script>
-
-<style>
-</style>
