@@ -55,7 +55,7 @@
       </v-col>
 
       <v-container fluid class="py-5">
-        <router-view></router-view>
+        <router-view :key="$route.fullPath"></router-view>
       </v-container>
 
     </v-content>

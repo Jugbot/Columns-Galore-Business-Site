@@ -37,7 +37,7 @@ module.exports = {
       routes: staticRoutes, // [...staticRoutes, ...dynamicRoutes],
       outputDir: './dist',
       pretty: true,
-      productionOnly: false
+      productionOnly: true
     },
     express: {
       shouldServeApp: true,
@@ -49,6 +49,16 @@ module.exports = {
       useRenderEvent: true,
       headless: true,
       onlyProduction: true
+    }
+  },
+
+  chainWebpack: (config) => {
+    // For some reason dev builds do not correctly name the main html file
+    if (process.env.NODE_ENV === 'development') {
+      config.plugin('html').tap((opts) => {
+        opts[0].filename = './app.html'
+        return opts
+      })
     }
   }
 }

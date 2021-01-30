@@ -13,9 +13,8 @@
           </template>
         </v-row>
       </v-card-actions>
-      <v-card-actions class="primary">
+      <v-card-actions v-if="questions.length !== 0 && !questionaireCompleted" class="primary">
         <v-select
-          v-if="questions.length !== 0"
           :items="question.options"
           v-model="question.selected"
           @change="changeSelection()"
@@ -50,23 +49,23 @@
       </v-list>
     </v-card>
     <v-row class="text-center py-5" no-gutters>
-      <v-btn :to="'?page=' + (page - 1)" @click="page--;fetchList()" :disabled="page<=1" color="white">prev</v-btn>
+      <!-- <v-btn :to="'?page=' + (page - 1)" @click="page--;fetchList()" :disabled="page<=1" color="white">prev</v-btn> -->
       <v-flex>
         <v-pagination @input="fetchList()" total-visible v-model="page" :length="maxPage"></v-pagination>
       </v-flex>
-      <v-btn :to="'?page=' + (page + 1)" @click="page++;fetchList()" :disabled="page>=maxPage" color="white">next</v-btn>
+      <!-- <v-btn :to="'?page=' + (page + 1)" @click="page++;fetchList()" :disabled="page>=maxPage" color="white">next</v-btn> -->
     </v-row>
   </v-container>
 </template>
 
 <style>
 /* hide native paginator buttons */
-.v-paginator li:last-of-type {
+/* .v-paginator li:last-of-type {
   display: hidden;
 }
 .v-paginator li:first-of-type {
   display: hidden;
-}
+} */
 </style>
 
 <script>
@@ -90,7 +89,7 @@ export default {
         //     'Chevy & GMC',
         //     'American Motors'
         //   ],
-        //   selected: null
+        //   selected: 'Jeep'
         // }
       ],
       searchResults: [
@@ -110,30 +109,54 @@ export default {
       maxPage: 1
     }
   },
+  watch: {
+    questions (val) {
+      this.setSearchParams(this.columnQuery)
+    },
+    page (val) {
+      this.setSearchParams({ page: this.page })
+    }
+  },
   computed: {
     question () {
       return this.questions.length
         ? this.questions[this.questions.length - 1]
         : null
-    }
-  },
-  methods: {
-    goto (idx) {
-      this.questions[idx].selected = null
-      this.questions = this.questions.slice(0, idx + 1)
-      this.fetchList()
     },
-    fetchList () {
+    questionaireCompleted () {
+      return !!this.question.selected
+    },
+    columnQuery () {
       let values = {}
       for (const obj of this.questions) {
         values[obj.text] = obj.selected || null
       }
-      console.log(values)
-      api.postCatalog(JSON.stringify({ query: values, page: this.page }))
+      return values
+    }
+  },
+  methods: {
+    goto (idx) {
+      this.questions = this.questions.slice(0, idx)
+      this.fetchList()
+    },
+    setSearchParams (keyValue) {
+      if ('URLSearchParams' in window) {
+        var searchParams = new URLSearchParams(window.location.search)
+        for (const [key, val] of Object.entries(keyValue)) {
+          if (val === null) {
+            continue
+          }
+          searchParams.set(key, val)
+        }
+        var newRelativePathQuery = window.location.pathname + '?' + searchParams.toString()
+        history.pushState(null, '', newRelativePathQuery)
+      }
+    },
+    fetchList () {
+      api.postCatalog(JSON.stringify({ query: this.columnQuery, page: this.page }))
         .then(response => {
           if (response.status === 200) {
             response.json().then(data => {
-              console.log(data)
               this.searchResults = data.result
               this.maxPage = data.maxPage
               if (data.nextQuestion) {
@@ -152,7 +175,19 @@ export default {
     }
   },
   created () {
-    this.page = this.$route.query.page || 1
+    // digest url query
+    const query = { ...this.$route.query }
+    for (const name in query) {
+      if (name === 'page') {
+        this.page = parseInt(query[name])
+      } else {
+        this.questions.push({
+          text: name,
+          options: [],
+          selected: query[name]
+        })
+      }
+    }
     this.fetchList()
   }
 }
