@@ -33,7 +33,7 @@ module.exports = {
 
   pluginOptions: {
     sitemap: {
-      baseURL: 'http://www.steeringcolumnsgalore.com',
+      baseURL: 'https://www.steeringcolumnsgalore.com',
       routes: staticRoutes, // [...staticRoutes, ...dynamicRoutes],
       outputDir: './dist',
       pretty: true,

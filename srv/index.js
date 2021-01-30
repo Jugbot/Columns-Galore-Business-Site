@@ -25,7 +25,7 @@ function objectToWhereValues (object) {
 };
 
 function server (app, http) {
-  app.use(cors({ origin: ['http://localhost:8080', /columnsgalore\.com$/] }))
+  app.use(cors({ origin: ['http://localhost:8080'] }))
   app.use(express.json())
   // app.use(express.static('../dist'))
   app.use(expressStaticGzip('../dist', {
