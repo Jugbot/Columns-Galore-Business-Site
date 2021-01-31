@@ -49,23 +49,15 @@
       </v-list>
     </v-card>
     <v-row class="text-center py-5" no-gutters>
-      <!-- <v-btn :to="'?page=' + (page - 1)" @click="page--;fetchList()" :disabled="page<=1" color="white">prev</v-btn> -->
       <v-flex>
         <v-pagination @input="fetchList()" total-visible v-model="page" :length="maxPage"></v-pagination>
       </v-flex>
-      <!-- <v-btn :to="'?page=' + (page + 1)" @click="page++;fetchList()" :disabled="page>=maxPage" color="white">next</v-btn> -->
     </v-row>
   </v-container>
 </template>
 
 <style>
-/* hide native paginator buttons */
-/* .v-paginator li:last-of-type {
-  display: hidden;
-}
-.v-paginator li:first-of-type {
-  display: hidden;
-} */
+
 </style>
 
 <script>
@@ -110,11 +102,11 @@ export default {
     }
   },
   watch: {
-    questions (val) {
-      this.setSearchParams(this.columnQuery)
+    questions () {
+      this.setSearchParams({ page: this.page, ...this.columnQuery })
     },
     page (val) {
-      this.setSearchParams({ page: this.page })
+      this.setSearchParams({ page: val, ...this.columnQuery })
     }
   },
   computed: {
@@ -137,20 +129,16 @@ export default {
   methods: {
     goto (idx) {
       this.questions = this.questions.slice(0, idx)
+      this.page = 1
       this.fetchList()
     },
     setSearchParams (keyValue) {
-      if ('URLSearchParams' in window) {
-        var searchParams = new URLSearchParams(window.location.search)
-        for (const [key, val] of Object.entries(keyValue)) {
-          if (val === null) {
-            continue
-          }
-          searchParams.set(key, val)
+      for (const [key, val] of Object.entries(keyValue)) {
+        if (val === null) {
+          delete keyValue[key]
         }
-        var newRelativePathQuery = window.location.pathname + '?' + searchParams.toString()
-        history.pushState(null, '', newRelativePathQuery)
       }
+      this.$router.push({ query: keyValue })
     },
     fetchList () {
       api.postCatalog(JSON.stringify({ query: this.columnQuery, page: this.page }))
@@ -175,7 +163,6 @@ export default {
     }
   },
   created () {
-    // digest url query
     const query = { ...this.$route.query }
     for (const name in query) {
       if (name === 'page') {
