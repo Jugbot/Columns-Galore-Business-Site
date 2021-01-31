@@ -44,7 +44,7 @@ export default {
   },
   data () {
     return {
-      imageClicked: false,
+      imageClicked: true, // Start with large image to avoid confusion
       fallbackImage: require('../assets/steering_column.svg'),
       part: {
         // AdditionalOptions: ""
