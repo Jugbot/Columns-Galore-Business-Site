@@ -30,4 +30,3 @@ jobs:
       with:
         branch: build # The branch the action should deploy to.
         folder: . # The folder the action should deploy.
-        single-commit: true
