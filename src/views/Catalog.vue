@@ -69,7 +69,6 @@ export default {
     title: 'Catalog'
   },
   data () {
-    // manufacturer make model(year)
     return {
       fallbackImage: require('../assets/steering_column.svg'),
       questions: [
