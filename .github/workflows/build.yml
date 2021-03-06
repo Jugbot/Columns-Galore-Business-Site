@@ -24,7 +24,7 @@ jobs:
     - run: npm test
 
     - run: rm .gitignore # Commit build files
-    - run: git config --global http.version HTTP/1.1
+    - run: git config --global http.postBuffer 157286400
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.1.0
