@@ -9,28 +9,21 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 14.x
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
 
     - run: rm .gitignore # Commit build files
-    - run: |
+    - run: | # node modules was too big to commit
         touch .gitignore
         echo "node_modules" >> .gitignore
 
-    - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@4.1.0
+    - uses: JamesIves/github-pages-deploy-action@4.1.0
       with:
         branch: build # The branch the action should deploy to.
         folder: . # The folder the action should deploy.
-        single-commit: true
