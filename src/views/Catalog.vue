@@ -49,9 +49,9 @@
       </v-list>
     </v-card>
     <v-row class="text-center py-5" no-gutters>
-      <v-flex>
-        <v-pagination @input="fetchList()" total-visible v-model="page" :length="maxPage"></v-pagination>
-      </v-flex>
+      <v-btn :to="{query:{...$route.query, page:(page-1)}}" :disabled="page===1" color="primary"><v-icon>mdi-arrow-left</v-icon></v-btn>
+      <v-spacer></v-spacer>
+      <v-btn :to="{query:{...$route.query, page:(page+1)}}" :disabled="page===maxPage" color="primary"><v-icon>mdi-arrow-right</v-icon></v-btn>
     </v-row>
   </v-container>
 </template>
@@ -101,14 +101,6 @@ export default {
       maxPage: 1
     }
   },
-  watch: {
-    questions () {
-      this.setSearchParams({ page: this.page, ...this.columnQuery })
-    },
-    page (val) {
-      this.setSearchParams({ page: val, ...this.columnQuery })
-    }
-  },
   computed: {
     question () {
       return this.questions.length
@@ -127,9 +119,17 @@ export default {
     }
   },
   methods: {
+    setPage (page) {
+      this.page = page
+      this.setSearchParams({ page: page, ...this.columnQuery })
+    },
+    setQuestions (questions) {
+      this.questions = questions
+      this.setSearchParams({ page: this.page, ...this.columnQuery })
+    },
     goto (idx) {
-      this.questions = this.questions.slice(0, idx)
-      this.page = 1
+      this.setQuestions(this.questions.slice(0, idx))
+      this.setPage(1)
       this.fetchList()
     },
     setSearchParams (keyValue) {
@@ -138,7 +138,7 @@ export default {
           delete keyValue[key]
         }
       }
-      this.$router.push({ query: keyValue })
+      this.$router.push({ query: keyValue }).catch(() => {})
     },
     fetchList () {
       api.postCatalog(JSON.stringify({ query: this.columnQuery, page: this.page }))
@@ -148,17 +148,17 @@ export default {
               this.searchResults = data.result
               this.maxPage = data.maxPage
               if (data.nextQuestion) {
-                this.questions.push({
+                this.setQuestions([...this.questions, {
                   text: data.nextQuestion,
                   options: data.options
-                })
+                }])
               }
             })
           }
         })
     },
     changeSelection () {
-      this.page = 1
+      this.setPage(1)
       this.fetchList()
     }
   },
@@ -166,13 +166,13 @@ export default {
     const query = { ...this.$route.query }
     for (const name in query) {
       if (name === 'page') {
-        this.page = parseInt(query[name])
+        this.setPage(parseInt(query[name]))
       } else {
-        this.questions.push({
+        this.setQuestions([...this.questions, {
           text: name,
           options: [],
           selected: query[name]
-        })
+        }])
       }
     }
     this.fetchList()
