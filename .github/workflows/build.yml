@@ -24,7 +24,9 @@ jobs:
     - run: npm test
 
     - run: rm .gitignore # Commit build files
-    - run: git config --global http.postBuffer 157286400
+    - run: |
+        touch .gitignore
+        echo "node_modules" >> .gitignore
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.1.0
