@@ -1,10 +1,8 @@
 import express from 'express'
 import cors from 'cors'
-// import httpServer from 'http'
-import httpsServer from 'https'
+import httpServer from 'http'
 import { sqlConnection, connectionPool } from './mysql'
 import path from 'path'
-import fs from 'fs'
 import expressStaticGzip from 'express-static-gzip'
 
 // borrow routes from vue-router
@@ -26,7 +24,7 @@ function objectToWhereValues (object) {
   return sqlString
 };
 
-function server (app, https) {
+function server (app, http) {
   app.use(cors({ origin: ['http://localhost:8080'] }))
   app.use(express.json())
   // app.use(express.static('../dist'))
@@ -178,15 +176,10 @@ function server (app, https) {
     })
   })
 
-  app.listen(PORT, () => console.log(`App listening at https://localhost:${PORT}${SERVE_PATH}`))
+  app.listen(PORT, () => console.log(`App listening at http://localhost:${PORT}${SERVE_PATH}`))
 }
 
 const app = express()
-// const http = httpServer.Server(app)
-const https = httpsServer.Server({
-  key: fs.readFileSync(process.env.KEY),
-  cert: fs.readFileSync(process.env.CERT),
-  ca: fs.readFileSync(process.env.CA)
-}, app)
+const http = httpServer.Server(app)
 
-server(app, https)
+server(app, http)
