@@ -58,7 +58,7 @@ export default {
         // Transmission: 'Automatic',
         // Tilt: 'Tilt',
         // AdditionalOptions: 'Delay Wipers',
-        // Image: '/images/SCG1138A.jpg',
+        // ImagePath: '/images/SCG1138A.jpg',
         // Price: 475,
         // CoreCharge: 250,
         // ProcessHTML:
