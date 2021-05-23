@@ -154,12 +154,3 @@ export default {
   }
 }
 </script>
-
-<style>
-/* .v-application .v-card__text .v-divider {
-  position: absolute;
-  margin-left: -16px !important;
-  margin-right: -16px !important;
-  width: calc(100% + 32px);
-} */
-</style>
