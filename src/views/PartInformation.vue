@@ -60,7 +60,6 @@ export default {
         // Price: 425
         // ProcessHTML: "<p>Complete disassembly, sand blast to remove rust & paint, clean and degrease, inspect components, repack or replace bearings, grease moving parts, replace broken & worn parts, twelve point test, paint to match interior.<p>"
         // ProcessInfoId: 1
-        // ProductInformationId: 4
         // Shift: "Column"
         // Tilt: "Tilt"
         // Transmission: "Automatic"
