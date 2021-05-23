@@ -47,23 +47,26 @@ export default {
       imageClicked: true, // Start with large image to avoid confusion
       fallbackImage: require('../assets/steering_column.svg'),
       part: {
-        // AdditionalOptions: ""
-        // CatalogId: "SCG1138A"
-        // CoreCharge: 250
-        // ExcludesHTML: "<p>Steering wheel, tilt lever, shift lever, hazard button, reverse light switch, these parts may be available if needed. The Customer can remove these items from their broken column and install them on our rebuilt column.</p>"
-        // ExcludesInfoId: 5
-        // ImagePath: "https://columnsgalore.com/images/SCG1138A.jpg"
-        // IncludesHTML: "<p>New signal switch, new ignition switch and a new lock with 2 keys, new cruise control lever if equiped with cruise control.</p>"
-        // IncludesInfoId: 2
-        // Manufacturer: "Chevy & GMC Trucks"
-        // Model: "Pick Up Truck"
-        // Price: 425
-        // ProcessHTML: "<p>Complete disassembly, sand blast to remove rust & paint, clean and degrease, inspect components, repack or replace bearings, grease moving parts, replace broken & worn parts, twelve point test, paint to match interior.<p>"
-        // ProcessInfoId: 1
-        // Shift: "Column"
-        // Tilt: "Tilt"
-        // Transmission: "Automatic"
-        // Year: "84-87"
+        // ExcludesInfoId: 8,
+        // IncludesInfoId: 2,
+        // ProcessInfoId: 1,
+        // CatalogId: 'SCG1138A',
+        // Manufacturer: 'Chevy & GMC Trucks',
+        // Model: 'Pick Up Truck',
+        // Year: '84-87',
+        // Shift: 'Column',
+        // Transmission: 'Automatic',
+        // Tilt: 'Tilt',
+        // AdditionalOptions: 'Delay Wipers',
+        // Image: '/images/SCG1138A.jpg',
+        // Price: 475,
+        // CoreCharge: 250,
+        // ProcessHTML:
+        //   '<p>Complete disassembly, sand blast to remove rust & paint, clean and degrease, inspect components, repack or replace bearings, grease moving parts, replace broken & worn parts, twelve point test, paint to match interior.</p>',
+        // IncludesHTML:
+        //   '<p>New signal switch, new ignition switch and a new lock with 2 keys, new cruise control lever if equiped with cruise control.</p>',
+        // ExcludesHTML:
+        //   '<p>Steering wheel, tilt lever, shift lever, hazard button, reverse light switch, these parts may be available if needed. The Customer can remove these items from their broken column and install them on our rebuilt column.</p>',
       }
     }
   },
