@@ -1,7 +1,8 @@
 <template>
   <v-app>
+    <div id="app-background"/>
     <v-content>
-      <v-col class="pa-0">
+      <v-col class="pa-0 white">
         <v-container v-if="$vuetify.breakpoint.smAndUp">
           <v-row justify="center">
             <v-flex xs12 sm2 px-1>
@@ -136,6 +137,15 @@
 <style>
 .v-content__wrap {
   min-height: 100vh;
+}
+#app-background {
+  background-image: url('~./assets/background.jpg') !important;
+  background-position: right center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
 }
 </style>
 
