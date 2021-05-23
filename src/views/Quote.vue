@@ -122,8 +122,6 @@ export default {
       colors: colors,
       part: {
         CatalogId: null,
-        InventoryId: null,
-        ProductInformationId: null,
         Manufacturer: '',
         Model: '',
         Year: '',
