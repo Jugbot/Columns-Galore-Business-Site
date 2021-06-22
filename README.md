@@ -20,5 +20,13 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### TODO
+- semantic naming (instead of SKUs)
+- quote form backend submission
+- clickable images
+- named images
+- Home page layout (wide screen)
+- Home page content changes
+- Part page multiple images (gallery)
+- catalog loading state
+- track clicks with google analytics
