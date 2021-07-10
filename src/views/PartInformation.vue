@@ -10,7 +10,7 @@
         {{this.title}}
       </v-card-title>
       <v-card-subtitle>
-        Price: ${{this.part.Price}}, Core Charge: ${{this.part.CoreCharge}}
+        Price: ${{this.part.Price}}, Core Charge: ${{this.part.CoreCharge}}, Part #${{this.part.CatalogId}}
       </v-card-subtitle>
       <v-card-text>
         <!-- generated content -->
@@ -72,7 +72,7 @@ export default {
   },
   computed: {
     title () {
-      return ['Part #' + this.part.CatalogId, this.part.Year, this.part.Manufacturer, this.part.Model, this.part.Tilt, this.part.AdditionalOptions].join(' ')
+      return [this.part.Year, this.part.Manufacturer, this.part.Model, this.part.Tilt, this.part.AdditionalOptions].join(' ')
       // "Column type:\t1980 - 1991 Ford Trucks (F series) and Vans (E Series) with non tilt.
     }
   },
@@ -80,7 +80,6 @@ export default {
     api.getPart(this.$route.params.id).then(response => {
       if (response.status === 200) {
         response.json().then(data => {
-          console.log(data)
           this.part = data
         })
       }

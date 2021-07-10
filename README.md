@@ -30,3 +30,4 @@ npm run lint
 - Part page multiple images (gallery)
 - catalog loading state
 - track clicks with google analytics
+- prerendering/SSR
