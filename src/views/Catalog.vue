@@ -32,7 +32,14 @@
       </v-card-text>
     </v-card>
     <v-card class="mt-5">
-      <v-list two-line>
+      <v-list v-if="fetching" two-line>
+        <v-skeleton-loader
+          v-for="key in [1,2,3,4,5]"
+          :key="key"
+          type="list-item-avatar-two-line"
+        ></v-skeleton-loader>
+      </v-list>
+      <v-list v-else two-line>
         <v-list-item
           v-for="product in searchResults"
           :key="product.CatalogId"
@@ -97,7 +104,8 @@ export default {
         // }
       ],
       page: 1,
-      maxPage: 1
+      maxPage: 1,
+      fetching: true
     }
   },
   computed: {
@@ -140,8 +148,10 @@ export default {
       this.$router.push({ query: keyValue }).catch(() => {})
     },
     fetchList () {
+      this.fetching = true
       api.postCatalog(JSON.stringify({ query: this.columnQuery, page: this.page }))
         .then(response => {
+          this.fetching = false
           if (response.status === 200) {
             response.json().then(data => {
               this.searchResults = data.result
