@@ -32,3 +32,5 @@ npm run lint
 [*] catalog loading state
 [ ] track clicks with google analytics
 [ ] prerendering/SSR
+[ ] conversion tracking GA
+ 
