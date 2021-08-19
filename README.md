@@ -21,16 +21,16 @@ npm run lint
 ```
 
 ### TODO
-[ ] semantic naming (instead of SKUs)
-[ ] quote form backend submission
-[ ] clickable images
-[ ] named images
-[*] Home page layout (wide screen)
-[ ] Home page content changes
-[ ] Change all mention of years to years since 1990
-[ ] Part page multiple images (gallery)
-[*] catalog loading state
-[ ] track clicks with google analytics
-[ ] prerendering/SSR
-[ ] conversion tracking GA
+- [ ] semantic naming (instead of SKUs)  
+- [ ] quote form backend submission  
+- [ ] clickable images  
+- [ ] named images  
+- [x] Home page layout (wide screen)  
+- [ ] Home page content changes  
+- [ ] Change all mention of years to years since 1990  
+- [ ] Part page multiple images (gallery)  
+- [x] catalog loading state  
+- [ ] track clicks with google analytics  
+- [ ] prerendering/SSR  
+- [ ] conversion tracking GA  
  
