@@ -23,6 +23,8 @@ npm run lint
 ### TODO
 - [ ] semantic naming (instead of SKUs)  
 - [ ] quote form backend submission  
+- [ ] note not all columns are on the /catalog
+- [ ] db backups
 - [ ] clickable images  
 - [ ] named images  
 - [x] Home page layout (wide screen)  
