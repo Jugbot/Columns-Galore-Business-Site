@@ -1,15 +1,15 @@
 <template>
   <v-container>
-    <v-card v-if="submitStep" key="submit step">
+    <v-card v-if="submitStep" key="submit-step">
       <v-card-title>Your Vehicle Information</v-card-title>
       <v-card-text>
-        Send to: <a :href="`mailto:quoteform@columnsgalore.com`">quoteform@columnsgalore.com</a>
+        Send the info below as an email to <a :href="`mailto:quoteform@columnsgalore.com`">quoteform@columnsgalore.com</a>
       </v-card-text>
       <v-card-text>
         <v-textarea v-model="emailContent" auto-grow filled></v-textarea>
       </v-card-text>
     </v-card>
-    <v-form v-else ref="form" key="form step">
+    <v-form v-else ref="form" key="form-step">
       <v-card>
         <v-card-title>Your Vehicle Information</v-card-title>
         <v-card-subtitle>
