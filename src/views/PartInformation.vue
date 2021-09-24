@@ -10,7 +10,7 @@
         {{this.title}}
       </v-card-title>
       <v-card-subtitle>
-        Price: ${{this.part.Price}}, Core Charge: ${{this.part.CoreCharge}}, Part #${{this.part.CatalogId}}
+        Price: ${{this.part.Price}}, Core Charge: ${{this.part.CoreCharge}}, Part #{{this.part.CatalogId}}
       </v-card-subtitle>
       <v-card-text>
         <!-- generated content -->
