@@ -22,17 +22,17 @@ npm run lint
 
 ### TODO
 - [ ] semantic naming (instead of SKUs)  
-- [ ] quote form backend submission  
-- [ ] note not all columns are on the /catalog
+- [x] quote form backend submission  
+- [ ] "note not all columns are on the /catalog" message
 - [ ] db backups
 - [ ] clickable images  
-- [ ] named images  
+- [x] named images  
 - [x] Home page layout (wide screen)  
 - [ ] Home page content changes  
 - [ ] Change all mention of years to years since 1990  
 - [ ] Part page multiple images (gallery)  
 - [x] catalog loading state  
-- [ ] track clicks with google analytics  
+- [x] track clicks with google analytics  
 - [ ] prerendering/SSR  
-- [ ] conversion tracking GA  
+- [x] conversion tracking GA  
  
