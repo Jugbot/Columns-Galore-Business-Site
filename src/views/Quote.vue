@@ -1,8 +1,25 @@
 <template>
   <v-container>
+    <v-dialog
+      v-model="dialog"
+      max-width="500px"
+    >
+      <v-card>
+        <v-card-title>We Recieved Your Request</v-card-title>
+        <v-card-text>
+          You should be contacted by a member of our sales team soon.
+          In the meantime if you have any questions please email us at <a href="mailto:salesteam@columnsgalore.com">salesteam@columnsgalore.com</a>
+        </v-card-text>
+        <v-card-actions class="justify-end">
+          <v-btn
+            text
+            @click="dialog = false"
+          >Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-form
-    @submit="onSubmit"
-    ref="form" method="POST" action="mailto:quoteform@columnsgalore.com" enctype="text/plain" target="_blank" rel="noopener noreferrer">
+    ref="form">
       <v-card>
         <v-card-title>Your Vehicle Information</v-card-title>
         <v-card-subtitle>
@@ -13,11 +30,11 @@
         <v-card-text>
           <v-row>
             <v-col cols="12" md="6" class="py-0">
-              <v-text-field v-model="part.Year" required name="year" label="Year"></v-text-field>
-              <v-text-field v-model="part.Manufacturer" required name="make" label="Make"></v-text-field>
+              <v-text-field v-model="part.Year"  :rules="[rules.required]" name="year" label="Year"></v-text-field>
+              <v-text-field v-model="part.Manufacturer"  :rules="[rules.required]" name="make" label="Make"></v-text-field>
             </v-col>
             <v-col cols="12" md="6" class="py-0">
-              <v-text-field v-model="part.Model" required name="model" label="Model"></v-text-field>
+              <v-text-field v-model="part.Model"  :rules="[rules.required]" name="model" label="Model"></v-text-field>
               <v-select
                 :items="colors"
                 name='color'
@@ -82,27 +99,23 @@
       <v-card class="mt-3">
         <v-card-title>Personal Information</v-card-title>
         <v-card-text>
-          <v-row wrap no-gutters>
-            <v-text-field required name="company" label="Company"></v-text-field>
-            <v-text-field required name="contact" label="Contact"></v-text-field>
-            <v-text-field required name="street" label="Street"></v-text-field>
-            <v-text-field required name="city" label="City"></v-text-field>
-            <v-text-field required name="state" label="State"></v-text-field>
-            <v-text-field required name="zip" label="Zip"></v-text-field>
-            <v-text-field required name="country" label="Country"></v-text-field>
-            <v-select required
+          <v-row wrap no-gutters style="gap: 0 1em">
+            <v-text-field v-model="contact.Name" name="name" label="Name"></v-text-field>
+            <v-text-field v-model="contact.Address" :rules="[rules.required]" name="address" label="Address"></v-text-field>
+            <v-select :rules="[rules.required]"
+              v-model="contact.ContactBy"
               :items='[{text:"Email", value:"email"}, {text:"Phone", value:"phone"}]'
               name="contactby"
               label="Contact Preference"
             ></v-select>
-            <v-text-field required name="phone" label="Phone"></v-text-field>
-            <v-text-field required name="email" label="Email"></v-text-field>
+            <v-text-field v-if="contact.ContactBy === 'phone'" v-model="contact.Phone" :rules="[rules.required]" name="phone" label="Phone"></v-text-field>
+            <v-text-field v-if="contact.ContactBy === 'email'" v-model="contact.Email" :rules="[rules.required]" name="email" label="Email"></v-text-field>
           </v-row>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="$refs.form.reset()" text color="error">Reset</v-btn>
-          <v-btn type="submit" color="success">Submit</v-btn>
+          <v-btn @click="$refs.form.reset()" color="error" text>Reset</v-btn>
+          <v-btn @click="onSubmit()" color="success">Submit</v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
@@ -122,6 +135,7 @@ export default {
   data () {
     return {
       colors: colors,
+      dialog: false,
       part: {
         CatalogId: null,
         Manufacturer: '',
@@ -134,6 +148,16 @@ export default {
         Image: null,
         Price: '',
         CoreCharge: ''
+      },
+      contact: {
+        Name: '',
+        Address: '',
+        ContactBy: 'email',
+        Phone: '',
+        Email: ''
+      },
+      rules: {
+        required: (value) => !!value || 'Required.'
       }
     }
   },
@@ -156,7 +180,10 @@ export default {
   },
   methods: {
     onSubmit () {
-      window.gtag('event', 'conversion', { 'product': this.part.CatalogId, 'price': this.part.Price })
+      if (this.$refs.form.validate()) {
+        window.gtag('event', 'conversion', { 'product': this.part.CatalogId, 'price': this.part.Price })
+        api.postQuote({ part: this.part, contact: this.contact }).then(() => { this.dialog = true })
+      }
     }
   }
 }

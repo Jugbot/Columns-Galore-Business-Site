@@ -5,7 +5,14 @@ const api = {
   getCatalog: (id) => fetch(`${BASE_URL}/catalog?id=${id}`),
   postCatalog: (data) => fetch(`${BASE_URL}/catalog`, {
     method: 'POST',
-    body: data,
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }),
+  postQuote: (data) => fetch(`${BASE_URL}/quote`, {
+    method: 'POST',
+    body: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json'
     }

@@ -149,7 +149,7 @@ export default {
     },
     fetchList () {
       this.fetching = true
-      api.postCatalog(JSON.stringify({ query: this.columnQuery, page: this.page }))
+      api.postCatalog({ query: this.columnQuery, page: this.page })
         .then(response => {
           this.fetching = false
           if (response.status === 200) {
