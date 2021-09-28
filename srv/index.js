@@ -4,6 +4,7 @@ import httpServer from 'http'
 import { sqlConnection, connectionPool } from './mysql'
 import path from 'path'
 import expressStaticGzip from 'express-static-gzip'
+import { sendQuoteMail } from './mail'
 
 // borrow routes from vue-router
 const SERVE_PATH = process.env.SERVE_PATH || ''
@@ -27,7 +28,6 @@ function objectToWhereValues (object) {
 function server (app, http) {
   app.use(cors({ origin: ['http://localhost:8080'] }))
   app.use(express.json())
-  // app.use(express.static('../dist'))
   app.use(expressStaticGzip('../dist', {
     enableBrotli: true,
     customCompressions: [{
@@ -173,6 +173,13 @@ function server (app, http) {
         })
       })
     })
+  })
+
+  app.post('/api/quote', (req, response) => {
+    let formdata = req.body
+    sendQuoteMail(formdata)
+      .then(result => response.status(200).send(result))
+      .catch(error => response.status(500).send(error))
   })
 
   app.listen(PORT, () => console.log(`App listening at http://localhost:${PORT}${SERVE_PATH}`))

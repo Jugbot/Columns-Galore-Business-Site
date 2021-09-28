@@ -42,6 +42,7 @@ const staticRoutes = [
   },
   {
     path: '/quote',
+    name: 'quote',
     component: () => import(/* webpackChunkName: "quoteform" */ '../views/Quote.vue')
   }
 ]
