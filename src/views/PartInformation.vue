@@ -5,7 +5,8 @@
       :lazy-src='fallbackImage'
       class="img-expand"
       @click='imageClicked=!imageClicked'
-      :style="{'max-height':imageClicked?'none':null}"></v-img>
+      :style="{'max-height':imageClicked?'none':null}"
+      :alt="title"></v-img>
       <v-card-title>
         {{this.title}}
       </v-card-title>
