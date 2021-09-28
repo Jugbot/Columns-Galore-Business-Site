@@ -6,7 +6,7 @@
       class="img-expand"
       @click='imageClicked=!imageClicked'
       :style="{'max-height':imageClicked?'none':null}"
-      :alt="title"></v-img>
+      :alt="'Steering Column ' + title"></v-img>
       <v-card-title>
         {{this.title}}
       </v-card-title>
