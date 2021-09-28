@@ -1,7 +1,7 @@
 import { createTransport } from 'nodemailer'
 
 const transporter = createTransport({
-  host: 'smtp.gmail.com',
+  host: 'aeronet.aeroad.net',
   port: 587,
   auth: {
     user: process.env.EMAIL_NAME,
