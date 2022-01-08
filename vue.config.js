@@ -1,6 +1,5 @@
-const { staticRoutes, dynamicRoutes } = require('./src/router/routes')
+const { staticRoutes } = require('./src/router/routes')
 const CompressionPlugin = require('compression-webpack-plugin')
-const zlib = require('zlib')
 
 module.exports = {
   'transpileDependencies': [

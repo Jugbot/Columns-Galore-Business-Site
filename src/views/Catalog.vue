@@ -50,7 +50,7 @@
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>{{product.Manufacturer}} {{product.Model}}</v-list-item-title>
-            <v-list-item-subtitle>{{product.Year}} {{product.Shift}} {{product.Transmission}} {{product.Tilt}}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{product.Year}} {{product.Shift}} {{product.Transmission}} {{product.Tilt}} {{product.AdditionalOptions}}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>
