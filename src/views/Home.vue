@@ -14,7 +14,7 @@
 
         <h2>Service:</h2>
         <ul>
-          <li>Over 30 Years Experience</li>
+          <li>Over {{$yearsSinceFounding}} Years Experience</li>
           <li>Reliable</li>
           <li>100% Satisfaction Guaranteed</li>
         </ul>

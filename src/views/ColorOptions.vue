@@ -21,7 +21,7 @@
           exact colors.
         </p>
         <v-simple-table>
-          <table>
+          <template v-slot:default>
             <tbody>
               <tr>
                 <th>Color Paint</th>
@@ -39,7 +39,7 @@
                 </td>
               </tr>
             </tbody>
-          </table>
+          </template>
         </v-simple-table>
       </v-card-text>
     </v-card>

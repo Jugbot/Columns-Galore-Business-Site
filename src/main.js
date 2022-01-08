@@ -6,6 +6,14 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
+Vue.mixin({
+  computed: {
+    $yearsSinceFounding () {
+      return new Date().getUTCFullYear() - 1990
+    }
+  }
+})
+
 new Vue({
   router,
   vuetify,

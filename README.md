@@ -29,7 +29,7 @@ npm run lint
 - [x] named images  
 - [x] Home page layout (wide screen)  
 - [ ] Home page content changes  
-- [ ] Change all mention of years to years since 1990  
+- [x] Change all mention of years to years since 1990  
 - [ ] Part page multiple images (gallery)  
 - [x] catalog loading state  
 - [x] track clicks with google analytics  
