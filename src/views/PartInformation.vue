@@ -6,7 +6,7 @@
       class="img-expand"
       @click='imageClicked=!imageClicked'
       :style="{'max-height':imageClicked?'none':null}"
-      :alt="'Steering Column ' + title"></v-img>
+      :alt="title"></v-img>
       <v-card-title>
         {{this.title}}
       </v-card-title>
@@ -29,7 +29,7 @@
         </span>
       </v-card-text>
       <v-card-actions>
-        <v-btn :to="{path: '/quote', query:{ id: part.CatalogId}}" block large color="primary"><b>Get A Quote</b></v-btn>
+        <v-btn :to="{path: '/quote', query:{ id: part.CatalogId}}" block large color="primary"><b>Submit an Order</b></v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -73,7 +73,7 @@ export default {
   },
   computed: {
     title () {
-      return [this.part.Year, this.part.Manufacturer, this.part.Model, this.part.Tilt, this.part.AdditionalOptions].join(' ')
+      return [this.part.Year, this.part.Manufacturer, this.part.Model, 'Steering Column with', this.part.Tilt, this.part.AdditionalOptions].join(' ')
       // "Column type:\t1980 - 1991 Ford Trucks (F series) and Vans (E Series) with non tilt.
     }
   },

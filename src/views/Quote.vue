@@ -76,12 +76,6 @@
                     <v-radio name="transmission" label="Manual" value="manual"></v-radio>
                   </v-radio-group>
                 </v-col>
-                <!-- <v-col>
-                  <v-radio-group v-model="part.Tilt">
-                    <v-radio name="delay" label="Delay" value="delay"></v-radio>
-                    <v-radio name="2speed" label="2 Speed" value="2speed"></v-radio>
-                  </v-radio-group>
-                </v-col> -->
               </v-row>
             </v-col>
             <v-col cols="12">
@@ -98,6 +92,9 @@
       </v-card>
       <v-card class="mt-3">
         <v-card-title>Personal Information</v-card-title>
+        <v-card-text>
+          We will contact you for payment information.
+        </v-card-text>
         <v-card-text>
           <v-row wrap no-gutters style="gap: 0 1em">
             <v-text-field v-model="contact.Name" name="name" label="Name"></v-text-field>
