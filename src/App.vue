@@ -11,7 +11,7 @@
             <v-flex shrink>
               <v-row no-gutters class="fill-height mx-3" align="center">
                 <v-flex>
-                  <h2>Your complete Steering Column Source.</h2>
+                  <h2>Your Complete Steering Column Source</h2>
                   <h3>Steering Columns And Parts Shipped Worldwide</h3>
                   <v-row no-gutters class="accent--text">
                     <h3>Toll Free 888-326-5866</h3>
