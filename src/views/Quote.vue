@@ -92,9 +92,9 @@
       </v-card>
       <v-card class="mt-3">
         <v-card-title>Personal Information</v-card-title>
-        <v-card-text>
+        <v-card-subtitle>
           We will contact you for payment information.
-        </v-card-text>
+        </v-card-subtitle>
         <v-card-text>
           <v-row wrap no-gutters style="gap: 0 1em">
             <v-text-field v-model="contact.Name" name="name" label="Name"></v-text-field>
