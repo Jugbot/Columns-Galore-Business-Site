@@ -2,10 +2,6 @@
   <v-container>
     <v-card>
       <v-card-actions v-if="questions.length > 1" class="primary">
-        <!-- <v-breadcrumbs divider="/" :items="questions" class='pa-0' dark>
-          <template #item="props">
-          </template>
-        </v-breadcrumbs>-->
         <v-row align="baseline" no-gutters>
           <template v-for="(item, i) in questions">
             <v-btn :disabled="!item.selected" :key="item.text" small text dark @click="goto(i)">{{item.text}}</v-btn>
@@ -13,21 +9,37 @@
           </template>
         </v-row>
       </v-card-actions>
-      <v-card-actions v-if="questions.length !== 0 && !questionaireCompleted" class="primary">
+      <v-card-actions v-if="!questionaireCompleted" class="primary">
+        <v-icon dark class="px-3">mdi-home-search</v-icon>
         <v-select
+          v-if="!fetching && question"
           :items="question.options"
           v-model="question.selected"
           @change="changeSelection()"
-          :label="'Steering Column ' + question.text"
-          prepend-icon="mdi-home-search"
+          :label="'Filter by Steering Column ' + question.text"
+          class="white"
           filled
-          dark
+          light
           hide-details
-          outlined
+          solo
         ></v-select>
+        <v-select
+          v-else
+          class="white"
+          loading
+          label="Loading..."
+          disabled
+          filled
+          light
+          hide-details
+          solo
+          />
       </v-card-actions>
-      <v-card-text class="text-center">
-        Search for the steering column you need! Use the prompt above to narrow down your search. <br>
+      <v-card-actions v-if="questionaireCompleted" class="primary text-center justify-center white--text ">
+        <h2 class="py-3">Select your steering column below!</h2>
+      </v-card-actions>
+      <v-card-text v-if="!questionaireCompleted" class="text-center">
+        <h3>Search for the steering column you need! Use the prompt above to narrow down your search.</h3> <br>
         Alternatively, <router-link to='/quote'>request a quote</router-link>.
       </v-card-text>
     </v-card>
@@ -115,7 +127,7 @@ export default {
         : null
     },
     questionaireCompleted () {
-      return !!this.question.selected
+      return !!this.question?.selected && !this.fetching
     },
     columnQuery () {
       let values = {}
