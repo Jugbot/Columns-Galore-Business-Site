@@ -146,6 +146,7 @@
   position: fixed;
   width: 100vw;
   height: 100vh;
+  filter: brightness(0.5);
 }
 </style>
 
