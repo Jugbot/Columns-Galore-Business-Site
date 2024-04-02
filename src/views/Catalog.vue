@@ -16,7 +16,7 @@
           :items="question.options"
           v-model="question.selected"
           @change="changeSelection()"
-          :label="'Filter by Steering Column ' + question.text"
+          :label="'Select the Steering Column ' + question.text"
           class="white"
           filled
           light
