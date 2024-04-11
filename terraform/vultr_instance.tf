@@ -6,5 +6,5 @@ resource "vultr_instance" "nodejs_server" {
   hostname = "nodejs-backend.example.com"
 
   # User data to install Node.js and other startup scripts
-  user_data = "${file("server_setup.sh")}"
+  user_data = file("server_setup.sh")
 }
