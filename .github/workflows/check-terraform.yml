@@ -9,7 +9,6 @@ jobs:
   terraform:
     name: 'Terraform Format and Validate'
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -18,13 +17,13 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Format
-        id: fmt
         run: terraform fmt -check
+        working-directory: terraform
 
       - name: Terraform Init
-        id: init
         run: terraform init
+        working-directory: terraform
 
       - name: Terraform Validate
-        id: validate
         run: terraform validate
+        working-directory: terraform

@@ -2,12 +2,17 @@ name: Deploy to Vultr
 
 on:
   push:
+    paths-ignore:
+      - '**.md'
     branches:
       - main
 
 jobs:
   deploy:
+    name: "Deploy to Vultr"
     runs-on: ubuntu-latest
+    env:
+      VULTR_API_KEY: ${{ secrets.VULTR_API_KEY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -17,15 +22,12 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-        env:
-          VULTR_API_KEY: ${{ secrets.VULTR_API_KEY }}
+        working-directory: terraform
 
       - name: Terraform Plan
         run: terraform plan
-        env:
-          VULTR_API_KEY: ${{ secrets.VULTR_API_KEY }}
+        working-directory: terraform
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
-        env:
-          VULTR_API_KEY: ${{ secrets.VULTR_API_KEY }}
+        working-directory: terraform
