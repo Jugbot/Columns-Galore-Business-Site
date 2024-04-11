@@ -4,8 +4,22 @@
       <v-card-actions v-if="questions.length > 1" class="primary">
         <v-row align="baseline" no-gutters>
           <template v-for="(item, i) in questions">
-            <v-btn :disabled="!item.selected" :key="item.text" small text dark @click="goto(i)">{{item.text}}</v-btn>
-            <div v-if="i != questions.length - 1" :key="item.text+'-slash'" class="white--text mx-3">/</div>
+            <v-btn
+              :disabled="!item.selected"
+              :key="item.text"
+              small
+              text
+              dark
+              @click="goto(i)"
+              >{{ item.text }}</v-btn
+            >
+            <div
+              v-if="i != questions.length - 1"
+              :key="item.text + '-slash'"
+              class="white--text mx-3"
+            >
+              /
+            </div>
           </template>
         </v-row>
       </v-card-actions>
@@ -33,20 +47,27 @@
           light
           hide-details
           solo
-          />
+        />
       </v-card-actions>
-      <v-card-actions v-if="questionaireCompleted" class="primary text-center justify-center white--text ">
+      <v-card-actions
+        v-if="questionaireCompleted"
+        class="primary text-center justify-center white--text"
+      >
         <h2 class="py-3">Select your steering column below!</h2>
       </v-card-actions>
       <v-card-text v-if="!questionaireCompleted" class="text-center">
-        <h3>Search for the steering column you need! Use the prompt above to narrow down your search.</h3> <br>
-        Alternatively, <router-link to='/quote'>request a quote</router-link>.
+        <h3>
+          Search for the steering column you need! Use the prompt above to
+          narrow down your search.
+        </h3>
+        <br />
+        Alternatively, <router-link to="/quote">request a quote</router-link>.
       </v-card-text>
     </v-card>
     <v-card class="mt-5">
       <v-list v-if="fetching" two-line>
         <v-skeleton-loader
-          v-for="key in [1,2,3,4,5]"
+          v-for="key in [1, 2, 3, 4, 5]"
           :key="key"
           type="list-item-avatar-two-line"
         ></v-skeleton-loader>
@@ -61,23 +82,37 @@
             <v-img :src="product.ImagePath" :lazy-src="fallbackImage"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title>{{product.Manufacturer}} {{product.Model}}</v-list-item-title>
-            <v-list-item-subtitle>{{product.Year}} {{product.Shift}} {{product.Transmission}} {{product.Tilt}} {{product.AdditionalOptions}}</v-list-item-subtitle>
+            <v-list-item-title
+              >{{ product.Manufacturer }} {{ product.Model }}</v-list-item-title
+            >
+            <v-list-item-subtitle
+              >{{ product.Year }} {{ product.Shift }}
+              {{ product.Transmission }} {{ product.Tilt }}
+              {{ product.AdditionalOptions }}</v-list-item-subtitle
+            >
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-card>
     <v-row class="text-center py-5" no-gutters>
-      <v-btn :to="{query:{...$route.query, page:(page-1)}}" :disabled="page===1" color="primary"><v-icon>mdi-arrow-left</v-icon></v-btn>
+      <v-btn
+        :to="{ query: { ...$route.query, page: page - 1 } }"
+        :disabled="page === 1"
+        color="primary"
+        ><v-icon>mdi-arrow-left</v-icon></v-btn
+      >
       <v-spacer></v-spacer>
-      <v-btn :to="{query:{...$route.query, page:(page+1)}}" :disabled="page===maxPage" color="primary"><v-icon>mdi-arrow-right</v-icon></v-btn>
+      <v-btn
+        :to="{ query: { ...$route.query, page: page + 1 } }"
+        :disabled="page === maxPage"
+        color="primary"
+        ><v-icon>mdi-arrow-right</v-icon></v-btn
+      >
     </v-row>
   </v-container>
 </template>
 
-<style>
-
-</style>
+<style></style>
 
 <script>
 import api from '@/api'
@@ -85,9 +120,9 @@ import api from '@/api'
 export default {
   name: 'catalog',
   metaInfo: {
-    title: 'Catalog'
+    title: 'Catalog',
   },
-  data () {
+  data() {
     return {
       fallbackImage: require('../assets/steering_column.svg'),
       questions: [
@@ -117,41 +152,41 @@ export default {
       ],
       page: 1,
       maxPage: 1,
-      fetching: true
+      fetching: true,
     }
   },
   computed: {
-    question () {
+    question() {
       return this.questions.length
         ? this.questions[this.questions.length - 1]
         : null
     },
-    questionaireCompleted () {
+    questionaireCompleted() {
       return !!this.question?.selected && !this.fetching
     },
-    columnQuery () {
+    columnQuery() {
       let values = {}
       for (const obj of this.questions) {
         values[obj.text] = obj.selected || null
       }
       return values
-    }
+    },
   },
   methods: {
-    setPage (page) {
+    setPage(page) {
       this.page = page
       this.setSearchParams({ page: page, ...this.columnQuery })
     },
-    setQuestions (questions) {
+    setQuestions(questions) {
       this.questions = questions
       this.setSearchParams({ page: this.page, ...this.columnQuery })
     },
-    goto (idx) {
+    goto(idx) {
       this.setQuestions(this.questions.slice(0, idx))
       this.setPage(1)
       this.fetchList()
     },
-    setSearchParams (keyValue) {
+    setSearchParams(keyValue) {
       for (const [key, val] of Object.entries(keyValue)) {
         if (val === null) {
           delete keyValue[key]
@@ -159,44 +194,51 @@ export default {
       }
       this.$router.push({ query: keyValue }).catch(() => {})
     },
-    fetchList () {
+    fetchList() {
       this.fetching = true
-      api.postCatalog({ query: this.columnQuery, page: this.page })
-        .then(response => {
+      api
+        .postCatalog({ query: this.columnQuery, page: this.page })
+        .then((response) => {
           this.fetching = false
           if (response.status === 200) {
-            response.json().then(data => {
+            response.json().then((data) => {
               this.searchResults = data.result
               this.maxPage = data.maxPage
               if (data.nextQuestion) {
-                this.setQuestions([...this.questions, {
-                  text: data.nextQuestion,
-                  options: data.options
-                }])
+                this.setQuestions([
+                  ...this.questions,
+                  {
+                    text: data.nextQuestion,
+                    options: data.options,
+                  },
+                ])
               }
             })
           }
         })
     },
-    changeSelection () {
+    changeSelection() {
       this.setPage(1)
       this.fetchList()
-    }
+    },
   },
-  created () {
+  created() {
     const query = { ...this.$route.query }
     for (const name in query) {
       if (name === 'page') {
         this.setPage(parseInt(query[name]))
       } else {
-        this.setQuestions([...this.questions, {
-          text: name,
-          options: [],
-          selected: query[name]
-        }])
+        this.setQuestions([
+          ...this.questions,
+          {
+            text: name,
+            options: [],
+            selected: query[name],
+          },
+        ])
       }
     }
     this.fetchList()
-  }
+  },
 }
 </script>

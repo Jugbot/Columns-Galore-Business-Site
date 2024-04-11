@@ -1,17 +1,20 @@
 <template>
   <v-container>
     <v-card>
-      <v-img :src='part.ImagePath'
-      :lazy-src='fallbackImage'
-      class="img-expand"
-      @click='imageClicked=!imageClicked'
-      :style="{'max-height':imageClicked?'none':null}"
-      :alt="title"></v-img>
+      <v-img
+        :src="part.ImagePath"
+        :lazy-src="fallbackImage"
+        class="img-expand"
+        @click="imageClicked = !imageClicked"
+        :style="{ 'max-height': imageClicked ? 'none' : null }"
+        :alt="title"
+      ></v-img>
       <v-card-title>
-        {{this.title}}
+        {{ this.title }}
       </v-card-title>
       <v-card-subtitle>
-        Price: ${{this.part.Price}}, Core Charge: ${{this.part.CoreCharge}}, Part #{{this.part.CatalogId}}
+        Price: ${{ this.part.Price }}, Core Charge: ${{ this.part.CoreCharge }},
+        Part #{{ this.part.CatalogId }}
       </v-card-subtitle>
       <v-card-text>
         <!-- generated content -->
@@ -29,7 +32,13 @@
         </span>
       </v-card-text>
       <v-card-actions>
-        <v-btn :to="{path: '/quote', query:{ id: part.CatalogId}}" block large color="primary"><b>Submit an Order</b></v-btn>
+        <v-btn
+          :to="{ path: '/quote', query: { id: part.CatalogId } }"
+          block
+          large
+          color="primary"
+          ><b>Submit an Order</b></v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-container>
@@ -41,9 +50,9 @@ import api from '@/api'
 export default {
   name: 'InventoryId',
   metaInfo: {
-    title: 'Part Information'
+    title: 'Part Information',
   },
-  data () {
+  data() {
     return {
       imageClicked: true, // Start with large image to avoid confusion
       fallbackImage: require('../assets/steering_column.svg'),
@@ -68,24 +77,31 @@ export default {
         //   '<p>New signal switch, new ignition switch and a new lock with 2 keys, new cruise control lever if equiped with cruise control.</p>',
         // ExcludesHTML:
         //   '<p>Steering wheel, tilt lever, shift lever, hazard button, reverse light switch, these parts may be available if needed. The Customer can remove these items from their broken column and install them on our rebuilt column.</p>',
-      }
+      },
     }
   },
   computed: {
-    title () {
-      return [this.part.Year, this.part.Manufacturer, this.part.Model, 'Steering Column with', this.part.Tilt, this.part.AdditionalOptions].join(' ')
+    title() {
+      return [
+        this.part.Year,
+        this.part.Manufacturer,
+        this.part.Model,
+        'Steering Column with',
+        this.part.Tilt,
+        this.part.AdditionalOptions,
+      ].join(' ')
       // "Column type:\t1980 - 1991 Ford Trucks (F series) and Vans (E Series) with non tilt.
-    }
+    },
   },
-  created () {
-    api.getPart(this.$route.params.id).then(response => {
+  created() {
+    api.getPart(this.$route.params.id).then((response) => {
       if (response.status === 200) {
-        response.json().then(data => {
+        response.json().then((data) => {
           this.part = data
         })
       }
     })
-  }
+  },
 }
 </script>
 

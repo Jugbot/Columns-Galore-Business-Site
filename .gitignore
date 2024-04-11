@@ -22,3 +22,21 @@ yarn-error.log*
 *.log
 TODO.txt
 desktop.ini
+
+# Terraform files
+*.tfstate
+*.tfstate.*.backup
+*.tfstate.backup
+*.tfvars
+*.tfplan
+.terraform/
+
+# Ignore override files as they are usually used to override resources locally.
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc

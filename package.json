@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint",
     "audit": "npm audit fix",
     "sitemap": "vue-cli-service sitemap",
+    "format": "prettier --write \"**/*.{js,vue}\" && terraform fmt -recursive terraform",
     "postinstall": "cd srv && npm install"
   },
   "dependencies": {

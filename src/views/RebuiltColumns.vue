@@ -1,7 +1,9 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title class="justify-center headline">Rebuilt Steering Columns</v-card-title>
+      <v-card-title class="justify-center headline"
+        >Rebuilt Steering Columns</v-card-title
+      >
       <v-card-text>
         <p>We stock over 3000 different rebuilt steering columns...</p>
         <p>
@@ -63,7 +65,7 @@
 export default {
   name: 'rebuiltcolumns',
   metaInfo: {
-    title: 'Rebuilt Columns'
-  }
+    title: 'Rebuilt Columns',
+  },
 }
 </script>

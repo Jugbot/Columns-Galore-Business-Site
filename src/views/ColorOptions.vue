@@ -32,7 +32,7 @@
                 v-for="({ id, available, name, color }, i) in colors"
                 :key="i"
               >
-                <td>{{ name }}&nbsp;{{ available ? "" : "(unavailable)" }}</td>
+                <td>{{ name }}&nbsp;{{ available ? '' : '(unavailable)' }}</td>
                 <td>{{ id }}</td>
                 <td>
                   <v-chip :color="color" style="width: 100%"></v-chip>
@@ -52,12 +52,12 @@ import colors from '@/colors'
 export default {
   name: 'coloroptions',
   metaInfo: {
-    title: 'Color Options'
+    title: 'Color Options',
   },
-  data () {
+  data() {
     return {
-      colors: colors
+      colors: colors,
     }
-  }
+  },
 }
 </script>

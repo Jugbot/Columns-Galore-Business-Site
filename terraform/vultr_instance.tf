@@ -3,7 +3,7 @@ resource "vultr_instance" "nodejs_server" {
   region   = var.region
   os_id    = "387" # Ubuntu 20.04 x64
   label    = "nodejs-backend"
-  hostname = "nodejs-backend.example.com"
+  hostname = "steeringcolumnsgalore.com"
 
   # User data to install Node.js and other startup scripts
   user_data = file("server_setup.sh")

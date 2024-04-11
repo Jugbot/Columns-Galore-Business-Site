@@ -31,7 +31,7 @@
 export default {
   name: 'payment',
   metaInfo: {
-    title: 'Payment Information'
-  }
+    title: 'Payment Information',
+  },
 }
 </script>

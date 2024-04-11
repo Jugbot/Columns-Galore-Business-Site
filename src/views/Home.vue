@@ -14,7 +14,7 @@
 
         <h2>Service:</h2>
         <ul>
-          <li>Over {{$yearsSinceFounding}} Years Experience</li>
+          <li>Over {{ $yearsSinceFounding }} Years Experience</li>
           <li>Reliable</li>
           <li>100% Satisfaction Guaranteed</li>
         </ul>
@@ -91,7 +91,7 @@ export default {
   components: {},
   metaInfo: {
     title: 'Steering Columns Galore',
-    titleTemplate: '%s'
-  }
+    titleTemplate: '%s',
+  },
 }
 </script>

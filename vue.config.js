@@ -2,9 +2,7 @@ const { staticRoutes } = require('./src/router/routes')
 const CompressionPlugin = require('compression-webpack-plugin')
 
 module.exports = {
-  'transpileDependencies': [
-    'vuetify'
-  ],
+  transpileDependencies: ['vuetify'],
 
   lintOnSave: false,
 
@@ -15,19 +13,19 @@ module.exports = {
         algorithm: 'gzip',
         test: /\.js$|\.css$|\.html$/,
         threshold: 10240,
-        minRatio: 0.8
+        minRatio: 0.8,
       }),
       new CompressionPlugin({
         filename: '[path].br[query]',
         algorithm: 'brotliCompress',
         test: /\.(js|css|html|svg)$/,
         compressionOptions: {
-          level: 11
+          level: 11,
         },
         threshold: 10240,
-        minRatio: 0.8
-      })
-    ]
+        minRatio: 0.8,
+      }),
+    ],
   },
 
   pluginOptions: {
@@ -36,19 +34,19 @@ module.exports = {
       routes: staticRoutes, // [...staticRoutes, ...dynamicRoutes],
       outputDir: './dist',
       pretty: true,
-      productionOnly: true
+      productionOnly: true,
     },
     express: {
       shouldServeApp: true,
-      serverDir: './srv'
+      serverDir: './srv',
     },
     prerenderSpa: {
       registry: undefined,
       // renderRoutes: staticRoutes.map(o => o.path),
       useRenderEvent: true,
       headless: true,
-      onlyProduction: true
-    }
+      onlyProduction: true,
+    },
   },
 
   chainWebpack: (config) => {
@@ -59,5 +57,5 @@ module.exports = {
         return opts
       })
     }
-  }
+  },
 }
