@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title class="justify-center headline"
-        >Company Profile</v-card-title
-      >
+      <v-card-title class="justify-center headline">
+        Company Profile
+      </v-card-title>
       <v-card-text>
         <p>
           Family owned and operated business, Bill and Rick Lanza - father and
@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: 'about',
+  name: 'About',
   metaInfo: {
     title: 'About Us',
   },

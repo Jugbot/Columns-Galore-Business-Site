@@ -1,16 +1,18 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title class="justify-center headline"
-        >Rebuilt Steering Columns</v-card-title
-      >
+      <v-card-title class="justify-center headline">
+        Rebuilt Steering Columns
+      </v-card-title>
       <v-card-text>
         <p>We stock over 3000 different rebuilt steering columns...</p>
         <p>
           All Rebuilt steering columns come with two new keys and are painted to
           match the interior of your car. To see the paint colors available
           follow this link:
-          <router-link to="coloroptions">Paint Options</router-link>
+          <router-link to="coloroptions">
+            Paint Options
+          </router-link>
         </p>
         <p>
           Our columns are thoroughly tested. We have a 10 point mechanical and
@@ -30,7 +32,9 @@
         <p>
           Pricing depends on the year, make, model, and options of your vehicle,
           please call us for a price, or fill out our
-          <router-link to="quote">online quote form</router-link>.
+          <router-link to="quote">
+            online quote form
+          </router-link>.
         </p>
         <p><b>Core Charge:</b></p>
         <p>
@@ -63,7 +67,7 @@
 
 <script>
 export default {
-  name: 'rebuiltcolumns',
+  name: 'RebuiltColumns',
   metaInfo: {
     title: 'Rebuilt Columns',
   },

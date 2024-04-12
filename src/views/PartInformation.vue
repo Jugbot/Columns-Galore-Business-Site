@@ -5,30 +5,34 @@
         :src="part.ImagePath"
         :lazy-src="fallbackImage"
         class="img-expand"
-        @click="imageClicked = !imageClicked"
         :style="{ 'max-height': imageClicked ? 'none' : null }"
         :alt="title"
-      ></v-img>
+        @click="imageClicked = !imageClicked"
+      />
       <v-card-title>
-        {{ this.title }}
+        {{ title }}
       </v-card-title>
       <v-card-subtitle>
-        Price: ${{ this.part.Price }}, Core Charge: ${{ this.part.CoreCharge }},
-        Part #{{ this.part.CatalogId }}
+        Price: ${{ part.Price }}, Core Charge: ${{ part.CoreCharge }}, Part #{{
+          part.CatalogId
+        }}
       </v-card-subtitle>
       <v-card-text>
         <!-- generated content -->
         <span v-show="part.ProcessHTML">
           <h3>What gets done when we rebuild.</h3>
-          <span v-html="part.ProcessHTML"></span>
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <span v-html="part.ProcessHTML" />
         </span>
         <span v-show="part.IncludesHTML">
           <h3>Comes complete with:</h3>
-          <span v-html="part.IncludesHTML"></span>
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <span v-html="part.IncludesHTML" />
         </span>
         <span v-show="part.ExcludesHTML">
           <h3>This column does not come with:</h3>
-          <span v-html="part.ExcludesHTML"></span>
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <span v-html="part.ExcludesHTML" />
         </span>
       </v-card-text>
       <v-card-actions>
@@ -37,8 +41,9 @@
           block
           large
           color="primary"
-          ><b>Submit an Order</b></v-btn
         >
+          <b>Submit an Order</b>
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -48,7 +53,7 @@
 import api from '@/api'
 
 export default {
-  name: 'InventoryId',
+  name: 'PartInformation',
   metaInfo: {
     title: 'Part Information',
   },

@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: 'columnparts',
+  name: 'ColumnParts',
   metaInfo: {
     title: 'Column Parts',
   },

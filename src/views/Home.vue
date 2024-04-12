@@ -79,15 +79,9 @@
   </v-container>
 </template>
 
-<style>
-.v-card__title {
-  word-break: initial;
-}
-</style>
-
 <script>
 export default {
-  name: 'home',
+  name: 'Home',
   components: {},
   metaInfo: {
     title: 'Steering Columns Galore',
@@ -95,3 +89,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.v-card__title {
+  word-break: initial;
+}
+</style>

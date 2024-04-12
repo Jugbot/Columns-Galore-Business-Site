@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title class="justify-center headline"
-        >Technical Support</v-card-title
-      >
+      <v-card-title class="justify-center headline">
+        Technical Support
+      </v-card-title>
       <v-card-text>
         <p>
           When you buy your steering column parts or rebuilt steering columns
@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  name: 'techsupport',
+  name: 'TechSupport',
   metaInfo: {
     title: 'Technical Support',
   },
