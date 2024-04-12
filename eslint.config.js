@@ -1,5 +1,6 @@
 const js = require('@eslint/js')
 const prettier = require('eslint-config-prettier')
+const prettierVue = require('eslint-config-prettier/vue')
 const vue = require('eslint-plugin-vue')
 const globals = require('globals')
 
@@ -7,6 +8,7 @@ module.exports = [
   js.configs.recommended,
   ...vue.configs['flat/vue2-recommended'],
   prettier,
+  prettierVue,
   {
     files: ['src/**/*.js', 'src/**/*.vue'],
     languageOptions: {

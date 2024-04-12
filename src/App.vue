@@ -5,30 +5,17 @@
       <v-col class="pa-0 white">
         <v-container v-if="$vuetify.breakpoint.smAndUp">
           <v-row justify="center">
-            <v-flex
-              xs12
-              sm2
-              px-1
-            >
+            <v-flex xs12 sm2 px-1>
               <v-img :src="require('./assets/logo.svg')" />
             </v-flex>
             <v-flex shrink>
-              <v-row
-                no-gutters
-                class="fill-height mx-3"
-                align="center"
-              >
+              <v-row no-gutters class="fill-height mx-3" align="center">
                 <v-flex>
                   <h2>Your Complete Steering Column Source</h2>
                   <h3>Steering Columns And Parts Shipped Worldwide</h3>
-                  <v-row
-                    no-gutters
-                    class="accent--text"
-                  >
+                  <v-row no-gutters class="accent--text">
                     <h3>Toll Free 888-326-5866</h3>
-                    <div class="px-1">
-                      &mdash;
-                    </div>
+                    <div class="px-1">&mdash;</div>
                     <h3>Satisfaction Guaranteed</h3>
                   </v-row>
                 </v-flex>
@@ -37,28 +24,15 @@
           </v-row>
         </v-container>
 
-        <v-tabs
-          centered
-          show-arrows
-        >
-          <v-tab
-            key="Home"
-            to="/"
-            exact
-          >
-            <v-avatar
-              v-if="$vuetify.breakpoint.xsOnly"
-              tile
-            >
+        <v-tabs centered show-arrows>
+          <v-tab key="Home" to="/" exact>
+            <v-avatar v-if="$vuetify.breakpoint.xsOnly" tile>
               <v-img :src="require('./assets/logo.svg')" />
             </v-avatar>
             <span v-else>Home</span>
           </v-tab>
           <template v-for="{ name, page } in pages.primary">
-            <v-tab
-              :key="name"
-              :to="page"
-            >
+            <v-tab :key="name" :to="page">
               {{ name }}
             </v-tab>
           </template>
@@ -73,10 +47,7 @@
             </template>
             <v-list>
               <template v-for="{ name, page } in pages.secondary">
-                <v-list-item
-                  :key="name"
-                  :to="page"
-                >
+                <v-list-item :key="name" :to="page">
                   <v-list-item-title>{{ name }}</v-list-item-title>
                 </v-list-item>
               </template>
@@ -85,55 +56,32 @@
         </v-tabs>
       </v-col>
 
-      <v-container
-        fluid
-        class="py-5"
-      >
+      <v-container fluid class="py-5">
         <router-view :key="$route.fullPath" />
       </v-container>
     </v-content>
 
-    <v-footer
-      app
-      absolute
-      color="white"
-    >
+    <v-footer app absolute color="white">
       <v-container>
         <v-row justify="space-between">
-          <v-col
-            cols="12"
-            md="auto"
-            class="grow"
-          >
-            <v-card
-              outlined
-              class="pa-3 fill-height"
-            >
+          <v-col cols="12" md="auto" class="grow">
+            <v-card outlined class="pa-3 fill-height">
               <v-card-title>Phone</v-card-title>
               <v-card-text style>
-                <p
-                  v-for="({ name, number }, i) in phoneNumbers"
-                  :key="i"
-                >
+                <p v-for="({ name, number }, i) in phoneNumbers" :key="i">
                   {{ name }}
                   <a
                     :href="toCallable(number)"
                     style="float: right"
                     class="ml-2"
-                  >{{ number }}</a>
+                    >{{ number }}</a
+                  >
                 </p>
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col
-            cols="12"
-            md="auto"
-            class="grow"
-          >
-            <v-card
-              outlined
-              class="pa-3 fill-height"
-            >
+          <v-col cols="12" md="auto" class="grow">
+            <v-card outlined class="pa-3 fill-height">
               <v-card-title>Shipping & Mailing</v-card-title>
               <v-card-text>
                 <p>Steering Columns Galore Inc.</p>
@@ -142,46 +90,30 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col
-            cols="12"
-            md="auto"
-            class="grow"
-          >
-            <v-card
-              outlined
-              class="pa-3 fill-height"
-            >
+          <v-col cols="12" md="auto" class="grow">
+            <v-card outlined class="pa-3 fill-height">
               <v-card-title>Email</v-card-title>
               <v-card-text>
                 <p>
-                  <a href="mailto:techsupport@columnsgalore.com">techsupport@columnsgalore.com</a>
+                  <a href="mailto:techsupport@columnsgalore.com"
+                    >techsupport@columnsgalore.com</a
+                  >
                 </p>
                 <p>
-                  <a href="mailto:salesteam@columnsgalore.com">salesteam@columnsgalore.com</a>
+                  <a href="mailto:salesteam@columnsgalore.com"
+                    >salesteam@columnsgalore.com</a
+                  >
                 </p>
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col
-            cols="12"
-            md="auto"
-            class="grow"
-          >
-            <v-card
-              outlined
-              class="pa-3 fill-height"
-            >
+          <v-col cols="12" md="auto" class="grow">
+            <v-card outlined class="pa-3 fill-height">
               <v-card-title>Hours of Operation (EST)</v-card-title>
               <v-card-text>
-                <v-simple-table
-                  dense
-                  width="100%"
-                >
+                <v-simple-table dense width="100%">
                   <tbody>
-                    <tr
-                      v-for="({ day, start, end }, i) in hours"
-                      :key="i"
-                    >
+                    <tr v-for="({ day, start, end }, i) in hours" :key="i">
                       <td>{{ day }}</td>
                       <td>{{ start }}</td>
                       <td>{{ end }}</td>
@@ -191,15 +123,8 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col
-            cols="12"
-            md="auto"
-            class="grow"
-          >
-            <v-card
-              outlined
-              class="fill-height grow"
-            >
+          <v-col cols="12" md="auto" class="grow">
+            <v-card outlined class="fill-height grow">
               <v-card-actions class="pa-0">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.03556457633!2d-73.62045168448964!3d41.3950340034838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89dd52e5ff79a0cb%3A0x487f9a4fb8e078ea!2sSteering%20Columns%20Galore%20Inc.!5e0!3m2!1sen!2sus!4v1578945739765!5m2!1sen!2sus"

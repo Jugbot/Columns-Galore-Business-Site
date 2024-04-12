@@ -35,10 +35,7 @@
                 <td>{{ name }}&nbsp;{{ available ? '' : '(unavailable)' }}</td>
                 <td>{{ id }}</td>
                 <td>
-                  <v-chip
-                    :color="color"
-                    style="width: 100%"
-                  />
+                  <v-chip :color="color" style="width: 100%" />
                 </td>
               </tr>
             </tbody>

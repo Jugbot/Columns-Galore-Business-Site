@@ -1,9 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title class="justify-center headline">
-        Payment
-      </v-card-title>
+      <v-card-title class="justify-center headline"> Payment </v-card-title>
       <v-card-text>
         <p>
           If you use a credit card we do not charge the core charge up front.

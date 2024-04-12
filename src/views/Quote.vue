@@ -1,23 +1,17 @@
 <template>
   <v-container>
-    <v-dialog
-      v-model="dialog"
-      max-width="500px"
-    >
+    <v-dialog v-model="dialog" max-width="500px">
       <v-card>
         <v-card-title>We Recieved Your Request</v-card-title>
         <v-card-text>
           You should be contacted by a member of our sales team soon. In the
           meantime if you have any questions please email us at
-          <a href="mailto:salesteam@columnsgalore.com">salesteam@columnsgalore.com</a>
+          <a href="mailto:salesteam@columnsgalore.com"
+            >salesteam@columnsgalore.com</a
+          >
         </v-card-text>
         <v-card-actions class="justify-end">
-          <v-btn
-            text
-            @click="dialog = false"
-          >
-            Close
-          </v-btn>
+          <v-btn text @click="dialog = false"> Close </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -26,18 +20,12 @@
         <v-card-title>Your Vehicle Information</v-card-title>
         <v-card-subtitle>
           Use the
-          <router-link to="catalog">
-            Catalog
-          </router-link>
+          <router-link to="catalog"> Catalog </router-link>
           to automatically fill this information!
         </v-card-subtitle>
         <v-card-text>
           <v-row>
-            <v-col
-              cols="12"
-              md="6"
-              class="py-0"
-            >
+            <v-col cols="12" md="6" class="py-0">
               <v-text-field
                 v-model="part.Year"
                 :rules="[rules.required]"
@@ -51,11 +39,7 @@
                 label="Make"
               />
             </v-col>
-            <v-col
-              cols="12"
-              md="6"
-              class="py-0"
-            >
+            <v-col cols="12" md="6" class="py-0">
               <v-text-field
                 v-model="part.Model"
                 :rules="[rules.required]"
@@ -74,16 +58,8 @@
                   {{ item.name }}
                 </template>
                 <template #item="{ item }">
-                  <v-chip
-                    :color="item.color"
-                    style="width: 100%"
-                  >
-                    <v-chip
-                      v-if="item.available"
-                      disabled
-                      small
-                      color="white"
-                    >
+                  <v-chip :color="item.color" style="width: 100%">
+                    <v-chip v-if="item.available" disabled small color="white">
                       {{ item.name }}
                     </v-chip>
                     <v-chip
@@ -99,10 +75,7 @@
                 </template>
               </v-select>
             </v-col>
-            <v-col
-              cols="12"
-              class="py-0"
-            >
+            <v-col cols="12" class="py-0">
               <v-text-field
                 v-if="part.Price"
                 v-model="part.Price"
@@ -112,40 +85,18 @@
                 readonly
               />
             </v-col>
-            <v-col
-              cols="12"
-              class="py-0"
-            >
-              <v-row
-                no-gutters
-                wrap
-              >
+            <v-col cols="12" class="py-0">
+              <v-row no-gutters wrap>
                 <v-col>
                   <v-radio-group v-model="part.Tilt">
-                    <v-radio
-                      name="wheel"
-                      label="Tilt Wheel"
-                      value="tilt"
-                    />
-                    <v-radio
-                      name="wheel"
-                      label="Fixed Wheel"
-                      value="fixed"
-                    />
+                    <v-radio name="wheel" label="Tilt Wheel" value="tilt" />
+                    <v-radio name="wheel" label="Fixed Wheel" value="fixed" />
                   </v-radio-group>
                 </v-col>
                 <v-col>
                   <v-radio-group v-model="part.Shift">
-                    <v-radio
-                      name="shift"
-                      label="Column Shift"
-                      value="column"
-                    />
-                    <v-radio
-                      name="shift"
-                      label="Floor Shift"
-                      value="floor"
-                    />
+                    <v-radio name="shift" label="Column Shift" value="column" />
+                    <v-radio name="shift" label="Floor Shift" value="floor" />
                   </v-radio-group>
                 </v-col>
                 <v-col>
@@ -182,16 +133,8 @@
           We will contact you for payment information.
         </v-card-subtitle>
         <v-card-text>
-          <v-row
-            wrap
-            no-gutters
-            style="gap: 0 1em"
-          >
-            <v-text-field
-              v-model="contact.Name"
-              name="name"
-              label="Name"
-            />
+          <v-row wrap no-gutters style="gap: 0 1em">
+            <v-text-field v-model="contact.Name" name="name" label="Name" />
             <v-text-field
               v-model="contact.Address"
               :rules="[rules.required]"
@@ -226,19 +169,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            color="error"
-            text
-            @click="$refs.form.reset()"
-          >
-            Reset
-          </v-btn>
-          <v-btn
-            color="success"
-            @click="onSubmit()"
-          >
-            Submit
-          </v-btn>
+          <v-btn color="error" text @click="$refs.form.reset()"> Reset </v-btn>
+          <v-btn color="success" @click="onSubmit()"> Submit </v-btn>
           <v-spacer />
         </v-card-actions>
       </v-card>

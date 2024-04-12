@@ -10,9 +10,7 @@
           All Rebuilt steering columns come with two new keys and are painted to
           match the interior of your car. To see the paint colors available
           follow this link:
-          <router-link to="coloroptions">
-            Paint Options
-          </router-link>
+          <router-link to="coloroptions"> Paint Options </router-link>
         </p>
         <p>
           Our columns are thoroughly tested. We have a 10 point mechanical and
@@ -32,9 +30,7 @@
         <p>
           Pricing depends on the year, make, model, and options of your vehicle,
           please call us for a price, or fill out our
-          <router-link to="quote">
-            online quote form
-          </router-link>.
+          <router-link to="quote"> online quote form </router-link>.
         </p>
         <p><b>Core Charge:</b></p>
         <p>
