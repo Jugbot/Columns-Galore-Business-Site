@@ -1,5 +1,6 @@
 resource "vultr_instance" "nodejs_server" {
   plan      = var.nodejs_plan
+  image_id  = "nodejs"
   region    = var.region
   label     = "nodejs-backend"
   hostname  = "steeringcolumnsgalore.com"
