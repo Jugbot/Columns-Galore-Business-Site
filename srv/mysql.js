@@ -12,7 +12,6 @@ export const connectionPool = mysql.createPool({
 export const sqlConnection = (queryFunc) => {
   connectionPool.getConnection((err, conn) => {
     if (err) {
-      conn?.release()
       console.log('Error getting connection!')
       throw err
     }
