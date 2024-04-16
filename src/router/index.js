@@ -8,8 +8,8 @@ const routes = [
   ...dynamicRoutes,
   {
     path: '*',
-    redirect: '/'
-  }
+    redirect: '/',
+  },
 ]
 
 Vue.use(VueRouter)
@@ -18,12 +18,12 @@ Vue.use(Meta, {
   attribute: 'data-vue-meta',
   ssrAttribute: 'data-vue-meta-server-rendered',
   tagIDKeyName: 'vmid',
-  refreshOnceOnNavigation: true
+  refreshOnceOnNavigation: true,
 })
 
 const router = new VueRouter({
   mode: 'history',
-  routes
+  routes,
 })
 
 export default router
