@@ -12,6 +12,12 @@ jobs:
     name: "Deploy to Vultr"
     runs-on: ubuntu-latest
     environment: production
+    env:
+      TF_VAR_DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}
+      TF_VAR_DB_USER: ${{ secrets.TF_VAR_DB_USER }}
+      TF_VAR_EMAIL_NAME: ${{ secrets.TF_VAR_EMAIL_NAME }}
+      TF_VAR_EMAIL_PASSWORD: ${{ secrets.TF_VAR_EMAIL_PASSWORD }}
+      TF_VAR_VULTR_API_KEY: ${{ secrets.TF_VAR_VULTR_API_KEY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
