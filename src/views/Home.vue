@@ -14,7 +14,7 @@
 
         <h2>Service:</h2>
         <ul>
-          <li>Over {{$yearsSinceFounding}} Years Experience</li>
+          <li>Over {{ $yearsSinceFounding }} Years Experience</li>
           <li>Reliable</li>
           <li>100% Satisfaction Guaranteed</li>
         </ul>
@@ -79,19 +79,19 @@
   </v-container>
 </template>
 
+<script>
+export default {
+  name: 'Home',
+  components: {},
+  metaInfo: {
+    title: 'Steering Columns Galore',
+    titleTemplate: '%s',
+  },
+}
+</script>
+
 <style>
 .v-card__title {
   word-break: initial;
 }
 </style>
-
-<script>
-export default {
-  name: 'home',
-  components: {},
-  metaInfo: {
-    title: 'Steering Columns Galore',
-    titleTemplate: '%s'
-  }
-}
-</script>

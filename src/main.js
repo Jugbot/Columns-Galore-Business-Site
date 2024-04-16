@@ -8,16 +8,16 @@ Vue.config.productionTip = false
 
 Vue.mixin({
   computed: {
-    $yearsSinceFounding () {
+    $yearsSinceFounding() {
       return new Date().getUTCFullYear() - 1990
-    }
-  }
+    },
+  },
 })
 
 new Vue({
   router,
   vuetify,
+  mounted: () => document.dispatchEvent(new Event('x-app-rendered')),
   // store,
-  render: h => h(App),
-  mounted: () => document.dispatchEvent(new Event('x-app-rendered'))
+  render: (h) => h(App),
 }).$mount('#app')

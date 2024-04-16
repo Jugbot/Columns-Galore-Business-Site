@@ -4,9 +4,12 @@
   "description": "Columnsgalore express server",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "pm2 start app.js --name app",
+    "stop": "pm2 stop app",
+    "logs": "pm2 logs app",
+    "restart": "pm2 restart app",
+    "delete": "pm2 delete app"
   },
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
@@ -15,6 +18,7 @@
     "express": "^4.17.1",
     "express-static-gzip": "^2.0.6",
     "mysql2": "^2.2.5",
-    "nodemailer": "^6.6.5"
+    "nodemailer": "^6.6.5",
+    "pm2": "^5.3.1"
   }
 }

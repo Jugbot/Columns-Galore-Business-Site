@@ -9,34 +9,44 @@ import { sendQuoteMail } from './mail'
 // borrow routes from vue-router
 const SERVE_PATH = process.env.SERVE_PATH || ''
 const { staticRoutes, dynamicRoutes } = require('../src/router/routes')
-const appRoutes = [...staticRoutes, ...dynamicRoutes].map(o => SERVE_PATH + o.path)
+const appRoutes = [...staticRoutes, ...dynamicRoutes].map(
+  (o) => SERVE_PATH + o.path,
+)
 
 const PORT = 3000
 
-function objectToWhereValues (object) {
+function objectToWhereValues(object) {
   var sqlString = ''
   for (var key in object) {
     var val = object[key]
     if (typeof val === 'function') {
       continue
     }
-    sqlString += (sqlString.length === 0 ? '' : ' AND ') + connectionPool.escapeId(key) + ' = ' + connectionPool.escape(val, true)
+    sqlString +=
+      (sqlString.length === 0 ? '' : ' AND ') +
+      connectionPool.escapeId(key) +
+      ' = ' +
+      connectionPool.escape(val, true)
   }
   return sqlString
-};
+}
 
-function server (app, http) {
+function server(app) {
   app.use(cors({ origin: ['http://localhost:8080'] }))
   app.use(express.json())
-  app.use(expressStaticGzip('../dist', {
-    enableBrotli: true,
-    customCompressions: [{
-      encodingName: 'deflate',
-      fileExtension: 'zz'
-    }],
-    orderPreference: ['br'],
-    index: false
-  }))
+  app.use(
+    expressStaticGzip('../dist', {
+      enableBrotli: true,
+      customCompressions: [
+        {
+          encodingName: 'deflate',
+          fileExtension: 'zz',
+        },
+      ],
+      orderPreference: ['br'],
+      index: false,
+    }),
+  )
 
   app.get(appRoutes, (req, res) => {
     res.sendFile(path.join(__dirname, '../dist', 'app.html'))
@@ -49,7 +59,7 @@ function server (app, http) {
     'Shift',
     'Transmission',
     'Tilt',
-    'AdditionalOptions'
+    'AdditionalOptions',
   ]
 
   app.get('/api/ping', (req, response) => {
@@ -57,94 +67,118 @@ function server (app, http) {
   })
 
   app.get('/api/part', (req, response) => {
-    sqlConnection(sql => {
-      sql.query(`
+    sqlConnection((sql) => {
+      sql.query(
+        `
       SELECT * FROM catalog
       LEFT JOIN info_process USING(ProcessInfoId)
       LEFT JOIN info_includes USING(IncludesInfoId)
       LEFT JOIN info_excludes USING(ExcludesInfoId)
-      WHERE catalog.CatalogId=? LIMIT 1`, req.query.id, function (error, result) {
-        console.log(this.sql)
-        if (error) {
-          console.log(error)
-          return
-        }
-        response.json(result[0])
-      })
+      WHERE catalog.CatalogId=? LIMIT 1`,
+        req.query.id,
+        function (error, result) {
+          console.log(this.sql)
+          if (error) {
+            console.log(error)
+            return
+          }
+          response.json(result[0])
+        },
+      )
     })
   })
 
   const MAX_RESULTS = 5
 
-  function catalogQuestion (idx, whereString, fn) {
+  function catalogQuestion(idx, whereString, fn) {
     // get the next question to ask
     if (idx >= catalogQueries.length) {
       return fn({})
     }
     let field = catalogQueries[idx]
-    sqlConnection(sql => {
-      sql.query('SELECT DISTINCT ' + field + ' FROM catalog ' + (whereString ? ('WHERE ' + whereString) : ''), (error, result) => {
-        if (error) {
-          console.log(error)
-          return fn({})
-        }
-        // console.log('field: ', field, 'options: ', result)
-        let options = []
-        for (let obj of result) {
-          options.push(obj[field])
-        }
-        if (options.length > 1) {
-          console.log('Next Question: ', field)
-          fn({
-            nextQuestion: field,
-            options: options
-          })
-        } else {
-          return catalogQuestion(idx + 1, whereString, fn)
-        }
-      })
+    sqlConnection((sql) => {
+      sql.query(
+        'SELECT DISTINCT ' +
+          field +
+          ' FROM catalog ' +
+          (whereString ? 'WHERE ' + whereString : ''),
+        (error, result) => {
+          if (error) {
+            console.log(error)
+            return fn({})
+          }
+          // console.log('field: ', field, 'options: ', result)
+          let options = []
+          for (let obj of result) {
+            options.push(obj[field])
+          }
+          if (options.length > 1) {
+            console.log('Next Question: ', field)
+            fn({
+              nextQuestion: field,
+              options: options,
+            })
+          } else {
+            return catalogQuestion(idx + 1, whereString, fn)
+          }
+        },
+      )
     })
   }
 
-  function catalogQuery (page, whereString, fn) {
-    sqlConnection(sql => {
-      sql.query('SELECT * FROM catalog' + (whereString ? (' WHERE ' + whereString) : '') + ' ORDER BY CatalogId LIMIT ?, ?', [(page - 1) * MAX_RESULTS, MAX_RESULTS], function (error, result) {
-        console.log(this.sql)
-        if (error) {
-          console.log(error)
-          return fn({})
-        }
-        fn({ result: result })
-        // console.log('result: ', result)
-      })
+  function catalogQuery(page, whereString, fn) {
+    sqlConnection((sql) => {
+      sql.query(
+        'SELECT * FROM catalog' +
+          (whereString ? ' WHERE ' + whereString : '') +
+          ' ORDER BY CatalogId LIMIT ?, ?',
+        [(page - 1) * MAX_RESULTS, MAX_RESULTS],
+        function (error, result) {
+          console.log(this.sql)
+          if (error) {
+            console.log(error)
+            return fn({})
+          }
+          fn({ result: result })
+          // console.log('result: ', result)
+        },
+      )
     })
   }
 
-  function catalogSizeQuery (whereString, fn) {
-    sqlConnection(sql => {
-      sql.query('SELECT COUNT(*) as count FROM catalog' + (whereString ? (' WHERE ' + whereString) : ''), function (error, result) {
-        console.log(this.sql)
-        if (error) {
-          console.log(error)
-          return fn({})
-        }
-        result = Math.ceil(result[0].count / MAX_RESULTS)
-        fn({ maxPage: result })
-        // console.log('result: ', result)
-      })
+  function catalogSizeQuery(whereString, fn) {
+    sqlConnection((sql) => {
+      sql.query(
+        'SELECT COUNT(*) as count FROM catalog' +
+          (whereString ? ' WHERE ' + whereString : ''),
+        function (error, result) {
+          console.log(this.sql)
+          if (error) {
+            console.log(error)
+            return fn({})
+          }
+          result = Math.ceil(result[0].count / MAX_RESULTS)
+          fn({ maxPage: result })
+          // console.log('result: ', result)
+        },
+      )
     })
   }
 
   app.get('/api/catalog', (req, response) => {
-    sqlConnection(sql => {
-      sql.query('SELECT * FROM catalog WHERE catalog.CatalogId=? LIMIT 1', req.query.id, function (error, result) {
-        console.log(this.sql)
-        if (error) {
-          console.log(error)
-          return
-        }
-        response.json(result[0])
-      })
+    sqlConnection((sql) => {
+      sql.query(
+        'SELECT * FROM catalog WHERE catalog.CatalogId=? LIMIT 1',
+        req.query.id,
+        function (error, result) {
+          console.log(this.sql)
+          if (error) {
+            console.log(error)
+            return
+          }
+          response.json(result[0])
+        },
+      )
     })
   })
 
@@ -178,11 +212,13 @@ function server (app, http) {
   app.post('/api/quote', (req, response) => {
     let formdata = req.body
     sendQuoteMail(formdata)
-      .then(result => response.status(200).send(result))
-      .catch(error => response.status(500).send(error))
+      .then((result) => response.status(200).send(result))
+      .catch((error) => response.status(500).send(error))
   })
 
-  app.listen(PORT, () => console.log(`App listening at http://localhost:${PORT}${SERVE_PATH}`))
+  app.listen(PORT, () =>
+    console.log(`App listening at http://localhost:${PORT}${SERVE_PATH}`),
+  )
 }
 
 const app = express()

@@ -21,7 +21,7 @@
           exact colors.
         </p>
         <v-simple-table>
-          <template v-slot:default>
+          <template #default>
             <tbody>
               <tr>
                 <th>Color Paint</th>
@@ -32,10 +32,10 @@
                 v-for="({ id, available, name, color }, i) in colors"
                 :key="i"
               >
-                <td>{{ name }}&nbsp;{{ available ? "" : "(unavailable)" }}</td>
+                <td>{{ name }}&nbsp;{{ available ? '' : '(unavailable)' }}</td>
                 <td>{{ id }}</td>
                 <td>
-                  <v-chip :color="color" style="width: 100%"></v-chip>
+                  <v-chip :color="color" style="width: 100%" />
                 </td>
               </tr>
             </tbody>
@@ -50,14 +50,14 @@
 import colors from '@/colors'
 
 export default {
-  name: 'coloroptions',
+  name: 'ColorOptions',
   metaInfo: {
-    title: 'Color Options'
+    title: 'Color Options',
   },
-  data () {
+  data() {
     return {
-      colors: colors
+      colors: colors,
     }
-  }
+  },
 }
 </script>
