@@ -18,6 +18,6 @@ resource "vultr_database" "mysql_db" {
 
 resource "vultr_database_user" "my_database_user" {
   database_id = vultr_database.mysql_db.id
-  username    = var.MYSQL_USER
-  password    = var.MYSQL_PASSWORD
+  username    = var.DB_USER
+  password    = var.DB_PASSWORD
 }

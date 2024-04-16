@@ -13,8 +13,8 @@ resource "vultr_startup_script" "setup_script" {
   type = "boot"
   script = base64encode(templatefile("server_setup.sh", {
     repository_url = var.REPOSITORY_URL
-    mysql_user     = var.MYSQL_USER
-    mysql_password = var.MYSQL_PASSWORD
+    mysql_user     = var.DB_USER
+    mysql_password = var.DB_PASSWORD
     mysql_host     = vultr_database.mysql_db.public_host
     mysql_port     = vultr_database.mysql_db.port
     email_name     = var.EMAIL_NAME
