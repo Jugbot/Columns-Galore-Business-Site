@@ -6,6 +6,11 @@ resource "vultr_instance" "nodejs_server" {
   hostname  = "steeringcolumnsgalore.com"
   vpc2_ids  = [vultr_vpc2.my_vpc2.id]
   script_id = vultr_startup_script.setup_script.id
+  lifecycle {
+    replace_triggered_by = [
+      null_resource.always_run
+    ]
+  }
 }
 
 resource "vultr_startup_script" "setup_script" {
@@ -21,4 +26,8 @@ resource "vultr_startup_script" "setup_script" {
     email_password = var.EMAIL_PASSWORD
     nginx_config   = file("nginx.conf")
   }))
+}
+
+resource "terraform_data" "always_run" {
+  input = "${timestamp()}"
 }
