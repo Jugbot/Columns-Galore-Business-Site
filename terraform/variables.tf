@@ -9,13 +9,13 @@ variable "REPOSITORY_URL" {
   type        = string
 }
 
-variable "MYSQL_USER" {
+variable "DB_USER" {
   description = "The MySQL user"
   type        = string
   sensitive   = true
 }
 
-variable "MYSQL_PASSWORD" {
+variable "DB_PASSWORD" {
   description = "The MySQL password"
   type        = string
   sensitive   = true
