@@ -21,3 +21,8 @@ resource "vultr_database_user" "my_database_user" {
   username    = var.DB_USER
   password    = var.DB_PASSWORD
 }
+
+resource "vultr_database_db" "my_database_db" {
+  database_id = vultr_database.mysql_db.id
+  name        = "steering_columnsg"
+}
