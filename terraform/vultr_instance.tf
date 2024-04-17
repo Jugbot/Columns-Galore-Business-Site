@@ -8,7 +8,7 @@ resource "vultr_instance" "nodejs_server" {
   script_id = vultr_startup_script.setup_script.id
   lifecycle {
     replace_triggered_by = [
-      null_resource.always_run
+      terraform_data.always_run
     ]
   }
 }
