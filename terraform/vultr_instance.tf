@@ -3,7 +3,7 @@ resource "vultr_instance" "nodejs_server" {
   os_id     = 1743
   region    = var.region
   label     = "nodejs-backend"
-  hostname  = "steeringcolumnsgalore.com"
+  hostname  = var.hostname
   vpc2_ids  = [vultr_vpc2.my_vpc2.id]
   script_id = vultr_startup_script.setup_script.id
   lifecycle {
@@ -30,4 +30,9 @@ resource "vultr_startup_script" "setup_script" {
 
 resource "terraform_data" "always_run" {
   input = timestamp()
+}
+
+resource "vultr_dns_domain" "my_domain" {
+  domain = var.hostname
+  ip     = vultr_instance.nodejs_server.main_ip
 }
