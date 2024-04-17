@@ -46,3 +46,8 @@ variable "mysql_plan" {
   description = "The plan to use for the MySQL database"
   default     = "vultr-dbaas-hobbyist-cc-1-25-1"
 }
+
+variable "hostname" {
+  description = "The hostname to use for the server"
+  default     = "steeringcolumnsgalore.com"
+}
