@@ -5,6 +5,7 @@ export DB_HOST=${mysql_host}
 export DB_PORT=${mysql_port}
 export DB_USER=${mysql_user}
 export DB_PASSWORD=${mysql_password}
+export DB_SCHEMA=${mysql_db_schema}
 export REPOSITORY_URL=${repository_url}
 export EMAIL_NAME=${email_name}
 export EMAIL_PASSWORD=${email_password}

@@ -17,14 +17,15 @@ resource "vultr_startup_script" "setup_script" {
   name = "Server Setup"
   type = "boot"
   script = base64encode(templatefile("server_setup.sh", {
-    repository_url = var.REPOSITORY_URL
-    mysql_user     = var.DB_USER
-    mysql_password = var.DB_PASSWORD
-    mysql_host     = vultr_database.mysql_db.host
-    mysql_port     = vultr_database.mysql_db.port
-    email_name     = var.EMAIL_NAME
-    email_password = var.EMAIL_PASSWORD
-    nginx_config   = file("nginx.conf")
+    repository_url  = var.REPOSITORY_URL
+    mysql_user      = var.DB_USER
+    mysql_password  = var.DB_PASSWORD
+    mysql_host      = vultr_database.mysql_db.host
+    mysql_port      = vultr_database.mysql_db.port
+    mysql_db_schema = vultr_database_db.my_database_db.name
+    email_name      = var.EMAIL_NAME
+    email_password  = var.EMAIL_PASSWORD
+    nginx_config    = file("nginx.conf")
   }))
 }
 
