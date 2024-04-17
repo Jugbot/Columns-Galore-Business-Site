@@ -54,4 +54,5 @@ git clone $REPOSITORY_URL .
 npm ci
 npm run build
 cd srv
+npm run migrate
 npm run start
