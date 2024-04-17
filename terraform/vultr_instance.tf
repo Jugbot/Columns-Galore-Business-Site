@@ -20,7 +20,7 @@ resource "vultr_startup_script" "setup_script" {
     repository_url = var.REPOSITORY_URL
     mysql_user     = var.DB_USER
     mysql_password = var.DB_PASSWORD
-    mysql_host     = vultr_database.mysql_db.public_host
+    mysql_host     = vultr_database.mysql_db.host
     mysql_port     = vultr_database.mysql_db.port
     email_name     = var.EMAIL_NAME
     email_password = var.EMAIL_PASSWORD
@@ -29,5 +29,5 @@ resource "vultr_startup_script" "setup_script" {
 }
 
 resource "terraform_data" "always_run" {
-  input = "${timestamp()}"
+  input = timestamp()
 }
