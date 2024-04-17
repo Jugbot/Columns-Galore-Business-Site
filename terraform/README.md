@@ -31,7 +31,7 @@ If you get a warning for a potential man in the middle attack after deploying yo
 
 To view startup logs:
 
-`cat /var/log/firstboot.log`
+`cat /var/log/cloud-init-output.log`
 
 To view server logs:
 
