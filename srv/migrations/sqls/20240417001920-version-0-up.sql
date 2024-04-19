@@ -1,3 +1,21 @@
+CREATE TABLE `info_excludes` (
+  `ExcludesInfoId` int NOT NULL,
+  `ExcludesHTML` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`ExcludesInfoId`)
+);
+
+CREATE TABLE `info_includes` (
+  `IncludesInfoId` int NOT NULL,
+  `IncludesHTML` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`IncludesInfoId`)
+);
+
+CREATE TABLE `info_process` (
+  `ProcessInfoId` int NOT NULL,
+  `ProcessHTML` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`ProcessInfoId`)
+);
+
 CREATE TABLE `catalog` (
   `CatalogId` varchar(20) NOT NULL,
   `Manufacturer` varchar(50) NOT NULL,
@@ -20,22 +38,4 @@ CREATE TABLE `catalog` (
   CONSTRAINT `ExcludesInfoId` FOREIGN KEY (`ExcludesInfoId`) REFERENCES `info_excludes` (`ExcludesInfoId`),
   CONSTRAINT `IncludesInfoId` FOREIGN KEY (`IncludesInfoId`) REFERENCES `info_includes` (`IncludesInfoId`),
   CONSTRAINT `ProcessInfoId` FOREIGN KEY (`ProcessInfoId`) REFERENCES `info_process` (`ProcessInfoId`)
-);
-
-CREATE TABLE `info_excludes` (
-  `ExcludesInfoId` int NOT NULL,
-  `ExcludesHTML` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`ExcludesInfoId`)
-);
-
-CREATE TABLE `info_includes` (
-  `IncludesInfoId` int NOT NULL,
-  `IncludesHTML` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`IncludesInfoId`)
-);
-
-CREATE TABLE `info_process` (
-  `ProcessInfoId` int NOT NULL,
-  `ProcessHTML` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`ProcessInfoId`)
 );
