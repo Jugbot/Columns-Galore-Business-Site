@@ -1,4 +1,11 @@
 terraform {
+  cloud {
+    organization = "columnsgalore"
+
+    workspaces {
+      name = "columnsgalore"
+    }
+  }
   required_providers {
     vultr = {
       source  = "vultr/vultr"
