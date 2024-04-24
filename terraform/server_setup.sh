@@ -48,7 +48,7 @@ npm run migrate
 npm run start
 
 # Fallback to invalid certificate
-sudo certbot certonly --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive --test-cert --cert-only
+sudo certbot certonly --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive --test-cert
 
 # Real certificate will overwrite self-signed
 # Will retry until the certificate is retrieved, which depends on how long the vultr dns takes to propagate
