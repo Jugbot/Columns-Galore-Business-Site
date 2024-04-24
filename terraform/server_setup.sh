@@ -30,10 +30,6 @@ sudo n 14
 sudo ufw allow http
 sudo ufw allow https
 
-cat << 'EOF' > /etc/nginx/sites-available/default 
-${nginx_config} 
-EOF
-
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
@@ -52,7 +48,11 @@ sudo certbot certonly --nginx -d steeringcolumnsgalore.com -d www.steeringcolumn
 
 # Real certificate will overwrite self-signed
 # Will retry until the certificate is retrieved, which depends on how long the vultr dns takes to propagate
-until sudo certbot --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive; do
+until sudo certbot certonly --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive; do
   echo "Certificate retrieval failed, retrying in 5 seconds..."
   sleep 5
 done
+
+cat << 'EOF' > /etc/nginx/sites-available/default 
+${nginx_config} 
+EOF
