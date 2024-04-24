@@ -37,3 +37,12 @@ resource "vultr_dns_domain" "my_domain" {
   domain = var.hostname
   ip     = vultr_instance.nodejs_server.main_ip
 }
+
+# Block storage is for storing ssl certificates only
+# This was implemented to circumvent rate limiting on certificate requests
+resource "vultr_block_storage" "my_block_storage" {
+  attached_to_instance = vultr_instance.nodejs_server.id
+  region               = var.region
+  block_type           = "high_perf"
+  size_gb              = 1
+}
