@@ -54,7 +54,7 @@ sudo chown $(whoami):$(whoami) /var/www/app
 cd /var/www/app
 git clone $REPOSITORY_URL .
 npm ci
-npm run build > build.log
+npm run build &> build.log
 cd srv
 npm run migrate
 npm run start
