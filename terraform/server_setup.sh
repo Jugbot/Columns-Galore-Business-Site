@@ -1,14 +1,14 @@
 #!/bin/bash
 set -e
 
-export DB_HOST=${mysql_host}
-export DB_PORT=${mysql_port}
-export DB_USER=${mysql_user}
-export DB_PASSWORD=${mysql_password}
-export DB_SCHEMA=${mysql_db_schema}
-export REPOSITORY_URL=${repository_url}
-export EMAIL_NAME=${email_name}
-export EMAIL_PASSWORD=${email_password}
+export DB_HOST='${mysql_host}'
+export DB_PORT='${mysql_port}'
+export DB_USER='${mysql_user}'
+export DB_PASSWORD='${mysql_password}'
+export DB_SCHEMA='${mysql_db_schema}'
+export REPOSITORY_URL='${repository_url}'
+export EMAIL_NAME='${email_name}'
+export EMAIL_PASSWORD='${email_password}'
 
 # https://dev.to/hayleycodes/deploying-a-node-js-site-to-vultr-j8d
 # https://docs.vultr.com/how-to-generate-ssl-certificates-using-certbot-on-a-vultr-cloud-server
@@ -52,7 +52,10 @@ EOF
 
 # Real certificate will overwrite self-signed
 # Will retry until the certificate is retrieved, which depends on how long the vultr dns takes to propagate
+attempt=1
 until sudo certbot certonly --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive --force-renewal; do
-  echo "Certificate retrieval failed, retrying in 5 seconds..."
-  sleep 5
+  seconds=$((2**attempt))
+  echo "Certificate retrieval failed, retrying in ${seconds} seconds..."
+  sleep $seconds
+  attempt=$((attempt+1))
 done
