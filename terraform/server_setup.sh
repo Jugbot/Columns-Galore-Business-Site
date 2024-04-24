@@ -44,7 +44,7 @@ npm run migrate
 npm run start
 
 DEVICE="/dev/vdb"
-PARTITION="${DEVICE}1"
+PARTITION="$${DEVICE}1"
 
 # Check if the filesystem already exists on the partition
 # https://docs.vultr.com/block-storage
@@ -66,7 +66,7 @@ BLOCKSTORAGE_PATH="/mnt/blockstorage"
 sudo mkdir -p $BLOCKSTORAGE_PATH
 
 # Retrieve UUID for the created partition
-UUID=$(sudo blkid -s UUID -o value ${DEVICE}1)
+UUID=$(sudo blkid -s UUID -o value $PARTITION)
 
 # Add a mount entry to /etc/fstab to automatically mount the block storage at each reboot
 echo "UUID=$UUID $BLOCKSTORAGE_PATH ext4 defaults,noatime,nofail 0 0" | sudo tee -a /etc/fstab
