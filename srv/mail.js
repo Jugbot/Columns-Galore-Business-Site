@@ -13,6 +13,7 @@ const transporter = createTransport({
 export function sendQuoteMail(formdata) {
   return transporter.sendMail({
     to: process.env.EMAIL_NAME,
+    from: process.env.EMAIL_NAME,
     subject: 'Quote Request',
     text:
       'I am looking for a ' +
