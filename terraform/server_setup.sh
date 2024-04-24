@@ -66,7 +66,7 @@ BLOCKSTORAGE_PATH="/mnt/blockstorage"
 sudo mkdir -p $BLOCKSTORAGE_PATH
 
 # Retrieve UUID for the created partition
-UUID=$(sudo blkid -s UUID -o value ${DEVICE}1)
+UUID=$(sudo blkid -s UUID -o value $${DEVICE}1)
 
 # Add a mount entry to /etc/fstab to automatically mount the block storage at each reboot
 echo "UUID=$UUID $BLOCKSTORAGE_PATH ext4 defaults,noatime,nofail 0 0" | sudo tee -a /etc/fstab
