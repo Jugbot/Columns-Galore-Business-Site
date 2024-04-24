@@ -46,13 +46,13 @@ npm run start
 # Fallback to invalid certificate
 sudo certbot certonly --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive --test-cert
 
-# Real certificate will overwrite self-signed
-# Will retry until the certificate is retrieved, which depends on how long the vultr dns takes to propagate
-until sudo certbot certonly --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive; do
-  echo "Certificate retrieval failed, retrying in 5 seconds..."
-  sleep 5
-done
-
 cat << 'EOF' > /etc/nginx/sites-available/default 
 ${nginx_config} 
 EOF
+
+# Real certificate will overwrite self-signed
+# Will retry until the certificate is retrieved, which depends on how long the vultr dns takes to propagate
+until sudo certbot certonly --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive --force-renewal; do
+  echo "Certificate retrieval failed, retrying in 5 seconds..."
+  sleep 5
+done
