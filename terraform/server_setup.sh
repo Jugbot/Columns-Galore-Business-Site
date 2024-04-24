@@ -74,10 +74,6 @@ echo "UUID=$UUID $BLOCKSTORAGE_PATH ext4 defaults,noatime,nofail 0 0" | sudo tee
 # Mount the block storage
 sudo mount $BLOCKSTORAGE_PATH
 
-cat <<'EOF' >/etc/nginx/sites-available/default
-${nginx_config}
-EOF
-
 # Real certificate will overwrite self-signed
 # Will retry until the certificate is retrieved, which depends on how long the vultr dns takes to propagate
 attempt=1
@@ -95,5 +91,9 @@ until sudo certbot certonly \
     sleep $seconds
     attempt=$((attempt + 1))
 done
+
+cat <<'EOF' >/etc/nginx/sites-available/default
+${nginx_config}
+EOF
 
 nginx -t && systemctl restart nginx
