@@ -38,26 +38,62 @@ sudo chown $(whoami):$(whoami) /var/www/app
 cd /var/www/app
 git clone $REPOSITORY_URL .
 npm ci
-npm run build &> build.log
+npm run build &>build.log
 cd srv
 npm run migrate
 npm run start
 
-# Fallback to invalid certificate
-sudo certbot certonly --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive --test-cert
+DEVICE="/dev/vdb"
+PARTITION="${DEVICE}1"
 
-cat << 'EOF' > /etc/nginx/sites-available/default 
-${nginx_config} 
+# Check if the filesystem already exists on the partition
+# https://docs.vultr.com/block-storage
+if ! lsblk -fno FSTYPE $PARTITION | grep -q ext4; then
+    echo "No ext4 filesystem detected on $PARTITION. Formatting..."
+
+    # Create a new disk label using parted
+    sudo parted -s $DEVICE mklabel gpt
+    # Make a primary partition to fill the entire disk
+    sudo parted -s $DEVICE unit mib mkpart primary 0% 100%
+
+    # Create an EXT4 filesystem on the primary partition and format it
+    sudo mkfs.ext4 $PARTITION
+fi
+
+BLOCKSTORAGE_PATH="/mnt/blockstorage"
+
+# Make a mount point for block storage
+sudo mkdir -p $BLOCKSTORAGE_PATH
+
+# Retrieve UUID for the created partition
+UUID=$(sudo blkid -s UUID -o value ${DEVICE}1)
+
+# Add a mount entry to /etc/fstab to automatically mount the block storage at each reboot
+echo "UUID=$UUID $BLOCKSTORAGE_PATH ext4 defaults,noatime,nofail 0 0" | sudo tee -a /etc/fstab
+
+# Mount the block storage
+sudo mount $BLOCKSTORAGE_PATH
+
+cat <<'EOF' >/etc/nginx/sites-available/default
+${nginx_config}
 EOF
-
-nginx -t && systemctl restart nginx
 
 # Real certificate will overwrite self-signed
 # Will retry until the certificate is retrieved, which depends on how long the vultr dns takes to propagate
 attempt=1
-until sudo certbot certonly --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive --force-renewal; do
-  seconds=$((2**attempt))
-  echo "Certificate retrieval failed, retrying in $seconds seconds..."
-  sleep $seconds
-  attempt=$((attempt+1))
+until sudo certbot certonly \
+    --nginx \
+    -d steeringcolumnsgalore.com \
+    -d www.steeringcolumnsgalore.com \
+    -m $EMAIL_NAME \
+    --work-dir $BLOCKSTORAGE_PATH \
+    --agree-tos \
+    --non-interactive \
+    --staging; do
+    seconds=$((2 ** attempt))
+    echo "Certificate retrieval failed, retrying in $seconds seconds..."
+    sleep $seconds
+    attempt=$((attempt + 1))
 done
+
+nginx -t && systemctl restart nginx
