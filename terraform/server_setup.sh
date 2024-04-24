@@ -37,18 +37,6 @@ EOF
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
-# Fallback to self-signed certificate
-sudo mkdir -p /etc/letsencrypt/self-signed
-sudo openssl req -nodes -x509 -newkey rsa:2048 -keyout /etc/letsencrypt/self-signed/privkey.pem -out /etc/letsencrypt/self-signed/fullchain.pem -days 365 -subj "/CN=steeringcolumnsgalore.com/C=US"
-
-# Real certificate will overwrite self-signed
-sudo certbot --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive || {
-    echo "Certbot failed, using a self-signed certificate instead."
-}
-
-sudo nginx -t 
-sudo systemctl restart nginx
-
 sudo mkdir -p /var/www/app
 sudo chown $(whoami):$(whoami) /var/www/app
 cd /var/www/app
@@ -58,3 +46,13 @@ npm run build &> build.log
 cd srv
 npm run migrate
 npm run start
+
+# Fallback to invalid certificate
+sudo certbot --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive --test-cert
+
+# Real certificate will overwrite self-signed
+# Will retry until the certificate is retrieved, which depends on how long the vultr dns takes to propagate
+until sudo certbot --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive; do
+  echo "Certificate retrieval failed, retrying in 5 seconds..."
+  sleep 5
+done
