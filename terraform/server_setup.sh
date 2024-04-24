@@ -55,7 +55,7 @@ EOF
 attempt=1
 until sudo certbot certonly --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive --force-renewal; do
   seconds=$((2**attempt))
-  echo "Certificate retrieval failed, retrying in ${seconds} seconds..."
+  echo "Certificate retrieval failed, retrying in $seconds seconds..."
   sleep $seconds
   attempt=$((attempt+1))
 done
