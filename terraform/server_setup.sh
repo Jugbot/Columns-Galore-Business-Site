@@ -50,6 +50,8 @@ cat << 'EOF' > /etc/nginx/sites-available/default
 ${nginx_config} 
 EOF
 
+nginx -t && systemctl restart nginx
+
 # Real certificate will overwrite self-signed
 # Will retry until the certificate is retrieved, which depends on how long the vultr dns takes to propagate
 attempt=1
