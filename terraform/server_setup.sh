@@ -36,13 +36,14 @@ EOF
 
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
-sudo certbot --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive || {
-    echo "Certbot failed, creating a self-signed certificate instead."
-    # Fallback to self-signed certificate
-    sudo mkdir -p /etc/letsencrypt/self-signed
-    sudo openssl req -nodes -x509 -newkey rsa:2048 -keyout /etc/letsencrypt/self-signed/privkey.pem -out /etc/letsencrypt/self-signed/fullchain.pem -days 365 -subj "/CN=steeringcolumnsgalore.com/C=US"
 
-    sudo nginx -t && sudo systemctl reload nginx
+# Fallback to self-signed certificate
+sudo mkdir -p /etc/letsencrypt/self-signed
+sudo openssl req -nodes -x509 -newkey rsa:2048 -keyout /etc/letsencrypt/self-signed/privkey.pem -out /etc/letsencrypt/self-signed/fullchain.pem -days 365 -subj "/CN=steeringcolumnsgalore.com/C=US"
+
+# Real certificate will overwrite self-signed
+sudo certbot --nginx -d steeringcolumnsgalore.com -d www.steeringcolumnsgalore.com -m $EMAIL_NAME --agree-tos --non-interactive || {
+    echo "Certbot failed, using a self-signed certificate instead."
 }
 
 sudo nginx -t 
