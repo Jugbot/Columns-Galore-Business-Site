@@ -1,5 +1,20 @@
 <template>
   <v-container>
+    <v-dialog v-model="errorDialog" max-width="500px">
+      <v-card>
+        <v-card-title>There was an error</v-card-title>
+        <v-card-text>
+          There was an error submitting your request. Please try again later, or
+          email your request manually to
+          <a href="mailto:salesteam@columnsgalore.com"
+            >salesteam@columnsgalore.com</a
+          >
+        </v-card-text>
+        <v-card-actions class="justify-end">
+          <v-btn text @click="errorDialog = false"> Close </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-dialog v-model="dialog" max-width="500px">
       <v-card>
         <v-card-title>We Recieved Your Request</v-card-title>
@@ -29,12 +44,14 @@
               <v-text-field
                 v-model="part.Year"
                 :rules="[rules.required]"
+                :disabled="pending"
                 name="year"
                 label="Year"
               />
               <v-text-field
                 v-model="part.Manufacturer"
                 :rules="[rules.required]"
+                :disabled="pending"
                 name="make"
                 label="Make"
               />
@@ -43,6 +60,7 @@
               <v-text-field
                 v-model="part.Model"
                 :rules="[rules.required]"
+                :disabled="pending"
                 name="model"
                 label="Model"
               />
@@ -53,6 +71,7 @@
                 :item-disabled="(o) => !o.available"
                 :item-text="(o) => o.name"
                 :item-value="(o) => o.id"
+                :disabled="pending"
               >
                 <template #selection="{ item }">
                   {{ item.name }}
@@ -79,6 +98,7 @@
               <v-text-field
                 v-if="part.Price"
                 v-model="part.Price"
+                :disabled="pending"
                 outlined
                 name="price"
                 label="Price"
@@ -88,19 +108,22 @@
             <v-col cols="12" class="py-0">
               <v-row no-gutters wrap>
                 <v-col>
-                  <v-radio-group v-model="part.Tilt">
+                  <v-radio-group v-model="part.Tilt" :disabled="pending">
                     <v-radio name="wheel" label="Tilt Wheel" value="tilt" />
                     <v-radio name="wheel" label="Fixed Wheel" value="fixed" />
                   </v-radio-group>
                 </v-col>
                 <v-col>
-                  <v-radio-group v-model="part.Shift">
+                  <v-radio-group v-model="part.Shift" :disabled="pending">
                     <v-radio name="shift" label="Column Shift" value="column" />
                     <v-radio name="shift" label="Floor Shift" value="floor" />
                   </v-radio-group>
                 </v-col>
                 <v-col>
-                  <v-radio-group v-model="part.Transmission">
+                  <v-radio-group
+                    v-model="part.Transmission"
+                    :disabled="pending"
+                  >
                     <v-radio
                       name="transmission"
                       label="Automatic"
@@ -118,6 +141,7 @@
             <v-col cols="12">
               <v-textarea
                 v-model="part.AdditionalInformation"
+                :disabled="pending"
                 auto-grow
                 rows="1"
                 name="aditionalinfo"
@@ -134,10 +158,16 @@
         </v-card-subtitle>
         <v-card-text>
           <v-row wrap no-gutters style="gap: 0 1em">
-            <v-text-field v-model="contact.Name" name="name" label="Name" />
+            <v-text-field
+              v-model="contact.Name"
+              :disabled="pending"
+              name="name"
+              label="Name"
+            />
             <v-text-field
               v-model="contact.Address"
               :rules="[rules.required]"
+              :disabled="pending"
               name="address"
               label="Address"
             />
@@ -148,6 +178,7 @@
                 { text: 'Email', value: 'email' },
                 { text: 'Phone', value: 'phone' },
               ]"
+              :disabled="pending"
               name="contactby"
               label="Contact Preference"
             />
@@ -155,6 +186,7 @@
               v-if="contact.ContactBy === 'phone'"
               v-model="contact.Phone"
               :rules="[rules.required]"
+              :disabled="pending"
               name="phone"
               label="Phone"
             />
@@ -162,6 +194,7 @@
               v-if="contact.ContactBy === 'email'"
               v-model="contact.Email"
               :rules="[rules.required]"
+              :disabled="pending"
               name="email"
               label="Email"
             />
@@ -169,8 +202,17 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="error" text @click="$refs.form.reset()"> Reset </v-btn>
-          <v-btn color="success" @click="onSubmit()"> Submit </v-btn>
+          <v-btn
+            color="error"
+            text
+            :disabled="pending"
+            @click="$refs.form.reset()"
+          >
+            Reset
+          </v-btn>
+          <v-btn color="success" :loading="pending" @click="onSubmit()">
+            Submit
+          </v-btn>
           <v-spacer />
         </v-card-actions>
       </v-card>
@@ -191,6 +233,8 @@ export default {
     return {
       colors: colors,
       dialog: false,
+      errorDialog: false,
+      pending: false,
       part: {
         CatalogId: null,
         Manufacturer: '',
@@ -237,9 +281,17 @@ export default {
           product: this.part.CatalogId,
           price: this.part.Price,
         })
-        api.postQuote({ part: this.part, contact: this.contact }).then(() => {
-          this.dialog = true
-        })
+        this.pending = true
+        api
+          .postQuote({ part: this.part, contact: this.contact })
+          .then((response) => {
+            this.pending = false
+            if (response.ok) {
+              this.dialog = true
+            } else {
+              this.errorDialog = true
+            }
+          })
       }
     },
   },

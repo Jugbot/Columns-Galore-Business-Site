@@ -4,6 +4,7 @@
   "description": "Columnsgalore express server",
   "main": "app.js",
   "scripts": {
+    "dev": "node app.js",
     "start": "pm2 start app.js --name app",
     "stop": "pm2 stop app",
     "logs": "pm2 logs app",
