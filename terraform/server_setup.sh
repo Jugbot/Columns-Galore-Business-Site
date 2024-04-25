@@ -82,10 +82,10 @@ until sudo certbot certonly \
     -d steeringcolumnsgalore.com \
     -d www.steeringcolumnsgalore.com \
     -m $EMAIL_NAME \
-    --work-dir $BLOCKSTORAGE_PATH \
+    --config-dir $BLOCKSTORAGE_PATH \
     --agree-tos \
     --non-interactive \
-    --staging; do
+    --staging --force-renewal; do
     seconds=$((2 ** attempt))
     echo "Certificate retrieval failed, retrying in $seconds seconds..."
     sleep $seconds
