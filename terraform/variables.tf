@@ -39,7 +39,7 @@ variable "region" {
 
 variable "nodejs_plan" {
   description = "The plan to use for the Node.js server"
-  default     = "vc2-1c-1gb"
+  default     = "vc2-1c-2gb"
 }
 
 variable "mysql_plan" {
