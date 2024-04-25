@@ -84,8 +84,7 @@ until sudo certbot certonly \
     -m $EMAIL_NAME \
     --config-dir $BLOCKSTORAGE_PATH \
     --agree-tos \
-    --non-interactive \
-    --staging --force-renewal; do
+    --non-interactive; do
     seconds=$((2 ** attempt))
     echo "Certificate retrieval failed, retrying in $seconds seconds..."
     sleep $seconds
