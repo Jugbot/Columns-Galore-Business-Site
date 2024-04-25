@@ -45,4 +45,7 @@ resource "vultr_block_storage" "my_block_storage" {
   region               = var.region
   block_type           = "high_perf"
   size_gb              = 1
+  lifecycle {
+    prevent_destroy = true
+  }
 }
