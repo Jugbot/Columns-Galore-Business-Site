@@ -122,6 +122,12 @@ export default {
   name: 'Catalog',
   metaInfo: {
     title: 'Catalog',
+    meta: [
+      {
+        name: 'robots',
+        content: 'noindex',
+      },
+    ],
   },
   data() {
     return {
