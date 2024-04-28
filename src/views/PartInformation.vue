@@ -38,6 +38,7 @@
       <v-card-actions>
         <v-btn
           :to="{ path: '/quote', query: { id: part.CatalogId } }"
+          rel="nofollow"
           block
           large
           color="primary"
