@@ -25,7 +25,7 @@
         </v-row>
       </v-card-actions>
       <v-card-actions v-if="!questionaireCompleted" class="primary">
-        <v-icon dark class="px-3"> mdi-home-search </v-icon>
+        <v-icon dark class="px-3"> {{ mdiHomeSearch }} </v-icon>
         <v-select
           v-if="!fetching && question"
           v-model="question.selected"
@@ -101,7 +101,7 @@
         :disabled="page === 1"
         color="primary"
       >
-        <v-icon>mdi-arrow-left</v-icon>
+        <v-icon>{{ mdiArrowLeft }}</v-icon>
       </v-btn>
       <v-spacer />
       <v-btn
@@ -109,13 +109,14 @@
         :disabled="page === maxPage"
         color="primary"
       >
-        <v-icon>mdi-arrow-right</v-icon>
+        <v-icon>{{ mdiArrowRight }}</v-icon>
       </v-btn>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import { mdiArrowLeft, mdiArrowRight, mdiHomeSearch } from '@mdi/js'
 import api from '@/api'
 
 export default {
@@ -131,6 +132,9 @@ export default {
   },
   data() {
     return {
+      mdiArrowLeft,
+      mdiArrowRight,
+      mdiHomeSearch,
       fallbackImage: require('../assets/steering_column.svg'),
       questions: [
         // {

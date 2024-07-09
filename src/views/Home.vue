@@ -62,6 +62,7 @@
               class="mx-4"
               alt="This picture represents, SCG1754A, SCG1754B, SCG1941A, SCG1941B"
               :src="require('../assets/SCG1754b.jpg')"
+              :lazy-src="require('../assets/steering_column.svg')"
               max-height="250"
               contain
             />
@@ -69,6 +70,7 @@
               class="mx-4"
               alt="This picture represents SCGP3091 and SCGP3094"
               :src="require('../assets/SCGP3091.jpg')"
+              :lazy-src="require('../assets/steering_column.svg')"
               max-height="250"
               contain
             />

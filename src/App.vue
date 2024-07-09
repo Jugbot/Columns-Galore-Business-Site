@@ -27,7 +27,7 @@
         <v-tabs centered show-arrows>
           <v-tab key="Home" to="/" exact>
             <v-avatar v-if="$vuetify.breakpoint.xsOnly" tile>
-              <v-img :src="require('./assets/logo.svg')" />
+              <v-img :src="require('./assets/logo.svg')" contain />
             </v-avatar>
             <span v-else>Home</span>
           </v-tab>
@@ -40,7 +40,7 @@
             <template #activator="{ on, value }">
               <v-tab v-on="on">
                 <v-icon left>
-                  {{ value ? 'mdi-close' : 'mdi-menu' }}
+                  {{ value ? mdiClose : mdiMenu }}
                 </v-icon>
                 More
               </v-tab>
@@ -144,6 +144,8 @@
 </template>
 
 <script>
+import { mdiClose, mdiMenu } from '@mdi/js'
+
 export default {
   name: 'App',
 
@@ -161,6 +163,8 @@ export default {
   components: {},
 
   data: () => ({
+    mdiClose,
+    mdiMenu,
     pages: {
       primary: [
         { name: 'Catalog', page: '/catalog' },
