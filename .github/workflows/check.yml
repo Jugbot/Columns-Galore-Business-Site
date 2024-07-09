@@ -32,4 +32,10 @@ jobs:
       - name: Lint Check
         run: npm run format:lint:check
 
+      - name: Test
+        run: npm run test
+
+      - name: Build (Dry Run)
+        run: npm run build
+
     
