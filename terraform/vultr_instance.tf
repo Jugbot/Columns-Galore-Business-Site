@@ -39,11 +39,11 @@ resource "vultr_dns_domain" "my_domain" {
 }
 
 resource "vultr_dns_record" "google_search_console_verification" {
-    domain = "${vultr_dns_domain.my_domain.id}"
-    type = "CNAME"
-    name = "kxaxszpqqxhz"
-    data = "gv-wkgc2wwkgjmrzr.dv.googlehosted.com"
-    ttl = 3600
+  domain = vultr_dns_domain.my_domain.id
+  type   = "CNAME"
+  name   = "kxaxszpqqxhz"
+  data   = "gv-wkgc2wwkgjmrzr.dv.googlehosted.com"
+  ttl    = 3600
 }
 
 # Block storage is for storing ssl certificates only
