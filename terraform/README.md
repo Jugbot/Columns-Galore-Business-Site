@@ -2,7 +2,7 @@
 
 1. In this folder you can make changes to infrastructure hosted on vultr.
 2. Make sure to format files using `npm run format:terraform` in the project root before commit.
-3. Pushing to master will deploy automatically using terraform cloud.
+3. Publishing a tag on github will deploy automatically using HCP terraform cloud. You can view the runs on https://app.terraform.io
 
 ### Debugging locally
 
