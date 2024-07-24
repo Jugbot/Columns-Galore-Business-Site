@@ -38,6 +38,14 @@ resource "vultr_dns_domain" "my_domain" {
   ip     = vultr_instance.nodejs_server.main_ip
 }
 
+resource "vultr_dns_record" "google_search_console_verification" {
+    domain = "${vultr_dns_domain.my_domain.id}"
+    type = "CNAME"
+    name = "kxaxszpqqxhz"
+    data = "gv-wkgc2wwkgjmrzr.dv.googlehosted.com"
+    ttl = 3600
+}
+
 # Block storage is for storing ssl certificates only
 # This was implemented to circumvent rate limiting on certificate requests
 resource "vultr_block_storage" "my_block_storage" {
