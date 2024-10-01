@@ -24,3 +24,6 @@ npm run format
 
 #### More info related to debugging production
 [terraform/README.md](./terraform/README.md)
+
+#### The most recent dump of data before product sunset
+[srv/Dump20240930.sql](./srv/Dump20240930.sql)
